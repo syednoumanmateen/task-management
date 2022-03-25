@@ -1,7 +1,7 @@
 <h4 class="py-3 mb-4">
     <ol class="breadcrumb font-weight-bold m-0">
         <li class="breadcrumb-item"><a href="javascript:void(0)">Projects</a></li>
-        <li class="breadcrumb-item active">projectData.title}}</li>
+        <li class="breadcrumb-item active">title</li>
     </ol>
 </h4>
 
@@ -11,18 +11,18 @@
         <div class="col-md-9">
             <div class="media-body container-p-x py-4">
                 <div class="d-flex justify-content-between align-items-center mb-1">
-                    <div><strong class="text-primary text-large">{{completedPercent(projectData.tasks,
-                            projectData.completedTasks%</strong> completed</div>
+                    <div><strong class="text-primary text-large">10%</strong> completed</div>
                     <div class="text-muted small">
-                        projectData.cpleted</div>
+                        0 Completed Task,0 Opened Task</div>
                 </div>
-            
+                <ngb-progressbar [value]="10" height="4px">
+                </ngb-progressbar>
             </div>
         </div>
         <div class="col-md-3">
             <div class="container-p-x py-4">
                 <div class="text-muted small">Status</div>
-                <strong class="text-big">statusesrojectData.status].title}}</strong>
+                <strong class="text-big">status.title</strong>
             </div>
         </div>
     </div>
@@ -51,10 +51,10 @@
                             <div class="project-attachment-file display-4"><i></i></div>
 
                             <div class="media-body ml-3">
-                                <strong class="project-attachment-filename">attachment.name}}</strong>
-                                <div class="text-muted small">attachment.size}}</div>
+                                <strong class="project-attachment-filename">name</strong>
+                                <div class="text-muted small">size</div>
                                 <div>
-                                    <span ><a href="javascript:void(0)">View</a>
+                                    <span><a href="javascript:void(0)">View</a>
                                         &nbsp;</span>
                                     <a href="javascript:void(0)">Download</a>
                                 </div>
@@ -74,19 +74,19 @@
                     <ng-template ngbNavContent>
                         <div>
                             <div class="card-body">
-                                <p class="text-muted small">{{section.title</p>
+                                <p class="text-muted small">section.title</p>
 
                                 <div class="project-task-list custom-controls-stacked">
                                     <div class="project-task-item">
 
                                         <label class="ui-todo-item custom-control custom-checkbox">
                                             <input type="checkbox" class="custom-control-input">
-                                            <span class="custom-control-label">{{task.text</span>
+                                            <span class="custom-control-label">task.text</span>
                                             <span>
-                                                <span class="badge font-weight-normal ml-2">Ta.title}}</span>
+                                                <span class="badge font-weight-normal ml-2">Title</span>
                                             </span>
                                             <span
-                                                class="ui-todo-badge badge badge-outline-default font-weight-normal ml-2">{{task.lef
+                                                class="ui-todo-badge badge badge-outline-default font-weight-normal ml-2">task.lef
                                                 left</span>
                                         </label>
 
@@ -128,11 +128,11 @@
                             <div class="media mb-3">
                                 <div>
                                     <img src="'assets/profile.png" class="ui-w-40 rounded-circle" alt>
-                                    <div class="text-muted small text-nowrap mt-2">message.date}}</div>
+                                    <div class="text-muted small text-nowrap mt-2">message.date</div>
                                 </div>
                                 <div class="media-body bg-lighter rounded py-2 px-3 ml-3">
-                                    <div class="font-weight-semibold mb-1">message.user.name}}</div>
-                                    {{message.text
+                                    <div class="font-weight-semibold mb-1">message.user.name</div>
+                                    message.text
                                 </div>
                             </div>
 
@@ -163,14 +163,18 @@
                                     <img src="assets/profile.png" class="ui-w-40 rounded-circle" alt>
                                 </div>
                                 <div class="media-body align-self-center ml-3">
-                                    <div><a href="javascript:void(0)">activity.user.name}}</a> added new task
-                                        <strong>ctivity.data.taskTitle}}</strong></div>
-                                    <div><a href="javascript:void(0)">ctivity.user.name}}</a> pushed commit
-                                        <strong>#activity.data.commitId}}</strong></div>
-                                    <div><a href="javascript:void(0)">activity.user.name}}</a> completed task
-                                        <strong>ctivity.data.taskTitle}}</strong></div>
-                                    <div><a href="javascript:void(0)">activity.user.name}}</a> assigned new participant
-                                        <a href="javascript:void(0)"><strong>ctivity.data.userName}}</strong></a></div>
+                                    <div><a href="javascript:void(0)">user.name</a> added new task
+                                        <strong>taskTitle</strong>
+                                    </div>
+                                    <div><a href="javascript:void(0)">user.name</a> pushed commit
+                                        <strong>data.commitId</strong>
+                                    </div>
+                                    <div><a href="javascript:void(0)">user.name</a> completed task
+                                        <strong>taskTitle</strong>
+                                    </div>
+                                    <div><a href="javascript:void(0)">user.name</a> assigned new participant
+                                        <a href="javascript:void(0)"><strong>data.userName</strong></a>
+                                    </div>
 
                                     <div class="text-muted small">.date}} ago</div>
                                 </div>
@@ -191,55 +195,55 @@
             <ul class="list-group list-group-flush">
                 <li class="list-group-item d-flex justify-content-between align-items-center">
                     <div class="text-muted">Client</div>
-                    <div><a href="javascript:void(0)">{{projectData.client.name</a></div>
+                    <div><a href="javascript:void(0)">client.name</a></div>
                 </li>
                 <li class="list-group-item d-flex justify-content-between align-items-center">
                     <div class="text-muted">Created by</div>
-                    <div><a href="javascript:void(0)">{{projectData.createdBy.name</a></div>
+                    <div><a href="javascript:void(0)">createdBy.name</a></div>
                 </li>
                 <li class="list-group-item d-flex justify-content-between align-items-center">
                     <div class="text-muted">Created at</div>
-                    <div>{{projectData.created</div>
+                    <div>created date</div>
                 </li>
                 <li class="list-group-item d-flex justify-content-between align-items-center">
                     <div class="text-muted">Last update</div>
-                    <div>{{projectData.lastUpdate</div>
+                    <div>lastUpdate date</div>
                 </li>
                 <li class="list-group-item d-flex justify-content-between align-items-center">
                     <div class="text-muted">Deadline</div>
-                    <div><strong>{{projectData.deadline</strong></div>
+                    <div><strong>deadline date</strong></div>
                 </li>
                 <li class="list-group-item d-flex justify-content-between align-items-center">
                     <div class="text-muted">Priority</div>
                     <div class="btn-group" ngbDropdown>
                         <button type="button" class="btn btn-xs md-btn-flat" ngbDropdownToggle>
-                            <span >High</span>
-                            <span >Medium</span>
-                            <span >Low</span>
+                            <span *ngIf="curOpt=='high'">High</span>
+                            <span *ngIf="curOpt=='medium'">Medium</span>
+                            <span *ngIf="curOpt=='low'">Low</span>
                         </button>
                         <div ngbDropdownMenu>
-                            <a class="dropdown-item" href="javascript:void(0)">High</a>
-                            <a class="dropdown-item" href="javascript:void(0)">Medium</a>
-                            <a class="dropdown-item" href="javascript:void(0)">Low</a>
+                            <a class="dropdown-item" (click)="curOpt='high'">High</a>
+                            <a class="dropdown-item" (click)="curOpt='medium'">Medium</a>
+                            <a class="dropdown-item" (click)="curOpt='low'">Low</a>
                         </div>
                     </div>
                 </li>
                 <li class="list-group-item d-flex justify-content-between align-items-center">
                     <div class="text-muted">Hour rate</div>
-                    <div>${{projectData.hourRate/h</div>
+                    <div>$0/h</div>
                 </li>
                 <li class="list-group-item d-flex justify-content-between align-items-center">
                     <div class="text-muted">Total hours</div>
-                    <div>{{projectData.hours</div>
+                    <div>0hours</div>
                 </li>
                 <li class="list-group-item d-flex justify-content-between align-items-center">
                     <div class="text-muted">Total cost</div>
-                    <div><strong>${{projectData.hourRate * projectData.hours</strong></div>
+                    <div><strong>$8998</strong></div>
                 </li>
                 <li class="list-group-item">
                     <div class="text-muted small">Tags</div>
                     <div class="d-flex flex-wrap">
-                        <div class="badge badge-default mt-1 mr-1">tag}}</div>
+                        <div class="badge badge-default mt-1 mr-1">tag</div>
                     </div>
                 </li>
             </ul>
@@ -259,9 +263,9 @@
             <ul class="list-group list-group-flush">
                 <div class="list-group-item">
                     <div class="media align-items-center">
-                        <img src="'assets/profile.pmg" class="d-block ui-w-30 rounded-circle" alt="">
+                        <img src="assets/profile.png" class="d-block ui-w-30 rounded-circle" alt="">
                         <div class="media-body px-2">
-                            <a href="javascript:void(0)" class="text-body">leader.name}}</a>
+                            <a href="javascript:void(0)" class="text-body">leader.name</a>
                         </div>
                         <a href="javascript:void(0)" class="d-block text-light text-large font-weight-light">&times;</a>
                     </div>
@@ -283,9 +287,9 @@
             <ul class="list-group list-group-flush">
                 <div class="list-group-item">
                     <div class="media align-items-center">
-                        <img src="'assets/profile.png" class="d-block ui-w-30 rounded-circle" alt="">
+                        <img src="assets/profile.png" class="d-block ui-w-30 rounded-circle" alt="">
                         <div class="media-body px-2">
-                            <a href="javascript:void(0)" class="text-body">{{member.name</a>
+                            <a href="javascript:void(0)" class="text-body">member.name</a>
                         </div>
                         <a href="javascript:void(0)" class="d-block text-light text-large font-weight-light">&times;</a>
                     </div>

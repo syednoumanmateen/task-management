@@ -28,7 +28,7 @@ import { TasksComponent } from "./project/tasks/tasks.component";
 import { TasksViewComponent } from "./project/tasks-view/tasks-view.component";
 import { ProfileComponent } from "./user/profile/profile.component";
 import { DashboardComponent } from "./dashboard/dashboard.component";
-import { SettingsComponent } from './user/settings/settings.component';
+import { SettingsComponent } from "./user/settings/settings.component";
 
 // *******************************************************************************
 //
@@ -55,6 +55,7 @@ import { SettingsComponent } from './user/settings/settings.component';
     NgbModule,
     FormsModule,
     ReactiveFormsModule,
+    NgbModule,
 
     // App
     AppRoutingModule,

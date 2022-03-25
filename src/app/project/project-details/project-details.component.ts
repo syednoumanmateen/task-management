@@ -6,6 +6,7 @@ import { Component, OnInit } from "@angular/core";
   styleUrls: ["./project-details.component.css"],
 })
 export class ProjectDetailsComponent implements OnInit {
+  curOpt = "high";
   constructor() {}
 
   ngOnInit(): void {}
