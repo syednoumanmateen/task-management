@@ -1,5 +1,5 @@
 import { SettingsComponent } from "./user/settings/settings.component";
-import { AuthGuardService } from "./providers/auth-guard.service";
+// import { AuthGuardService } from "./providers/auth-guard.service";
 import { NgModule } from "@angular/core";
 import { Routes, RouterModule } from "@angular/router";
 import { NotFoundComponent } from "./not-found/not-found.component";
@@ -29,7 +29,7 @@ const routes: Routes = [
   {
     path: "dashboard",
     component: Layout1Component,
-    canActivate: [AuthGuardService],
+    // canActivate: [AuthGuardService],
     children: [{ path: "", component: DashboardComponent }],
   },
   {

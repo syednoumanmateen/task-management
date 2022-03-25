@@ -1,3 +1,5 @@
+import { Subscription } from "rxjs";
+import { UserService } from "./../../providers/user.service";
 import { Router } from "@angular/router";
 import { AuthService } from "./../../providers/auth.service";
 
@@ -14,7 +16,7 @@ export class LoginComponent implements OnInit {
   formGroup: FormGroup;
   constructor(
     private appService: AppService,
-    private authService: AuthService,
+    private user: UserService,
     private router: Router
   ) {
     this.appService.pageTitle = "Login - Task Management";
@@ -50,15 +52,29 @@ export class LoginComponent implements OnInit {
 
   OnLoginClick() {
     let v = this.ValidateForm();
-    let fg = this.formGroup.value;
+
     if (v.status == false) {
       alert(v.msg);
     } else {
-      this.authService.login(fg.userName, fg.password);
+      this.getLogin();
     }
   }
 
   onFogetPassword() {
     this.router.navigate(["/forget-password"]);
+  }
+
+  getLogin() {
+    let fg = this.formGroup.value;
+    let p = {
+      email: fg.userName,
+      password: fg.password,
+    };
+    this.user.userLogin(p).subscribe(
+      (res: any) => {
+        console.log(res);
+      },
+      (err: any) => {}
+    );
   }
 }

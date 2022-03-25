@@ -10,7 +10,7 @@
 
       <div class="card-body d-flex justify-content-between align-items-start pb-3">
         <div>
-          <a routerLink="/project-details" class="text-body text-big font-weight-semibold">title</a>
+          <a class="text-body text-big font-weight-semibold">title</a>
           <span class="badge align-text-bottom ml-1">status.title</span>
           <div class="text-muted small mt-1">0 opened tasks,
             0 tasks completed</div>
@@ -20,7 +20,7 @@
             class="btn btn-default btn-sm icon-btn borderless rounded-pill md-btn-flat hide-arrow" ngbDropdownToggle><i
               class="ion ion-ios-more"></i></button>
           <div ngbDropdownMenu>
-            <a class="dropdown-item" href="javascript:void(0)">View</a>
+            <a class="dropdown-item" routerLink="/project-details">View</a>
             <a class="dropdown-item" href="javascript:void(0)">Edit</a>
             <a class="dropdown-item" href="javascript:void(0)">Remove</a>
           </div>

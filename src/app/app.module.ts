@@ -1,7 +1,12 @@
+import { AuthInterceptorService } from "./providers/auth-interceptor.service";
+import { UserService } from "./providers/user.service";
+import { AuthGuardService } from "./providers/auth-guard.service";
+import { AuthService } from "./providers/auth.service";
 import { BrowserModule, Title } from "@angular/platform-browser";
 import { NgModule } from "@angular/core";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
+import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
 
 // *******************************************************************************
 // NgBootstrap
@@ -56,13 +61,27 @@ import { SettingsComponent } from "./user/settings/settings.component";
     FormsModule,
     ReactiveFormsModule,
     NgbModule,
+    // HttpClientModule,
+    
 
     // App
     AppRoutingModule,
     LayoutModule,
+    HttpClientModule
   ],
 
-  providers: [Title, AppService],
+  providers: [
+    Title,
+    AppService,
+    AuthService,
+    AuthGuardService,
+    UserService,
+    // {
+    //   provide: HTTP_INTERCEPTORS,
+    //   useClass: AuthInterceptorService,
+    //   multi: true,
+    // },
+  ],
 
   bootstrap: [AppComponent],
 })
