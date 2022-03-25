@@ -1,0 +1,528 @@
+@import '~src/vendor/styles/_custom-variables/libs';
+
+$angular-archwizard-icon-size: 2.5rem !default;
+$angular-archwizard-icon-border-width: 2px !default;
+$angular-archwizard-icon-font-size: 1rem !default;
+$angular-archwizard-spacer: 2rem !default;
+
+:host ::ng-deep aw-wizard {
+  display: flex;
+  justify-content: flex-start;
+
+  &.vertical {
+    flex-direction: row;
+  }
+
+  &.horizontal {
+    flex-direction: column;
+  }
+
+  &.horizontal ul.steps-indicator {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+  }
+
+  &.vertical ul.steps-indicator {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+}
+
+:host ::ng-deep aw-wizard ul.steps-indicator {
+  flex-wrap: wrap;
+  margin: 0;
+  padding: 0;
+
+  li {
+    display: flex;
+    align-items: center;
+    flex-grow: 1;
+    padding: 0 $angular-archwizard-spacer 0 ($angular-archwizard-icon-size + 1.25rem);
+    min-height: $angular-archwizard-icon-size;
+    width: auto;
+    position: relative;
+    cursor: default;
+
+    @include feature-rtl {
+      padding: 0 ($angular-archwizard-icon-size + 1.25rem) 0 $angular-archwizard-spacer;
+    }
+
+    a {
+      color: inherit;
+      margin: 0;
+      padding: 0;
+      text-align: inherit;
+      text-transform: none;
+      line-height: inherit;
+    }
+  }
+
+  .step-indicator {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    display: block;
+    margin-top: -($angular-archwizard-icon-size / 2);
+    width: $angular-archwizard-icon-size;
+    height: $angular-archwizard-icon-size;
+    border: $angular-archwizard-icon-border-width solid;
+    border-radius: 50%;
+    text-align: center;
+    line-height: calc(#{$angular-archwizard-icon-size} - #{$angular-archwizard-icon-border-width * 2});
+
+    @include feature-rtl {
+      right: 0;
+      left: auto;
+    }
+  }
+}
+
+:host ::ng-deep aw-wizard.aw-wizard-icons ul.steps-indicator .step-indicator {
+  vertical-align: middle;
+  font-size: 115%;
+}
+
+:host ::ng-deep .wizard-steps.vertical {
+  flex-grow: 1;
+  min-width: 0;
+  width: auto;
+}
+
+:host ::ng-deep aw-wizard-navigation-bar.vertical {
+  position: sticky;
+  margin-top: -$angular-archwizard-spacer;
+  max-width: none;
+  width: auto;
+
+  ul.steps-indicator {
+    margin-top: $angular-archwizard-spacer;
+  }
+}
+
+@if $enable-light-style {
+  .light-style {
+    @import "~src/vendor/styles/_appwork/include";
+
+    :host ::ng-deep  {
+      aw-wizard-navigation-bar ul.steps-indicator li a {
+        font-weight: $font-weight-semibold;
+      }
+
+      aw-wizard ul.steps-indicator li {
+        margin: 0 0 map-get($spacers, 3) 0;
+      }
+
+      aw-wizard.aw-wizard-bottom:not(.aw-wizard-boxed-steps) ul.steps-indicator li {
+        margin: map-get($spacers, 3) 0 0 0;
+      }
+
+      aw-wizard ul.steps-indicator li {
+        .step-indicator {
+          border-color: $border-color;
+          color: $body-color;
+        }
+
+        a {
+          opacity: .4;
+        }
+
+        &.current a,
+        &.done a,
+        &.editing a {
+          opacity: 1;
+        }
+      }
+
+      // Boxed
+
+      .aw-wizard-boxed-steps {
+        ul.steps-indicator {
+          margin-bottom: map-get($spacers, 3);
+          padding: map-get($spacers, 3) 0 0 $card-spacer-x;
+          border: $card-border-width solid $card-border-color;
+          background: $card-bg;
+          background-clip: padding-box;
+          box-shadow: $card-shadow;
+
+          @include border-radius($border-radius);
+
+          li {
+            margin-bottom: map-get($spacers, 3);
+            padding: 0 $card-spacer-x 0 ($angular-archwizard-icon-size + 1.25rem);
+          }
+        }
+
+        &.aw-wizard-bottom ul.steps-indicator {
+          margin-top: map-get($spacers, 3);
+          margin-bottom: 0;
+        }
+      }
+
+      // Vertical
+
+      aw-wizard.vertical {
+        @media (max-width: (map-get($grid-breakpoints, md) - 1)) {
+          flex-direction: column;
+
+          aw-wizard-navigation-bar {
+            position: relative;
+            margin-top: 0;
+          }
+
+          ul.steps-indicator {
+            flex-direction: row;
+            margin-top: 0;
+          }
+
+          &.aw-wizard-right {
+            flex-direction: column-reverse;
+          }
+        }
+
+        @media (min-width: map-get($grid-breakpoints, md)) {
+          &.aw-wizard-right:not(.aw-wizard-boxed-steps) ul.steps-indicator li {
+            padding: 0 0 0 ($angular-archwizard-spacer + $angular-archwizard-icon-size + 1.25rem);
+
+            .step-indicator {
+              left: $angular-archwizard-spacer;
+            }
+          }
+
+          &.aw-wizard-boxed-steps ul.steps-indicator {
+            padding-top: $card-spacer-x;
+            padding-bottom: $card-spacer-x - map-get($spacers, 3);
+          }
+
+          &.aw-wizard-boxed-steps.aw-wizard-left ul.steps-indicator {
+            margin-right: map-get($spacers, 3);
+            margin-bottom: 0;
+          }
+
+          &.aw-wizard-boxed-steps.aw-wizard-right ul.steps-indicator {
+            margin-bottom: 0;
+            margin-left: map-get($spacers, 3);
+          }
+        }
+      }
+    }
+
+    @include feature-rtl-style {
+      :host ::ng-deep  {
+        .aw-wizard-boxed-steps ul.steps-indicator {
+          padding: map-get($spacers, 3) $card-spacer-x 0 0;
+
+          li {
+            padding: 0 ($angular-archwizard-icon-size + 1.25rem) 0 $card-spacer-x;
+          }
+        }
+
+        @media (min-width: map-get($grid-breakpoints, md)) {
+          aw-wizard.vertical.aw-wizard-right:not(.aw-wizard-boxed-steps) ul.steps-indicator li {
+            padding: 0 ($angular-archwizard-spacer + $angular-archwizard-icon-size + 1.25rem) 0 0;
+
+            .step-indicator {
+              right: $angular-archwizard-spacer;
+              left: auto;
+            }
+          }
+
+          aw-wizard.vertical.aw-wizard-left ul.steps-indicator {
+            margin-right: 0;
+            margin-left: map-get($spacers, 3);
+          }
+
+          aw-wizard.vertical.aw-wizard-right ul.steps-indicator {
+            margin-right: map-get($spacers, 3);
+            margin-left: 0;
+          }
+        }
+      }
+    }
+  }
+}
+
+@if $enable-material-style {
+  .material-style {
+    @import "~src/vendor/styles/_appwork/include-material";
+
+    :host ::ng-deep  {
+      aw-wizard-navigation-bar ul.steps-indicator li a {
+        font-weight: $font-weight-semibold;
+      }
+
+      aw-wizard ul.steps-indicator li {
+        margin: 0 0 map-get($spacers, 3) 0;
+      }
+
+      aw-wizard.aw-wizard-bottom:not(.aw-wizard-boxed-steps) ul.steps-indicator li {
+        margin: map-get($spacers, 3) 0 0 0;
+      }
+
+      aw-wizard ul.steps-indicator li {
+        .step-indicator {
+          border-color: $border-color;
+          color: $body-color;
+        }
+
+        a {
+          opacity: .4;
+        }
+
+        &.current a,
+        &.done a,
+        &.editing a {
+          opacity: 1;
+        }
+      }
+
+      // Boxed
+
+      .aw-wizard-boxed-steps {
+        ul.steps-indicator {
+          margin-bottom: map-get($spacers, 3);
+          padding: map-get($spacers, 3) 0 0 $card-spacer-x;
+          border: $card-border-width solid $card-border-color;
+          background: $card-bg;
+          background-clip: padding-box;
+          box-shadow: $card-shadow;
+
+          @include border-radius($border-radius);
+
+          li {
+            margin-bottom: map-get($spacers, 3);
+            padding: 0 $card-spacer-x 0 ($angular-archwizard-icon-size + 1.25rem);
+          }
+        }
+
+        &.aw-wizard-bottom ul.steps-indicator {
+          margin-top: map-get($spacers, 3);
+          margin-bottom: 0;
+        }
+      }
+
+      // Vertical
+
+      aw-wizard.vertical {
+        @media (max-width: (map-get($grid-breakpoints, md) - 1)) {
+          flex-direction: column;
+
+          aw-wizard-navigation-bar {
+            position: relative;
+            margin-top: 0;
+          }
+
+          ul.steps-indicator {
+            flex-direction: row;
+            margin-top: 0;
+          }
+
+          &.aw-wizard-right {
+            flex-direction: column-reverse;
+          }
+        }
+
+        @media (min-width: map-get($grid-breakpoints, md)) {
+          &.aw-wizard-right:not(.aw-wizard-boxed-steps) ul.steps-indicator li {
+            padding: 0 0 0 ($angular-archwizard-spacer + $angular-archwizard-icon-size + 1.25rem);
+
+            .step-indicator {
+              left: $angular-archwizard-spacer;
+            }
+          }
+
+          &.aw-wizard-boxed-steps ul.steps-indicator {
+            padding-top: $card-spacer-x;
+            padding-bottom: $card-spacer-x - map-get($spacers, 3);
+          }
+
+          &.aw-wizard-boxed-steps.aw-wizard-left ul.steps-indicator {
+            margin-right: map-get($spacers, 3);
+            margin-bottom: 0;
+          }
+
+          &.aw-wizard-boxed-steps.aw-wizard-right ul.steps-indicator {
+            margin-bottom: 0;
+            margin-left: map-get($spacers, 3);
+          }
+        }
+      }
+    }
+
+    @include feature-rtl-style {
+      :host ::ng-deep  {
+        .aw-wizard-boxed-steps ul.steps-indicator {
+          padding: map-get($spacers, 3) $card-spacer-x 0 0;
+
+          li {
+            padding: 0 ($angular-archwizard-icon-size + 1.25rem) 0 $card-spacer-x;
+          }
+        }
+
+        @media (min-width: map-get($grid-breakpoints, md)) {
+          aw-wizard.vertical.aw-wizard-right:not(.aw-wizard-boxed-steps) ul.steps-indicator li {
+            padding: 0 ($angular-archwizard-spacer + $angular-archwizard-icon-size + 1.25rem) 0 0;
+
+            .step-indicator {
+              right: $angular-archwizard-spacer;
+              left: auto;
+            }
+          }
+
+          aw-wizard.vertical.aw-wizard-left ul.steps-indicator {
+            margin-right: 0;
+            margin-left: map-get($spacers, 3);
+          }
+
+          aw-wizard.vertical.aw-wizard-right ul.steps-indicator {
+            margin-right: map-get($spacers, 3);
+            margin-left: 0;
+          }
+        }
+      }
+    }
+  }
+}
+
+@if $enable-dark-style {
+  .dark-style {
+    @import "~src/vendor/styles/_appwork/include-dark";
+
+    :host ::ng-deep  {
+      aw-wizard-navigation-bar ul.steps-indicator li a {
+        font-weight: $font-weight-semibold;
+      }
+
+      aw-wizard ul.steps-indicator li {
+        margin: 0 0 map-get($spacers, 3) 0;
+      }
+
+      aw-wizard.aw-wizard-bottom:not(.aw-wizard-boxed-steps) ul.steps-indicator li {
+        margin: map-get($spacers, 3) 0 0 0;
+      }
+
+      aw-wizard ul.steps-indicator li {
+        .step-indicator {
+          border-color: $border-color;
+          color: $body-color;
+        }
+
+        a {
+          opacity: .4;
+        }
+
+        &.current a,
+        &.done a,
+        &.editing a {
+          opacity: 1;
+        }
+      }
+
+      // Boxed
+
+      .aw-wizard-boxed-steps {
+        ul.steps-indicator {
+          margin-bottom: map-get($spacers, 3);
+          padding: map-get($spacers, 3) 0 0 $card-spacer-x;
+          border: $card-border-width solid $card-border-color;
+          background: $card-bg;
+          background-clip: padding-box;
+          box-shadow: $card-shadow;
+
+          @include border-radius($border-radius);
+
+          li {
+            margin-bottom: map-get($spacers, 3);
+            padding: 0 $card-spacer-x 0 ($angular-archwizard-icon-size + 1.25rem);
+          }
+        }
+
+        &.aw-wizard-bottom ul.steps-indicator {
+          margin-top: map-get($spacers, 3);
+          margin-bottom: 0;
+        }
+      }
+
+      // Vertical
+
+      aw-wizard.vertical {
+        @media (max-width: (map-get($grid-breakpoints, md) - 1)) {
+          flex-direction: column;
+
+          aw-wizard-navigation-bar {
+            position: relative;
+            margin-top: 0;
+          }
+
+          ul.steps-indicator {
+            flex-direction: row;
+            margin-top: 0;
+          }
+
+          &.aw-wizard-right {
+            flex-direction: column-reverse;
+          }
+        }
+
+        @media (min-width: map-get($grid-breakpoints, md)) {
+          &.aw-wizard-right:not(.aw-wizard-boxed-steps) ul.steps-indicator li {
+            padding: 0 0 0 ($angular-archwizard-spacer + $angular-archwizard-icon-size + 1.25rem);
+
+            .step-indicator {
+              left: $angular-archwizard-spacer;
+            }
+          }
+
+          &.aw-wizard-boxed-steps ul.steps-indicator {
+            padding-top: $card-spacer-x;
+            padding-bottom: $card-spacer-x - map-get($spacers, 3);
+          }
+
+          &.aw-wizard-boxed-steps.aw-wizard-left ul.steps-indicator {
+            margin-right: map-get($spacers, 3);
+            margin-bottom: 0;
+          }
+
+          &.aw-wizard-boxed-steps.aw-wizard-right ul.steps-indicator {
+            margin-bottom: 0;
+            margin-left: map-get($spacers, 3);
+          }
+        }
+      }
+    }
+
+    @include feature-rtl-style {
+      :host ::ng-deep  {
+        .aw-wizard-boxed-steps ul.steps-indicator {
+          padding: map-get($spacers, 3) $card-spacer-x 0 0;
+
+          li {
+            padding: 0 ($angular-archwizard-icon-size + 1.25rem) 0 $card-spacer-x;
+          }
+        }
+
+        @media (min-width: map-get($grid-breakpoints, md)) {
+          aw-wizard.vertical.aw-wizard-right:not(.aw-wizard-boxed-steps) ul.steps-indicator li {
+            padding: 0 ($angular-archwizard-spacer + $angular-archwizard-icon-size + 1.25rem) 0 0;
+
+            .step-indicator {
+              right: $angular-archwizard-spacer;
+              left: auto;
+            }
+          }
+
+          aw-wizard.vertical.aw-wizard-left ul.steps-indicator {
+            margin-right: 0;
+            margin-left: map-get($spacers, 3);
+          }
+
+          aw-wizard.vertical.aw-wizard-right ul.steps-indicator {
+            margin-right: map-get($spacers, 3);
+            margin-left: 0;
+          }
+        }
+      }
+    }
+  }
+}

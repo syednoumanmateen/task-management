@@ -1,0 +1,7 @@
+@mixin angular-archwizard-theme($color) {
+  aw-wizard ul.steps-indicator li.current .step-indicator,
+  aw-wizard ul.steps-indicator li.editing .step-indicator {
+    border-color: $color !important;
+    color: $color !important;
+  }
+}
