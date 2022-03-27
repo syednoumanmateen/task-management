@@ -2,6 +2,7 @@ import { FormControl } from "@angular/forms";
 import { FormGroup } from "@angular/forms";
 import { Component, OnInit } from "@angular/core";
 import { UserService } from "src/app/providers/user.service";
+import { DataStorageService } from "src/app/providers/data-storage.service";
 
 @Component({
   selector: "app-settings",
@@ -11,7 +12,10 @@ import { UserService } from "src/app/providers/user.service";
 export class SettingsComponent implements OnInit {
   curTab = "password";
   formGroup: FormGroup;
-  constructor(private userService: UserService) {
+  constructor(
+    private userService: UserService,
+    private storage: DataStorageService
+  ) {
     this.formGroup = this.getFormGroup();
   }
 
@@ -27,9 +31,13 @@ export class SettingsComponent implements OnInit {
   }
 
   onSave() {
-    this.userService.changePassword(email).subscribe(
-      () => {},
-      () => {}
+    let p = {
+      Password: this.formGroup.value.currentpsw,
+      newPassword: this.formGroup.value.newpsw,
+    };
+    this.userService.changePassword(p).subscribe(
+      (res: any) => {},
+      (err: any) => {}
     );
   }
 }

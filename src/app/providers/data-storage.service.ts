@@ -4,21 +4,28 @@ import { Injectable } from "@angular/core";
   providedIn: "root",
 })
 export class DataStorageService {
-  token: String;
+  Data: String;
   constructor() {
-    this.token = "";
+    this.Data = "";
   }
 
   setToken(token: string) {
-    // this.token = token;
     localStorage.setItem("token", token);
   }
   getToken() {
-    // return this.token;
     return localStorage.getItem("token");
   }
 
   removeToken() {
     localStorage.clear();
   }
+
+  setData(key: any, Data: string) {
+    this.Data = Data;
+  }
+  getData(key: any) {
+    return this.Data;
+  }
+
+  clearData() {}
 }

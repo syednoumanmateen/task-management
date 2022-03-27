@@ -31,7 +31,7 @@ export class UserService {
     return this.ajax.delete("/user/remove/" + id);
   }
 
-  changePassword(email: any) {
-    return this.ajax.post("/user/reset-password/" + email);
+  changePassword(params: any) {
+    return this.ajax.post("/user/change-password/", params);
   }
 }
