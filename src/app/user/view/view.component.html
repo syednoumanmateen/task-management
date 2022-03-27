@@ -1,0 +1,104 @@
+<div class="media align-items-center py-3 mb-3">
+    <img src="assets/profile.png" alt="" class="d-block ui-w-100 rounded-circle">
+    <div class="media-body ml-4">
+        <h4 class="font-weight-bold mb-0">{{userData.fName}}&nbsp;{{userData.lName}}<div
+                class="text-muted font-weight-normal">{{userData.email}}</div>
+        </h4>
+        <div class="text-muted mb-2">ID: {{userData.userCode}}</div>
+        <a class="btn btn-primary btn-sm" (click)="onEdit()">Edit</a>
+    </div>
+</div>
+
+<div class="card">
+    <div class="row no-gutters row-bordered">
+        <div class="d-flex col-md align-items-center">
+            <a href="javascript:void(0)" class="card-body d-block text-body">
+                <div class="text-muted small line-height-1">Posts</div>
+                <div class="text-xlarge">{{userData.role}}</div>
+            </a>
+        </div>
+
+    </div>
+    <div class="card-body">
+
+        <table class="table user-view-table m-0">
+            <tbody>
+                <tr>
+                    <td>Username:</td>
+                    <td>{{userData.email}}</td>
+                </tr>
+                <tr>
+                    <td>Name:</td>
+                    <td>{{userData.fName}}&nbsp;{{userData.lName}}</td>
+                </tr>
+                <tr>
+                    <td>E-mail:</td>
+                    <td>{{userData.email}}</td>
+                </tr>
+                <tr>
+                    <td>Company:</td>
+                    <td>StoreKing</td>
+                </tr>
+            </tbody>
+        </table>
+
+
+
+        <h6 class="mt-4 mb-3">Personal info</h6>
+
+        <table class="table user-view-table m-0">
+            <tbody>
+                <tr>
+                    <td>Birthday:</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>Address:</td>
+                    <td class="pl-5">
+                        {{userData.address.doorNumber}},{{userData.address.street}},{{userData.address.area}},{{userData.address.landmark}},{{userData.address.city}},{{userData.address.state}}-{{userData.address.postalCode}}
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h6 class="mt-4 mb-3">Contacts</h6>
+
+        <table class="table user-view-table m-0">
+            <tbody>
+                <tr>
+                    <td>Phone:</td>
+                    <td>{{userData.phone}}</td>
+                </tr>
+        </table>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-body">
+        <table class="table user-view-table m-0">
+            <tbody>
+                <tr>
+                    <td>Verified:</td>
+                    <td>
+                        <span><span class="ion ion-md-checkmark text-primary"></span>&nbsp; Yes</span>
+                        <span><span class="ion ion-md-close text-light"></span>&nbsp; No</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Role:</td>
+                    <td>
+                        <span>{{userData.role}}</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Status:</td>
+                    <td>
+                        <span class="badge badge-outline-success">Active</span>
+                        <span class="badge badge-outline-danger">Banned</span>
+                        <span class="badge badge-outline-default">Deleted</span>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

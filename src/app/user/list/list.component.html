@@ -1,0 +1,142 @@
+<h4 class="font-weight-bold py-3 mb-4">
+    Users
+</h4>
+
+<!-- Filters -->
+<div class="ui-bordered px-4 pt-4 mb-4">
+    <div class="form-row align-items-center">
+        <div class="col-md mb-4">
+            <label class="form-label">Verified</label>
+            <select class="custom-select">
+                <option *ngFor="let item of ['Any', 'Yes', 'No']" [value]="item">{{item}}</option>
+            </select>
+        </div>
+        <div class="col-md mb-4">
+            <label class="form-label">Role</label>
+            <select class="custom-select">
+                <option *ngFor="let item of ['Any', 'User', 'employee', 'Admin']" [value]="item">{{item}}
+                </option>
+            </select>
+        </div>
+        <div class="col-md mb-4">
+            <label class="form-label">Status</label>
+            <select class="custom-select">
+                <option *ngFor="let item of ['Any', 'Active', 'Banned', 'Deleted']" [value]="item">{{item}}</option>
+            </select>
+        </div>
+
+        <div class="col-md col-xl-2 mb-4">
+            <label class="form-label d-none d-md-block">&nbsp;</label>
+            <button type="button" class="btn btn-secondary btn-block">Show</button>
+        </div>
+    </div>
+</div>
+<!-- / Filters -->
+
+<div class="card">
+
+    <!-- Table controls -->
+    <div class="card-body">
+
+        <div class="row">
+            <div class="col">
+                Per page: &nbsp;
+                <select class="custom-select custom-select-sm d-inline-block w-auto">
+                    <option *ngFor="let limit of [10, 20, 30, 40, 50]">{{limit}}</option>
+                </select>
+            </div>
+            <div class="col">
+                <input type="text" class="form-control form-control-sm d-inline-block w-auto float-sm-right"
+                    placeholder="Search...">
+            </div>
+        </div>
+
+    </div>
+    <!-- / Table controls -->
+
+    <!-- Table -->
+    <hr class="border-light m-0">
+    <div class="table-responsive">
+        <table class="table table-striped table-bordered card-table">
+            <thead>
+                <tr>
+                    <th class="text-nowrap cursor-pointer">
+                        ID<i class="ion text-muted ml-2"></i>
+                    </th>
+                    <th class="text-nowrap cursor-pointer">
+                        Account<i class="ion text-muted ml-2"></i>
+                    </th>
+                    <th class="text-nowrap cursor-pointer">
+                        Email<i class="ion text-muted ml-2"></i>
+                    </th>
+                    <th class="text-nowrap cursor-pointer">
+                        Name<i class="ion text-muted ml-2"></i>
+                    </th>
+                    <th class="text-nowrap cursor-pointer">
+                        Created<i class="ion text-muted ml-2"></i>
+                    </th>
+                    <th class="text-nowrap cursor-pointer">
+                        Verified<i class="ion text-muted ml-2"></i>
+                    </th>
+                    <th class="text-nowrap cursor-pointer">
+                        Role<i class="ion text-muted ml-2"></i>
+                    </th>
+                    <th class="text-nowrap cursor-pointer">
+                        Status<i class="ion text-muted ml-2"></i>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let user of userData">
+                    <td class="align-middle">{{user.userCode}}</td>
+                    <td class="align-middle"><a href="javascript:void(0)">{{user.email}}</a></td>
+                    <td class="align-middle">{{user.email}}</td>
+                    <td class="align-middle">{{user.fName}}&nbsp;{{user.lName}}</td>
+                    <td class="align-middle">{{user.createdOn}}</td>
+                    <td class="align-middle">
+                        <span
+                            *ngIf="(user.verification.emailConfirmation && user.verification.phoneConfirmation)=='Confirmed'"
+                            class="text-success">Confirmed</span>
+                        <span
+                            *ngIf="(user.verification.emailConfirmation && user.verification.phoneConfirmation)=='Pending'"
+                            class=" text-warning">Pending</span>
+                    </td>
+                    <td class="align-middle">
+                        <span class="">{{user.role}}</span>
+                    </td>
+
+                    <td class="align-middle">
+                        <span *ngIf="user.status=='Active'" class="badge badge-outline-success">Active</span>
+                        <span *ngIf="user.status=='Created'" class="badge badge-outline-default">Created</span>
+                    </td>
+                    <td class="text-center text-nowrap align-middle">
+                        <a class="btn btn-primary btn-sm" (click)="onView(user._id)">View</a>&nbsp;
+                        <a (click)="onDelete(user._id)" class="btn btn-danger btn-sm">Delete</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <!-- / Table -->
+
+    <!-- Pagination -->
+    <div class="card-body py-0">
+
+        <div class="row">
+            <div class="col-sm text-sm-left text-center pt-3">
+                <span class="text-muted"> totalPages</span>
+            </div>
+            <div class="col-sm pt-3">
+                <ngb-pagination size="sm" class="d-flex justify-content-center justify-content-sm-end m-0">
+                </ngb-pagination>
+            </div>
+        </div>
+
+    </div>
+    <!-- / Pagination -->
+</div>
+
+<!-- [collectionSize]="totalItems"
+  [pageSize]="perPage"
+  [(page)]="currentPage"
+  (pageChange)="update()" -->

@@ -1,0 +1,170 @@
+<h4 class="font-weight-bold py-3 mb-4" *ngIf="userData">
+    Edit user <span class="text-muted">#{{userData.userCode}}</span>
+</h4>
+<h4 class="font-weight-bold py-3 mb-4" *ngIf="!userData">
+    Add user
+</h4>
+
+<div class="nav-tabs-top">
+    <form action="" [formGroup]="formGroup">
+        <!-- <ng-template ngbTabContent> -->
+
+        <div class="card-body">
+
+            <div class="media align-items-center">
+                <img src="assets/profile.png" alt="" class="d-block ui-w-80">
+                <div class="media-body ml-3">
+                    <label class="form-label d-block mb-2">Avatar</label>
+                    <button type="button" class="btn btn-outline-primary btn-sm">Change</button>&nbsp;
+                    <button type="button" class="btn btn-default btn-sm md-btn-flat">Reset</button>
+                </div>
+            </div>
+
+        </div>
+        <hr class="border-light m-0">
+        <div class="card-body pb-2">
+
+            <div class="form-group">
+                <label class="form-label">fName</label>
+                <input type="text" formControlName="fname" class="form-control">
+            </div>
+            <div class="form-group">
+                <label class="form-label">lName</label>
+                <input type="text" formControlName="lname" class="form-control">
+            </div>
+            <div class="form-group">
+                <label class="form-label">E-mail</label>
+                <input type="email" formControlName="email" class="form-control mb-1">
+            </div>
+
+        </div>`
+        <hr class="border-light m-0">
+        <div class="card-body pb-2">
+
+            <div class="form-group">
+                <label class="form-label">Role</label>
+                <select class="custom-select" formControlName="role">
+                    <option *ngFor="let i of [[1, 'User'], [2, 'staff'], [3, 'Admin']]" [value]="i[1]">{{i[1]}}
+                    </option>
+                </select>
+
+            </div>
+            <!-- <div class="form-group">
+                    <label class="form-label">Status</label>
+                    <select class="custom-select">
+                        <option *ngFor="let i of [[1, 'Active'], [2, 'Banned'], [3, 'Deleted']]" [value]="i[0]">{{i[1]}}
+                        </option>
+                    </select>
+                </div> -->
+        </div>
+        <!-- <hr class="border-light m-0">
+            <div class="table-responsive">
+                <table class="table card-table m-0">
+                    <tbody>
+                        <tr>
+                            <th>Module</th>
+                            <th>Read</th>
+                            <th>Write</th>
+                            <th>Create</th>
+                            <th>Delete</th>
+                        </tr>
+                        <tr>
+                            <td>p.module</td>
+                            <td>
+                                <label class="custom-control custom-checkbox px-2 m-0">
+                                    <input type="checkbox" class="custom-control-input">
+                                    <span class="custom-control-label"></span>
+                                </label>
+                            </td>
+                            <td>
+                                <label class="custom-control custom-checkbox px-2 m-0">
+                                    <input type="checkbox" class="custom-control-input">
+                                    <span class="custom-control-label"></span>
+                                </label>
+                            </td>
+                            <td>
+                                <label class="custom-control custom-checkbox px-2 m-0">
+                                    <input type="checkbox" class="custom-control-input">
+                                    <span class="custom-control-label"></span>
+                                </label>
+                            </td>
+                            <td>
+                                <label class="custom-control custom-checkbox px-2 m-0">
+                                    <input type="checkbox" class="custom-control-input">
+                                    <span class="custom-control-label"></span>
+                                </label>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div> -->
+
+        <!-- </ng-template> -->
+        <!-- </div> -->
+        <div>
+            <!-- <ng-template ngbTabContent> -->
+
+            <div class="card-body pb-2">
+
+                <h6 class="mb-4">Personal info</h6>
+                <div class="form-group">
+                    <label class="form-label">Birthday</label>
+                    <input type="text" formControlName="dob" class="form-control">
+                </div>
+                <div class="form-group">
+                    <h6 class="mb-4">Address</h6>
+
+                    <div class="form-group">
+                        <label class="form-label">Door No:</label>
+                        <input type="text" formControlName="dno" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Street:</label>
+                        <input type="text" formControlName="street" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Area:</label>
+                        <input type="text" formControlName="area" class="form-control mb-1">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">LandMark</label>
+                        <input type="text" formControlName="landmark" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">City:</label>
+                        <input type="text" formControlName="city" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">State:</label>
+                        <input type="text" formControlName="state" class="form-control mb-1">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Pincode:</label>
+                        <input type="text" formControlName="pincode" class="form-control mb-1">
+                    </div>
+
+                </div>
+                <div class="form-group">
+
+                </div>
+
+            </div>
+            <hr class="border-light m-0">
+            <div class="card-body pb-2">
+
+                <h6 class="mb-4">Contacts</h6>
+                <div class="form-group">
+                    <label class="form-label">Phone</label>
+                    <input type="mobile" formControlName="mobileno" class="form-control">
+                </div>
+            </div>
+
+            <!-- </ng-template> -->
+        </div>
+    </form>
+</div>
+
+<div class="text-right mt-3">
+    <button type="button" class="btn btn-primary" (click)="onSave()">Save changes</button>&nbsp;
+    <button type="button" class="btn btn-default" (click)="onCancel()">Cancel</button>
+</div>

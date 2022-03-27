@@ -12,5 +12,14 @@
     <sidenav-router-link icon="ion ion-ios-document" route="/tasks" [active]="isActive('/')">Tasks
     </sidenav-router-link>
 
+    <sidenav-router-link ngbDropdown ngbDropdownToggle icon="ion ion-ios-settings" class="hide-arrow">
+      user
+      <span ngbDropdownMenu>
+        <sidenav-router-link route="/add-user" class="dropdown-item">
+          Add</sidenav-router-link>
+        <sidenav-router-link route="/list-user" class="dropdown-item">
+          List</sidenav-router-link>
+      </span>
+    </sidenav-router-link>
   </div>
 </sidenav>

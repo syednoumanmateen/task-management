@@ -1,4 +1,5 @@
-import { AuthService } from "./../../providers/auth.service";
+import { Router } from "@angular/router";
+import { UserService } from "./../../providers/user.service";
 import { Component, Input, HostBinding } from "@angular/core";
 import { AppService } from "../../providers/app.service";
 import { LayoutService } from "../../layout/layout.service";
@@ -19,7 +20,8 @@ export class LayoutNavbarComponent {
   constructor(
     private appService: AppService,
     private layoutService: LayoutService,
-    private authService: AuthService
+    private userService: UserService,
+    private router: Router
   ) {
     this.isRTL = appService.isRTL;
   }
@@ -33,6 +35,11 @@ export class LayoutNavbarComponent {
   }
 
   OnLogOut() {
-    this.authService.isLogOut();
+    this.userService.userLogout().subscribe(
+      (res: any) => {
+        this.router.navigate(["/login"]);
+      },
+      (err: any) => {}
+    );
   }
 }

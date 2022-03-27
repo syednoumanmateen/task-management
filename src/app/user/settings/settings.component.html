@@ -6,96 +6,33 @@
     <div class="row no-gutters row-bordered row-border-light">
         <div class="col-md-3 pt-0">
             <div class="list-group list-group-flush account-settings-links">
-                <button type="button" class="list-group-item list-group-item-action"
-                    (click)="curTab = 'general'">General</button>
+
                 <button type="button" class="list-group-item list-group-item-action"
                     (click)="curTab = 'password'">Change password</button>
-                <button type="button" class="list-group-item list-group-item-action"
-                    (click)="curTab = 'info'">Info</button>
+
             </div>
         </div>
-        <div class="col-md-9" *ngIf="curTab == 'general'">
 
-            <div class="card-body media align-items-center">
-                <img src="'assets/profile.png" alt="" class="d-block ui-w-80">
-                <div class="media-body ml-4">
-                    <button type="button" class="btn btn-outline-primary">Upload new photo</button> &nbsp;
-                    <button type="button" class="btn btn-default md-btn-flat">Reset</button>
-                    <div class="text-light small mt-1">Allowed JPG, GIF or PNG. Max size of 800K</div>
-                </div>
-            </div>
-            <hr class="border-light m-0">
-
-            <form class="card-body">
-                <div class="form-group">
-                    <label class="form-label">Username</label>
-                    <input type="text" class="form-control mb-1" value="syed">
-                </div>
-                <div class="form-group">
-                    <label class="form-label">Name</label>
-                    <input type="text" class="form-control" value="syed n">
-                </div>
-                <div class="form-group">
-                    <label class="form-label">E-mail</label>
-                    <input type="email" class="form-control mb-1" value="syed@mail.com">
-                    <div class="alert alert-warning mt-3">
-                        Your email is not confirmed. Please check your inbox.<br>
-                        <a href="javascript:void(0)">Resend confirmation</a>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="form-label">Company</label>
-                    <input type="text" class="form-control" value="Company Ltd.">
-                </div>
-            </form>
-
-        </div>
         <div class="col-md-9" *ngIf="curTab == 'password'">
-            <form class="card-body pb-2">
+            <form class="card-body pb-2" [formGroup]="formGroup">
 
                 <div class="form-group">
                     <label class="form-label">Current password</label>
-                    <input type="password" class="form-control">
+                    <input type="password" formControlName="currentpsw" class="form-control">
                 </div>
 
                 <div class="form-group">
                     <label class="form-label">New password</label>
-                    <input type="text" class="form-control">
+                    <input type="text" formControlName="newpsw" class="form-control">
                 </div>
 
                 <div class="form-group">
                     <label class="form-label">Repeat new password</label>
-                    <input type="password" class="form-control">
+                    <input type="password" formControlName="repeatnewpsw" class="form-control">
                 </div>
 
             </form>
         </div>
-        <div class="col-md-9" *ngIf="curTab == 'info'">
-            <form class="card-body pb-2">
-
-                <div class="form-group">
-                    <label class="form-label">Bio</label>
-                    <textarea class="form-control" rows="5"></textarea>
-                </div>
-                <div class="form-group">
-                    <label class="form-label">Birthday</label>
-                    <input type="date" class="form-control">
-                </div>
-                <div class="form-group">
-                    <label class="form-label">Country</label>
-                    <select class="custom-select">
-                        <option value="country" *ngFor="let country of ['India','Pakistan','Bangladesh','srilankha']">
-                            {{country}}</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label class="form-label">Phone</label>
-                    <input type="mobile" class="form-control">
-                </div>
-
-            </form>
-        </div>
-
     </div>
 </div>
 

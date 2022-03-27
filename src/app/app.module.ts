@@ -34,6 +34,10 @@ import { TasksViewComponent } from "./project/tasks-view/tasks-view.component";
 import { ProfileComponent } from "./user/profile/profile.component";
 import { DashboardComponent } from "./dashboard/dashboard.component";
 import { SettingsComponent } from "./user/settings/settings.component";
+import { AddComponent } from "./user/add/add.component";
+import { ViewComponent } from "./user/view/view.component";
+import { ListComponent } from "./user/list/list.component";
+import { AddProjectComponent } from "./project/add-project/add-project.component";
 
 // *******************************************************************************
 //
@@ -53,6 +57,10 @@ import { SettingsComponent } from "./user/settings/settings.component";
     ProfileComponent,
     DashboardComponent,
     SettingsComponent,
+    AddComponent,
+    ViewComponent,
+    ListComponent,
+    AddProjectComponent,
   ],
 
   imports: [
@@ -62,12 +70,11 @@ import { SettingsComponent } from "./user/settings/settings.component";
     ReactiveFormsModule,
     NgbModule,
     // HttpClientModule,
-    
 
     // App
     AppRoutingModule,
     LayoutModule,
-    HttpClientModule
+    HttpClientModule,
   ],
 
   providers: [
@@ -76,11 +83,11 @@ import { SettingsComponent } from "./user/settings/settings.component";
     AuthService,
     AuthGuardService,
     UserService,
-    // {
-    //   provide: HTTP_INTERCEPTORS,
-    //   useClass: AuthInterceptorService,
-    //   multi: true,
-    // },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptorService,
+      multi: true,
+    },
   ],
 
   bootstrap: [AppComponent],

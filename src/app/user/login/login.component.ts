@@ -1,3 +1,4 @@
+import { DataStorageService } from './../../providers/data-storage.service';
 import { Subscription } from "rxjs";
 import { UserService } from "./../../providers/user.service";
 import { Router } from "@angular/router";
@@ -17,7 +18,8 @@ export class LoginComponent implements OnInit {
   constructor(
     private appService: AppService,
     private user: UserService,
-    private router: Router
+    private router: Router,
+    private storage:DataStorageService
   ) {
     this.appService.pageTitle = "Login - Task Management";
     this.formGroup = this.getFormGroup();
@@ -72,7 +74,8 @@ export class LoginComponent implements OnInit {
     };
     this.user.userLogin(p).subscribe(
       (res: any) => {
-        console.log(res);
+        this.storage.setToken(res.data.token);
+        this.router.navigate(['/dashboard']);
       },
       (err: any) => {}
     );
