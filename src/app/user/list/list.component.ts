@@ -1,7 +1,9 @@
+import { ToastrService } from "ngx-toastr";
 import { AppService } from "src/app/providers/app.service";
 import { Router } from "@angular/router";
 import { UserService } from "src/app/providers/user.service";
 import { Component, OnInit } from "@angular/core";
+import { DataStorageService } from "src/app/providers/data-storage.service";
 
 @Component({
   selector: "app-list",
@@ -13,7 +15,9 @@ export class ListComponent implements OnInit {
   constructor(
     private userService: UserService,
     private router: Router,
-    private appService: AppService
+    private appService: AppService,
+    private toastr: ToastrService,
+    private storage: DataStorageService
   ) {
     this.appService.pageTitle = "userList - Task Management";
     this.userData = {};
@@ -32,7 +36,9 @@ export class ListComponent implements OnInit {
       (res: any) => {
         this.userData = res;
       },
-      (err: any) => {}
+      (err: any) => {
+        this.toastr.error(err.message);
+      }
     );
   }
 
@@ -46,8 +52,12 @@ export class ListComponent implements OnInit {
 
   onDelete(id: any) {
     this.userService.deleteUser(id).subscribe(
-      (res: any) => {},
-      (err: any) => {}
+      (res: any) => {
+        this.toastr.success(res.message);
+      },
+      (err: any) => {
+        this.toastr.error(err.message);
+      }
     );
   }
 }

@@ -1,3 +1,4 @@
+import { AppService } from 'src/app/providers/app.service';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -7,7 +8,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ViewRoleComponent implements OnInit {
 
-  constructor() { }
+  constructor(private appService:AppService) {
+    this.appService.pageTitle = "viewrole - Task Management";
+   }
 
   ngOnInit(): void {
   }

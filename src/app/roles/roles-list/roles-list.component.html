@@ -1,14 +1,15 @@
 <h4 class="d-flex justify-content-between align-items-center w-100 font-weight-bold py-3 mb-4">
     <div>Roles</div>
-    <button type="button" class="btn btn-primary rounded-pill d-block"><span class="ion ion-md-add"></span>&nbsp;Add
+    <button type="button" class="btn btn-primary rounded-pill d-block" (click)="addRole()"><span
+            class="ion ion-md-add"></span>&nbsp;Add
         Role</button>
 </h4>
 
 
-<!-- <div class="card"> -->
+<div class="card">
 
     <!-- Table controls -->
-    <!-- <div class="card-body">
+    <div class="card-body">
 
         <div class="row">
             <div class="col">
@@ -23,11 +24,11 @@
             </div>
         </div>
 
-    </div> -->
+    </div>
     <!-- / Table controls -->
 
     <!-- Table -->
-    <!-- <hr class="border-light m-0">
+    <hr class="border-light m-0">
     <div class="table-responsive">
         <table class="table table-striped table-bordered card-table">
             <thead>
@@ -36,46 +37,26 @@
                         ID<i class="ion text-muted ml-2"></i>
                     </th>
                     <th class="text-nowrap cursor-pointer">
-                        Account<i class="ion text-muted ml-2"></i>
-                    </th>
-                    <th class="text-nowrap cursor-pointer">
-                        Email<i class="ion text-muted ml-2"></i>
-                    </th>
-                    <th class="text-nowrap cursor-pointer">
                         Name<i class="ion text-muted ml-2"></i>
                     </th>
                     <th class="text-nowrap cursor-pointer">
-                        Created<i class="ion text-muted ml-2"></i>
+                        Features<i class="ion text-muted ml-2"></i>
                     </th>
                     <th class="text-nowrap cursor-pointer">
-                        Verified<i class="ion text-muted ml-2"></i>
-                    </th>
-                    <th class="text-nowrap cursor-pointer">
-                        Role<i class="ion text-muted ml-2"></i>
-                    </th>
-                    <th class="text-nowrap cursor-pointer">
-                        Status<i class="ion text-muted ml-2"></i>
+                        Created By<i class="ion text-muted ml-2"></i>
                     </th>
                 </tr>
             </thead>
             <tbody>
                 <tr *ngFor="let user of userData">
-                    <td class="align-middle">{{user.userCode}}</td>
-                    <td class="align-middle"><a href="javascript:void(0)">{{user.email}}</a></td>
-                    <td class="align-middle">{{user.email}}</td>
-                    <td class="align-middle">{{user.fName}}&nbsp;{{user.lName}}</td>
-                    <td class="align-middle">{{user.createdOn}}</td>
+                    <td class="align-middle">{{user.roleCode}}</td>
+                    <td class="align-middle"><a href="javascript:void(0)">{{user.roleName}}</a></td>
                     <td class="align-middle">
-                        <span
-                            *ngIf="(user.verification.emailConfirmation && user.verification.phoneConfirmation)=='Confirmed'"
-                            class="text-success">Confirmed</span>
-                        <span
-                            *ngIf="(user.verification.emailConfirmation && user.verification.phoneConfirmation)=='Pending'"
-                            class=" text-warning">Pending</span>
+                        <button type="button" class="btn btn-primary d-block"
+                            (click)="viewFeatures(user.featureList)">View
+                            Features</button>
                     </td>
-                    <td class="align-middle">
-                        <span class="">{{user.role}}</span>
-                    </td>
+                    <td class="align-middle">{{user.createdBy}}</td>
 
                     <td class="text-center text-nowrap align-middle">
                         <a class="btn btn-primary btn-sm" (click)="onView(user._id)">View</a>&nbsp;
@@ -84,11 +65,11 @@
                 </tr>
             </tbody>
         </table>
-    </div> -->
+    </div>
     <!-- / Table -->
 
     <!-- Pagination -->
-    <!-- <div class="card-body py-0">
+    <div class="card-body py-0">
 
         <div class="row">
             <div class="col-sm text-sm-left text-center pt-3">
@@ -100,9 +81,9 @@
             </div>
         </div>
 
-    </div> -->
+    </div>
     <!-- / Pagination -->
-<!-- </div> -->
+</div>
 
 <!-- [collectionSize]="totalItems"
   [pageSize]="perPage"

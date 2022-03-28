@@ -67,8 +67,8 @@ export class UserService {
     return this.ajax.put("/feature/update/" + url, params);
   }
 
-  deletFeature(url: any, params: any) {
-    return this.ajax.delete("/feature/remove/" + url, params);
+  deletFeature(url: any) {
+    return this.ajax.delete("/feature/remove/" + url);
   }
 
   addRole(params: any) {
@@ -76,7 +76,7 @@ export class UserService {
   }
 
   roleList() {
-    return this.ajax.get("/role/list");
+    return this.ajax.get("/role/list/");
   }
 
   viewRole(url: any) {
@@ -87,7 +87,7 @@ export class UserService {
     return this.ajax.put("/role/update/" + url, params);
   }
 
-  deletRole(url: any, params: any) {
-    return this.ajax.delete("/role/remove/" + url, params);
+  deletRole(url: any) {
+    return this.ajax.delete("/role/remove/" + url);
   }
 }

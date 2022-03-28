@@ -79,7 +79,9 @@ export class LoginComponent implements OnInit {
         this.storage.setData("user", this.formGroup.value.userName);
         this.router.navigate(["/dashboard"]);
       },
-      (err: any) => {}
+      (err: any) => {
+        this.toastr.error(err.meassage);
+      }
     );
   }
 }

@@ -1,15 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { AppService } from "src/app/providers/app.service";
+import { Component, OnInit } from "@angular/core";
 
 @Component({
-  selector: 'app-add-role',
-  templateUrl: './add-role.component.html',
-  styleUrls: ['./add-role.component.css']
+  selector: "app-add-role",
+  templateUrl: "./add-role.component.html",
+  styleUrls: ["./add-role.component.css"],
 })
 export class AddRoleComponent implements OnInit {
-
-  constructor() { }
-
-  ngOnInit(): void {
+  constructor(private appService: AppService) {
+    this.appService.pageTitle = "addrole - Task Management";
   }
 
+  ngOnInit(): void {}
 }

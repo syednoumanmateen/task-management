@@ -1,3 +1,4 @@
+import { ToastrService } from "ngx-toastr";
 import { AppService } from "./../../providers/app.service";
 import { ActivatedRoute, Router } from "@angular/router";
 import { Component, OnInit } from "@angular/core";
@@ -16,7 +17,8 @@ export class ViewComponent implements OnInit {
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private userService: UserService,
-    private appService: AppService
+    private appService: AppService,
+    private toastr: ToastrService
   ) {
     this.appService.pageTitle = "addUser - Task Management";
   }
@@ -25,8 +27,6 @@ export class ViewComponent implements OnInit {
     this.activatedRoute.queryParams.subscribe((data) => {
       this.urlParams = data;
     });
-    console.log(this.urlParams.id);
-
     this.userView();
   }
 
@@ -35,13 +35,13 @@ export class ViewComponent implements OnInit {
       (res: any) => {
         this.userData = res.userData;
       },
-      (err: any) => {}
+      (err: any) => {
+        this.toastr.error(err.meassage);
+      }
     );
   }
 
   onEdit() {
-    console.log(this.urlParams.id);
-
     this.router.navigate(["/add-user"], {
       queryParams: {
         id: this.urlParams.id,
