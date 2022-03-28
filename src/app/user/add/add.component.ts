@@ -1,7 +1,9 @@
+import { AppService } from "src/app/providers/app.service";
 import { FormControl, FormGroup } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
 import { UserService } from "./../../providers/user.service";
 import { Component, OnInit } from "@angular/core";
+import { ToastrService } from "ngx-toastr";
 
 @Component({
   selector: "app-add",
@@ -13,10 +15,13 @@ export class AddComponent implements OnInit {
   urlParams: any;
   userData: any;
   constructor(
+    private appService: AppService,
     private userService: UserService,
     private router: Router,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private toastr: ToastrService
   ) {
+    this.appService.pageTitle = "addUser - Task Management";
     this.formGroup = this.getFormGroup();
     this.activatedRoute.queryParams.subscribe((data) => {
       this.urlParams = data;
@@ -47,28 +52,70 @@ export class AddComponent implements OnInit {
     });
     return fg;
   }
-  onSave() {
+  validateForm() {
     let fg = this.formGroup.value;
-    let p = {
-      fName: fg.fname,
-      lName: fg.lname,
-      address: {
-        doorNumber: fg.dno,
-        street: fg.street,
-        area: fg.area,
-        landmark: fg.landmark,
-        city: fg.city,
-        state: fg.state,
-        postalCode: fg.pincode,
-      },
-      phone: fg.mobileno,
-      email: fg.email,
-      role: fg.role,
+    let msg = "";
+    if (!fg.fname.trim()) {
+      msg = "Please Enter the First Name";
+    } else if (!fg.lname.trim()) {
+      msg = "Please Enter the Last Name";
+    } else if (!fg.dno.trim()) {
+      msg = "Please Enter the Door Number";
+    } else if (!fg.street.trim()) {
+      msg = "Please Enter the Street Name";
+    } else if (!fg.area.trim()) {
+      msg = "Please Enter the Area Name";
+    } else if (!fg.landmark.trim()) {
+      msg = "Please Enter the LandMark Address";
+    } else if (!fg.city.trim()) {
+      msg = "Please Enter the City Name";
+    } else if (!fg.pincode) {
+      msg = "Please Enter the Valid Pincode";
+    } else if (!fg.mobileno) {
+      msg = "Please Enter the Valid Mobile Number";
+    } else if (!fg.role.trim()) {
+      msg = "Please Enter the Role";
+    } else if (!fg.email.trim()) {
+      msg = "Please Enter the Valid Email";
+    } else {
+      msg = "";
+    }
+    return {
+      msg: msg,
+      status: (msg = "") ? true : false,
     };
-    this.userService.addUser(p).subscribe(
-      (res: any) => {},
-      (err: any) => {}
-    );
+  }
+  onSave() {
+    let v = this.validateForm();
+    if (v.status == false) {
+      this.toastr.error(v.msg);
+    } else {
+      let fg = this.formGroup.value;
+      let p = {
+        fName: fg.fname,
+        lName: fg.lname,
+        address: {
+          doorNumber: fg.dno,
+          street: fg.street,
+          area: fg.area,
+          landmark: fg.landmark,
+          city: fg.city,
+          state: fg.state,
+          postalCode: fg.pincode,
+        },
+        phone: fg.mobileno,
+        email: fg.email,
+        role: fg.role,
+      };
+      this.userService.addUser(p).subscribe(
+        (res: any) => {
+          this.toastr.success(res.message);
+        },
+        (err: any) => {
+          this.toastr.error(err.message);
+        }
+      );
+    }
   }
 
   onCancel() {
@@ -80,10 +127,12 @@ export class AddComponent implements OnInit {
     this.userService.viewUser(this.urlParams.id).subscribe(
       (res: any) => {
         this.userData = res.userData;
-
+        this.toastr.success(res.message);
         this.setValue();
       },
-      (err: any) => {}
+      (err: any) => {
+        this.toastr.error(err.message);
+      }
     );
   }
 

@@ -1,5 +1,4 @@
 import { DataStorageService } from "./../../providers/data-storage.service";
-import { Subscription } from "rxjs";
 import { UserService } from "./../../providers/user.service";
 import { Router } from "@angular/router";
 import { AuthService } from "./../../providers/auth.service";
@@ -7,6 +6,7 @@ import { AuthService } from "./../../providers/auth.service";
 import { Component, OnInit } from "@angular/core";
 import { FormControl, FormGroup } from "@angular/forms";
 import { AppService } from "src/app/providers/app.service";
+import { ToastrService } from "ngx-toastr";
 
 @Component({
   selector: "app-login",
@@ -19,7 +19,8 @@ export class LoginComponent implements OnInit {
     private appService: AppService,
     private user: UserService,
     private router: Router,
-    private storage: DataStorageService
+    private storage: DataStorageService,
+    private toastr: ToastrService
   ) {
     this.appService.pageTitle = "Login - Task Management";
     this.formGroup = this.getFormGroup();
@@ -54,9 +55,8 @@ export class LoginComponent implements OnInit {
 
   OnLoginClick() {
     let v = this.ValidateForm();
-
     if (v.status == false) {
-      alert(v.msg);
+      this.toastr.error(v.msg);
     } else {
       this.getLogin();
     }
@@ -74,6 +74,7 @@ export class LoginComponent implements OnInit {
     };
     this.user.userLogin(p).subscribe(
       (res: any) => {
+        this.toastr.success(res.status);
         this.storage.setToken(res.data.token);
         this.storage.setData("user", this.formGroup.value.userName);
         this.router.navigate(["/dashboard"]);

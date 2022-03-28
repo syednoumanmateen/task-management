@@ -1,8 +1,10 @@
+import { AppService } from "src/app/providers/app.service";
 import { FormControl } from "@angular/forms";
 import { FormGroup } from "@angular/forms";
 import { Component, OnInit } from "@angular/core";
 import { UserService } from "src/app/providers/user.service";
 import { DataStorageService } from "src/app/providers/data-storage.service";
+import { ToastrService } from "ngx-toastr";
 
 @Component({
   selector: "app-settings",
@@ -14,8 +16,10 @@ export class SettingsComponent implements OnInit {
   formGroup: FormGroup;
   constructor(
     private userService: UserService,
-    private storage: DataStorageService
+    private appService: AppService,
+    private toastr: ToastrService
   ) {
+    this.appService.pageTitle = "settings - Task Management";
     this.formGroup = this.getFormGroup();
   }
 
@@ -29,15 +33,42 @@ export class SettingsComponent implements OnInit {
     });
     return fg;
   }
+  validateForm() {
+    let fg = this.formGroup.value;
+    let msg = "";
+    if (!fg.newpsw.trim()) {
+      msg = "Please Enter the Password";
+    } else if (!fg.repeatnewpsw.trim()) {
+      msg = "Please Enter the Confirm Password";
+    } else if (fg.repeatnewpsw.trim() !== fg.newpsw.trim()) {
+      msg = "Enter the Password Does Not Match with Confirm Password";
+    } else if (fg.currentpsw.trim()) {
+      msg = "Please Enter The Current Password";
+    } else {
+      msg = "";
+    }
+    return {
+      msg: msg,
+      status: (msg = "") ? true : false,
+    };
+  }
 
   onSave() {
+    let v = this.validateForm();
+    if (v.status == false) {
+      this.toastr.error(v.msg);
+    }
     let p = {
       Password: this.formGroup.value.currentpsw,
       newPassword: this.formGroup.value.newpsw,
     };
     this.userService.changePassword(p).subscribe(
-      (res: any) => {},
-      (err: any) => {}
+      (res: any) => {
+        this.toastr.success(res.message);
+      },
+      (err: any) => {
+        this.toastr.error(err.message);
+      }
     );
   }
 }

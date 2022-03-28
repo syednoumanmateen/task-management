@@ -1,3 +1,4 @@
+import { AppService } from 'src/app/providers/app.service';
 import { Router } from "@angular/router";
 import { UserService } from "src/app/providers/user.service";
 import { Component, OnInit } from "@angular/core";
@@ -9,7 +10,9 @@ import { Component, OnInit } from "@angular/core";
 })
 export class ListComponent implements OnInit {
   userData: any;
-  constructor(private userService: UserService, private router: Router) {
+  constructor(private userService: UserService, private router: Router ,
+    private appService:AppService) {
+      this.appService.pageTitle = "userList - Task Management";
     this.userData = {};
   }
 

@@ -1,4 +1,6 @@
 @import "./vendor/styles/_custom-variables/features";
+@import "./vendor/libs/ngx-toastr/ngx-toastr.scss";
+@import "./vendor/libs/ngx-toastr/toastr.scss";
 
 @mixin keyframes($name) {
   @-webkit-keyframes #{$name} {

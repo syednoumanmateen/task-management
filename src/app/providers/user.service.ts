@@ -34,4 +34,16 @@ export class UserService {
   changePassword(params: any) {
     return this.ajax.post("/user/change-password/", params);
   }
+
+  forgetPassword(params: any) {
+    return this.ajax.post("/user/forget-password", params);
+  }
+
+  OTPValidation(params: any) {
+    return this.ajax.post("/user/otp-validation", params);
+  }
+
+  resetPassword(url: any, params: any) {
+    return this.ajax.post("/user/reset-password/" + url, params);
+  }
 }

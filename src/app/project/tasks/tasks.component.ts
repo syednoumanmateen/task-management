@@ -1,3 +1,4 @@
+import { AppService } from 'src/app/providers/app.service';
 import { Component, OnInit } from "@angular/core";
 
 @Component({
@@ -7,7 +8,11 @@ import { Component, OnInit } from "@angular/core";
 })
 export class TasksComponent implements OnInit {
   curTab = "project";
-  constructor() {}
+  constructor(
+    private appService:AppService
+  ) {
+    this.appService.pageTitle = "tasks - Task Management";
+  }
 
   ngOnInit(): void {}
 }

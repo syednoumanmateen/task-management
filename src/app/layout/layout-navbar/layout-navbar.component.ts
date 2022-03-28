@@ -3,6 +3,7 @@ import { UserService } from "./../../providers/user.service";
 import { Component, Input, HostBinding } from "@angular/core";
 import { AppService } from "../../providers/app.service";
 import { LayoutService } from "../../layout/layout.service";
+import { ToastrService } from "ngx-toastr";
 
 @Component({
   selector: "app-layout-navbar",
@@ -21,7 +22,8 @@ export class LayoutNavbarComponent {
     private appService: AppService,
     private layoutService: LayoutService,
     private userService: UserService,
-    private router: Router
+    private router: Router,
+    private toastr: ToastrService
   ) {
     this.isRTL = appService.isRTL;
   }
@@ -37,9 +39,12 @@ export class LayoutNavbarComponent {
   OnLogOut() {
     this.userService.userLogout().subscribe(
       (res: any) => {
+        this.toastr.success(res.message);
         this.router.navigate(["/login"]);
       },
-      (err: any) => {}
+      (err: any) => {
+        this.toastr.error(err.message);
+      }
     );
   }
 }

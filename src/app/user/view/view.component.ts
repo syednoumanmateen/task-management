@@ -1,3 +1,4 @@
+import { AppService } from "./../../providers/app.service";
 import { ActivatedRoute, Router } from "@angular/router";
 import { Component, OnInit } from "@angular/core";
 import { UserService } from "src/app/providers/user.service";
@@ -14,8 +15,11 @@ export class ViewComponent implements OnInit {
   constructor(
     private router: Router,
     private activatedRoute: ActivatedRoute,
-    private userService: UserService
-  ) {}
+    private userService: UserService,
+    private appService: AppService
+  ) {
+    this.appService.pageTitle = "addUser - Task Management";
+  }
 
   ngOnInit(): void {
     this.activatedRoute.queryParams.subscribe((data) => {
@@ -37,7 +41,7 @@ export class ViewComponent implements OnInit {
 
   onEdit() {
     console.log(this.urlParams.id);
-    
+
     this.router.navigate(["/add-user"], {
       queryParams: {
         id: this.urlParams.id,

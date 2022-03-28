@@ -7,6 +7,7 @@ import { NgModule } from "@angular/core";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
+import { ToastrModule } from "ngx-toastr";
 
 // *******************************************************************************
 // NgBootstrap
@@ -18,13 +19,13 @@ import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
 
 import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
-import { NotFoundComponent } from "./not-found/not-found.component";
 import { AppService } from "./providers/app.service";
 import { LayoutModule } from "./layout/layout.module";
 
 // *******************************************************************************
 // Pages
 
+import { NotFoundComponent } from "./not-found/not-found.component";
 import { LoginComponent } from "./user/login/login.component";
 import { ForgetPasswordComponent } from "./user/forget-password/forget-password.component";
 import { ProjectComponent } from "./project/project/project.component";
@@ -69,12 +70,17 @@ import { AddProjectComponent } from "./project/add-project/add-project.component
     FormsModule,
     ReactiveFormsModule,
     NgbModule,
-    // HttpClientModule,
 
     // App
     AppRoutingModule,
     LayoutModule,
     HttpClientModule,
+    BrowserAnimationsModule,
+    ToastrModule.forRoot({
+      preventDuplicates: true,
+      onActivateTick: false,
+      timeOut:30000
+    }),
   ],
 
   providers: [
