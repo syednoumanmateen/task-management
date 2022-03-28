@@ -12,14 +12,38 @@
     <sidenav-router-link icon="ion ion-ios-document" route="/tasks" [active]="isActive('/')">Tasks
     </sidenav-router-link>
 
-    <sidenav-router-link ngbDropdown ngbDropdownToggle icon="ion ion-ios-settings" class="hide-arrow">
-      user
-      <span ngbDropdownMenu>
-        <sidenav-router-link route="/add-user" class="dropdown-item">
-          Add</sidenav-router-link>
-        <sidenav-router-link route="/list-user" class="dropdown-item">
-          List</sidenav-router-link>
-      </span>
+    <sidenav-router-link icon="ion ion-ios-list" route="/list-user" [active]="isActive('/')">User
     </sidenav-router-link>
+
+    <sidenav-router-link icon="ion ion-ios-list" route="/features-list" [active]="isActive('/')">Feature
+    </sidenav-router-link>
+
+    <sidenav-router-link icon="ion ion-ios-list" route="/roles-list" [active]="isActive('/')">Role
+    </sidenav-router-link>
+
+    <!-- <sidenav-menu icon="ion ion-ios-albums" text="user">
+      <sidenav-router-link route="/add-user">
+        Add</sidenav-router-link>
+      <sidenav-router-link route="/list-user">
+        List</sidenav-router-link>
+    </sidenav-menu>
+
+    <sidenav-menu icon="ion ion-ios-albums" text="Feature">
+      <sidenav-router-link route="/add-feature" class="dropdown-item">
+        Add</sidenav-router-link>
+      <sidenav-router-link route="/view-feature" class="dropdown-item">
+        View</sidenav-router-link>
+      <sidenav-router-link route="/features-list" class="dropdown-item">
+        List</sidenav-router-link>
+    </sidenav-menu>
+
+    <sidenav-menu icon="ion ion-ios-albums" text="Role">
+      <sidenav-router-link route="/add-role" class="dropdown-item">
+        Add</sidenav-router-link>
+      <sidenav-router-link route="/view-role" class="dropdown-item">
+        View</sidenav-router-link>
+      <sidenav-router-link route="/roles-list" class="dropdown-item">
+        List</sidenav-router-link>
+    </sidenav-menu> -->
   </div>
 </sidenav>

@@ -27,6 +27,10 @@ export class UserService {
     return this.ajax.get("/user/get/" + id);
   }
 
+  editUser(url: any, params: any) {
+    return this.ajax.put("/user/update/" + url, params);
+  }
+
   deleteUser(id: any) {
     return this.ajax.delete("/user/remove/" + id);
   }
@@ -45,5 +49,45 @@ export class UserService {
 
   resetPassword(url: any, params: any) {
     return this.ajax.post("/user/reset-password/" + url, params);
+  }
+
+  addFeature(params: any) {
+    return this.ajax.post("/feature/add/", params);
+  }
+
+  featureList() {
+    return this.ajax.get("/feature/list/");
+  }
+
+  viewFeature(url: any) {
+    return this.ajax.get("/feature/get/" + url);
+  }
+
+  editFeature(url: any, params: any) {
+    return this.ajax.put("/feature/update/" + url, params);
+  }
+
+  deletFeature(url: any, params: any) {
+    return this.ajax.delete("/feature/remove/" + url, params);
+  }
+
+  addRole(params: any) {
+    return this.ajax.post("/role/add", params);
+  }
+
+  roleList() {
+    return this.ajax.get("/role/list");
+  }
+
+  viewRole(url: any) {
+    return this.ajax.get("/role/get/" + url);
+  }
+
+  editRole(url: any, params: any) {
+    return this.ajax.put("/role/update/" + url, params);
+  }
+
+  deletRole(url: any, params: any) {
+    return this.ajax.delete("/role/remove/" + url, params);
   }
 }

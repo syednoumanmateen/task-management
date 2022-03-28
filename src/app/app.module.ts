@@ -39,6 +39,12 @@ import { AddComponent } from "./user/add/add.component";
 import { ViewComponent } from "./user/view/view.component";
 import { ListComponent } from "./user/list/list.component";
 import { AddProjectComponent } from "./project/add-project/add-project.component";
+import { AddFeatureComponent } from './features/add-feature/add-feature.component';
+import { ViewFeatureComponent } from './features/view-feature/view-feature.component';
+import { FeaturesListComponent } from './features/features-list/features-list.component';
+import { AddRoleComponent } from './roles/add-role/add-role.component';
+import { ViewRoleComponent } from './roles/view-role/view-role.component';
+import { RolesListComponent } from './roles/roles-list/roles-list.component';
 
 // *******************************************************************************
 //
@@ -62,6 +68,12 @@ import { AddProjectComponent } from "./project/add-project/add-project.component
     ViewComponent,
     ListComponent,
     AddProjectComponent,
+    AddFeatureComponent,
+    ViewFeatureComponent,
+    FeaturesListComponent,
+    AddRoleComponent,
+    ViewRoleComponent,
+    RolesListComponent,
   ],
 
   imports: [
