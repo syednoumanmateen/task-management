@@ -13,10 +13,8 @@
 
         <div class="row">
             <div class="col">
-                Per page: &nbsp;
-                <select class="custom-select custom-select-sm d-inline-block w-auto">
-                    <option *ngFor="let limit of [10, 20, 30, 40, 50]">{{limit}}</option>
-                </select>
+                Total Of  Number Fetures: &nbsp;
+                <span>{{userData.length}}</span>
             </div>
             <div class="col">
                 <input type="text" class="form-control form-control-sm d-inline-block w-auto float-sm-right"
@@ -51,7 +49,7 @@
                     <th class="text-nowrap cursor-pointer">
                         Created On<i class="ion text-muted ml-2"></i>
                     </th>
-                    <th class="text-nowrap cursor-pointer">
+                    <th class="text-center cursor-pointer">
                         Actions<i class="ion text-muted ml-2"></i>
                     </th>
                 </tr>
@@ -65,8 +63,9 @@
                     <td class="align-middle">{{user.createdBy}}</td>
                     <td class="align-middle">{{user.createdOn|date:'dd/MM/yyyy'}}</td>
                     <td class="text-center text-nowrap align-middle">
+                        <a class="btn btn-danger btn-sm">Block</a>&nbsp;
                         <a class="btn btn-primary btn-sm" (click)="onView(user._id)">View</a>&nbsp;
-                        <a (click)="onDelete(user._id)" class="btn btn-danger btn-sm">Delete</a>
+                        <a (click)="onDelete(user._id)" class="btn btn-danger btn-sm">Remove</a>
                     </td>
                 </tr>
             </tbody>

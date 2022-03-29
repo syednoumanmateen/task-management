@@ -3,7 +3,6 @@ import { AppService } from "./../../providers/app.service";
 import { ActivatedRoute, Router } from "@angular/router";
 import { Component, OnInit } from "@angular/core";
 import { UserService } from "src/app/providers/user.service";
-import { NgbTypeahead } from "@ng-bootstrap/ng-bootstrap";
 
 @Component({
   selector: "app-view",

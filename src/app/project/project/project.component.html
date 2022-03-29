@@ -11,8 +11,8 @@
 
       <div class="card-body d-flex justify-content-between align-items-start pb-3">
         <div>
-          <a class="text-body text-big font-weight-semibold">title</a>
-          <span class="badge align-text-bottom ml-1">status.title</span>
+          <a class="text-body text-big font-weight-semibold">{{userData.nameOfProject}}({{userData.projectCode}})</a>
+          <span class="badge align-text-bottom ml-1">{{userData.status}}</span>
 
         </div>
 
@@ -20,8 +20,7 @@
             class="btn btn-default btn-sm icon-btn borderless rounded-pill md-btn-flat hide-arrow" ngbDropdownToggle><i
               class="ion ion-ios-more"></i></button>
           <div ngbDropdownMenu>
-            <a class="dropdown-item" (click)="onView()">View</a>
-            <a class="dropdown-item" href="javascript:void(0)">Edit</a>
+            <a class="dropdown-item" (click)="onView(userData._id)">View</a>
             <a class="dropdown-item" href="javascript:void(0)">Remove</a>
           </div>
         </div>
@@ -29,27 +28,30 @@
 
 
       <div class="card-body pb-3">
-        description
+        {{userData.projectDescription}}
+      </div>
+
+      <div class="card-body pb-3">
+        {{userData.handledBy.fName}}&nbsp;{{userData.handledBy.lName}}
       </div>
 
       <div class="card-body pt-0">
         <div class="row">
           <div class="col">
             <div class="text-muted small">Created</div>
-            <div class="font-weight-bold">date</div>
+            <div class="font-weight-bold">{{userData.createdOn |date:'dd/MM/yyyy'}}</div>
           </div>
           <div class="col">
             <div class="text-muted small">Deadline</div>
-            <div class="font-weight-bold">date</div>
+            <div class="font-weight-bold">{{userData.endDate|date:'dd/MM/yyyy'}}</div>
           </div>
         </div>
       </div>
       <hr class="m-0">
       <div class="card-body py-3">
         <div class="text-muted small mb-2">Team</div>
-        <div class="d-flex flex-wrap">
-          <a href="javascript:void(0)" class="d-block mr-1 mb-1"><img src="'assets/profile.png" alt=""
-              class="ui-w-30 rounded-circle"></a>
+        <div class="d-flex flex-wrap" *ngFor="let member of userData.members">
+          {{member.fName}}&nbsp;{{member.lName}}
         </div>
       </div>
 

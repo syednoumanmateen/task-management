@@ -1,6 +1,8 @@
+import { ToastrService } from "ngx-toastr";
 import { AppService } from "src/app/providers/app.service";
 import { Router } from "@angular/router";
 import { Component, OnInit } from "@angular/core";
+import { UserService } from "src/app/providers/user.service";
 
 @Component({
   selector: "app-project",
@@ -8,17 +10,40 @@ import { Component, OnInit } from "@angular/core";
   styleUrls: ["./project.component.css"],
 })
 export class ProjectComponent implements OnInit {
-  constructor(private router: Router, private appService: AppService) {
+  userData: any;
+  constructor(
+    private router: Router,
+    private appService: AppService,
+    private userService: UserService,
+    private toastr: ToastrService
+  ) {
     this.appService.pageTitle = "Project - Task Management";
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.getProject();
+  }
 
   onCreateProject() {
     this.router.navigate(["/projects/add-project"]);
   }
 
-  onView() {
-    this.router.navigate(["/projects/view-project"]);
+  onView(id: any) {
+    this.router.navigate(["/projects/view-project"], {
+      queryParams: {
+        id: id,
+      },
+    });
+  }
+
+  getProject() {
+    this.userService.projectList().subscribe(
+      (res: any) => {
+        this.userData = res[0];
+      },
+      (err: any) => {
+        this.toastr.error(err.error.message);
+      }
+    );
   }
 }

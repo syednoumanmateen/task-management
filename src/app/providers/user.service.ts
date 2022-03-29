@@ -90,4 +90,39 @@ export class UserService {
   deletRole(url: any) {
     return this.ajax.delete("/role/remove/" + url);
   }
+
+  addProject(params: any) {
+    return this.ajax.post("/project/add/", params);
+  }
+
+  projectList() {
+    return this.ajax.get("/project/list/");
+  }
+
+  viewProject(id: any) {
+    return this.ajax.get("/project/get/" + id);
+  }
+
+  editProject(id: any) {
+    return this.ajax.get("/project/update/" + id);
+  }
+
+  deleteProject(id: any) {
+    return this.ajax.delete("/project/remove/" + id);
+  }
+
+  removeProject(id: any) {
+    return this.ajax.put("/project/remove/" + id);
+  }
+  // filterRole(id: any) {
+  //   return this.ajax.get("/user/filtered-list?" + "role" + "=" + id);
+  // }
+
+  // filterStatus(id: any) {
+  //   return this.ajax.get("/user/filtered-list?" + "status" + "=" + id);
+  // }
+
+  // filterDate(id: any) {
+  //   return this.ajax.get("/user/filtered-list?" + "date" + "=" + id);
+  // }
 }

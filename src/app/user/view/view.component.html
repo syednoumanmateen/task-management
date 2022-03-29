@@ -73,17 +73,10 @@
     </div>
 </div>
 
-<div class="card">
+<div class="card mt-2">
     <div class="card-body">
         <table class="table user-view-table m-0">
             <tbody>
-                <tr>
-                    <td>Verified:</td>
-                    <td>
-                        <span><span class="ion ion-md-checkmark text-primary"></span>&nbsp; Yes</span>
-                        <span><span class="ion ion-md-close text-light"></span>&nbsp; No</span>
-                    </td>
-                </tr>
                 <tr>
                     <td>Role:</td>
                     <td>
@@ -93,9 +86,9 @@
                 <tr>
                     <td>Status:</td>
                     <td>
-                        <span class="badge badge-outline-success">Active</span>
-                        <span class="badge badge-outline-danger">Banned</span>
-                        <span class="badge badge-outline-default">Deleted</span>
+                        <span class="badge badge-outline-success" *ngIf="userData.status=='Active'">Active</span>
+                        <span class="badge badge-outline-default" *ngIf="userData.status=='Created'">Created</span>
+                        <span class="badge badge-outline-danger" *ngIf="userData.status=='Blocked'">Blocked</span>
                     </td>
                 </tr>
             </tbody>

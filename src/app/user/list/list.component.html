@@ -6,34 +6,32 @@
 </h4>
 
 <!-- Filters -->
-<!-- <div class="ui-bordered px-4 pt-4 mb-4">
-    <div class="form-row align-items-center">
+<div class="ui-bordered px-4 pt-4 mb-4">
+    <form class="form-row align-items-center" [formGroup]="formGroup">
         <div class="col-md mb-4">
-            <label class="form-label">Verified</label>
-            <select class="custom-select">
-                <option *ngFor="let item of ['Any', 'Yes', 'No']" [value]="item">{{item}}</option>
-            </select>
+            <label class="form-label">Created On</label>
+            <input formControlName="created" type="date">
         </div>
         <div class="col-md mb-4">
             <label class="form-label">Role</label>
-            <select class="custom-select">
-                <option *ngFor="let item of ['Any', 'User', 'employee', 'Admin']" [value]="item">{{item}}
+            <select class="custom-select" formControlName="role">
+                <option *ngFor="let item of ['Any', 'User', 'Developer','Tester', 'Admin']" [value]="item">{{item}}
                 </option>
             </select>
         </div>
         <div class="col-md mb-4">
             <label class="form-label">Status</label>
-            <select class="custom-select">
-                <option *ngFor="let item of ['Any', 'Active', 'Banned', 'Deleted']" [value]="item">{{item}}</option>
+            <select class="custom-select" formControlName="status">
+                <option *ngFor="let item of ['Any', 'Active', 'Created', 'Blocked']" [value]="item">{{item}}</option>
             </select>
         </div>
 
         <div class="col-md col-xl-2 mb-4">
             <label class="form-label d-none d-md-block">&nbsp;</label>
-            <button type="button" class="btn btn-secondary btn-block">Show</button>
+            <button type="button" class="btn btn-secondary btn-block" (click)="onFilter()">Filter</button>
         </div>
-    </div>
-</div> -->
+    </form>
+</div>
 <!-- / Filters -->
 
 <div class="card">
@@ -43,10 +41,8 @@
 
         <div class="row">
             <div class="col">
-                Per page: &nbsp;
-                <select class="custom-select custom-select-sm d-inline-block w-auto">
-                    <option *ngFor="let limit of [10, 20, 30, 40, 50]">{{limit}}</option>
-                </select>
+                Total Number Of Users: &nbsp;
+                <span>{{userData.length}}</span>
             </div>
             <div class="col">
                 <input type="text" class="form-control form-control-sm d-inline-block w-auto float-sm-right"
@@ -67,7 +63,7 @@
                         ID<i class="ion text-muted ml-2"></i>
                     </th>
                     <th class="text-nowrap cursor-pointer">
-                        USer Name<i class="ion text-muted ml-2"></i>
+                        User Name<i class="ion text-muted ml-2"></i>
                     </th>
                     <th class="text-nowrap cursor-pointer">
                         Email<i class="ion text-muted ml-2"></i>
@@ -116,8 +112,9 @@
                         <span *ngIf="user.status=='Created'" class="badge badge-outline-default">Created</span>
                     </td>
                     <td class="text-center text-nowrap">
+                        <a class="btn btn-danger btn-sm" (click)="onBlock(user._id)">block</a>&nbsp;
                         <a class="btn btn-primary btn-sm" (click)="onView(user._id)">View</a>&nbsp;
-                        <a (click)="onDelete(user._id)" class="btn btn-danger btn-sm">Delete</a>
+                        <a (click)="onDelete(user._id)" class="btn btn-danger btn-sm">Remove</a>
                     </td>
                 </tr>
             </tbody>
@@ -146,3 +143,7 @@
   [pageSize]="perPage"
   [(page)]="currentPage"
   (pageChange)="update()" -->
+
+<ng-template #BlockMsg>
+
+</ng-template>

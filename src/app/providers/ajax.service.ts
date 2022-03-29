@@ -11,6 +11,8 @@ export class AjaxService {
   }
 
   get(url: any, params?: any) {
+    console.log("param === ", params);
+
     return this.http.get<any>(this.baseUrl + url, params);
   }
 

@@ -1,17 +1,18 @@
 <h4 class="py-3 mb-4">
     <ol class="breadcrumb font-weight-bold m-0">
         <li class="breadcrumb-item"><a href="javascript:void(0)">Projects</a></li>
-        <li class="breadcrumb-item active">title</li>
+        <li class="breadcrumb-item active">{{userData.nameOfProject}}</li>
     </ol>
 </h4>
 
 <!-- Header -->
 <div class="container-m-nx border-right-0 border-left-0 ui-bordered mb-4">
     <div class="row no-gutters row-bordered row-border-light">
-        <div class="col-md-3">
+        <div class="col-md-12">
             <div class="container-p-x py-4">
                 <div class="text-muted small">Status</div>
-                <strong class="text-big">status.title</strong>
+                <strong class="text-big">{{userData.status}}</strong>
+                <a class="btn btn-primary btn-sm float-right" (click)="onEdit(userData._id)">Edit</a>
             </div>
         </div>
     </div>
@@ -24,12 +25,12 @@
         <!-- Description -->
         <div class="card mb-4">
             <h6 class="card-header">Description</h6>
-            <div class="card-body"></div>
+            <div class="card-body">{{userData.projectDescription}}</div>
         </div>
         <!-- / Description -->
 
         <!-- Attached files -->
-        <div class="card mb-4">
+        <!-- <div class="card mb-4">
             <h6 class="card-header">Attached files</h6>
             <div class="card-body p-3">
                 <div class="row no-gutters">
@@ -53,7 +54,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> -->
         <!-- / Attached files -->
 
         <div class="nav-tabs-top mb-4">
@@ -183,24 +184,20 @@
             <h6 class="card-header">Project details</h6>
             <ul class="list-group list-group-flush">
                 <li class="list-group-item d-flex justify-content-between align-items-center">
-                    <div class="text-muted">Client</div>
-                    <div><a href="javascript:void(0)">client.name</a></div>
+                    <div class="text-muted">ID</div>
+                    <div>{{userData.projectCode}}</div>
                 </li>
                 <li class="list-group-item d-flex justify-content-between align-items-center">
                     <div class="text-muted">Created by</div>
-                    <div><a href="javascript:void(0)">createdBy.name</a></div>
+                    <div>{{userData.createdBy}}</div>
                 </li>
                 <li class="list-group-item d-flex justify-content-between align-items-center">
                     <div class="text-muted">Created at</div>
-                    <div>created date</div>
-                </li>
-                <li class="list-group-item d-flex justify-content-between align-items-center">
-                    <div class="text-muted">Last update</div>
-                    <div>lastUpdate date</div>
+                    <div>{{userData.createdOn|date:'dd/MM/yyyy'}}</div>
                 </li>
                 <li class="list-group-item d-flex justify-content-between align-items-center">
                     <div class="text-muted">Deadline</div>
-                    <div><strong>deadline date</strong></div>
+                    <div>{{userData.endDate|date:'dd/MM/yyyy'}}</div>
                 </li>
                 <li class="list-group-item d-flex justify-content-between align-items-center">
                     <div class="text-muted">Priority</div>
@@ -217,24 +214,6 @@
                         </div>
                     </div>
                 </li>
-                <li class="list-group-item d-flex justify-content-between align-items-center">
-                    <div class="text-muted">Hour rate</div>
-                    <div>$0/h</div>
-                </li>
-                <li class="list-group-item d-flex justify-content-between align-items-center">
-                    <div class="text-muted">Total hours</div>
-                    <div>0hours</div>
-                </li>
-                <li class="list-group-item d-flex justify-content-between align-items-center">
-                    <div class="text-muted">Total cost</div>
-                    <div><strong>$8998</strong></div>
-                </li>
-                <li class="list-group-item">
-                    <div class="text-muted small">Tags</div>
-                    <div class="d-flex flex-wrap">
-                        <div class="badge badge-default mt-1 mr-1">tag</div>
-                    </div>
-                </li>
             </ul>
         </div>
         <!-- / Project details -->
@@ -243,20 +222,13 @@
         <div class="card mb-4">
             <h6 class="card-header with-elements">
                 <span class="card-header-title">Leaders</span>
-                <div class="card-header-elements ml-auto">
-                    <button type="button" class="btn btn-xs btn-outline-primary">
-                        <span class="ion ion-md-add"></span> Add
-                    </button>
-                </div>
             </h6>
             <ul class="list-group list-group-flush">
                 <div class="list-group-item">
                     <div class="media align-items-center">
-                        <img src="assets/profile.png" class="d-block ui-w-30 rounded-circle" alt="">
                         <div class="media-body px-2">
-                            <a href="javascript:void(0)" class="text-body">leader.name</a>
+                            <a class="text-body">{{userData.handledBy.fName}}&nbsp;{{userData.handledBy.lName}}</a>
                         </div>
-                        <a href="javascript:void(0)" class="d-block text-light text-large font-weight-light">&times;</a>
                     </div>
                 </div>
             </ul>
@@ -267,20 +239,13 @@
         <div class="card mb-4">
             <h6 class="card-header with-elements">
                 <span class="card-header-title">Participants</span>
-                <div class="card-header-elements ml-auto">
-                    <button type="button" class="btn btn-xs btn-outline-primary">
-                        <span class="ion ion-md-add"></span> Add
-                    </button>
-                </div>
             </h6>
             <ul class="list-group list-group-flush">
-                <div class="list-group-item">
+                <div class="list-group-item" *ngFor="let member of userData.members">
                     <div class="media align-items-center">
-                        <img src="assets/profile.png" class="d-block ui-w-30 rounded-circle" alt="">
                         <div class="media-body px-2">
-                            <a href="javascript:void(0)" class="text-body">member.name</a>
+                            <a class="text-body">{{member.fName}}&nbsp;{{member.lName}}</a>
                         </div>
-                        <a href="javascript:void(0)" class="d-block text-light text-large font-weight-light">&times;</a>
                     </div>
                 </div>
             </ul>

@@ -1,8 +1,8 @@
-<h4 class="font-weight-bold py-3 mb-4" >
-    Edit user <span class="text-muted">#{{userData.userCode</span>
+<h4 class="font-weight-bold py-3 mb-4">
+    Edit Role <span class="text-muted">#{{userData.userCode</span>
 </h4>
-<h4 class="font-weight-bold py-3 mb-4" >
-    Add user
+<h4 class="font-weight-bold py-3 mb-4">
+    Add Role
 </h4>
 
 <form action="" [formGroup]="formGroup">
@@ -11,75 +11,8 @@
 
             <div class="form-row">
                 <div class="form-group col-md-6">
-                    <label class="form-label">First Name<span class="text-danger">*</span></label>
-                    <input type="text" formControlName="fname" class="form-control">
-                </div>
-                <div class="form-group col-md-6">
-                    <label class="form-label">Last Name<span class="text-danger">*</span></label>
-                    <input type="text" formControlName="lname" class="form-control">
-                </div>
-            </div>
-            <div class="form-row">
-                <div class="form-group col-md-6">
-                    <label class="form-label">E-mail<span class="text-danger">*</span></label>
-                    <input type="email" formControlName="email" class="form-control mb-1">
-                </div>
-                <div class="form-group col-md-6">
-                    <label class="form-label">Phone<span class="text-danger">*</span></label>
-                    <input type="mobile" formControlName="mobileno" class="form-control">
-                </div>
-            </div>
-        </div>
-
-    </div>
-
-    <div class="card mb-2">
-        <div class="card-body pb-2">
-
-            <h6 class="mb-4">Personal info</h6>
-            <div class="form-row">
-                <div class="form-group col-md-6">
-                    <label class="form-label">Date Of Birth</label>
-                    <input type="date" formControlName="dob" class="form-control">
-                </div>
-            </div>
-            <div class="form-group mt-4">
-                <h6 class="mb-4">Address</h6>
-                <div class="form-row">
-                    <div class="form-group col-md-6">
-                        <label class="form-label">Door No<span class="text-danger">*</span>:</label>
-                        <input type="text" formControlName="dno" class="form-control">
-                    </div>
-                    <div class="form-group col-md-6">
-                        <label class="form-label">Street<span class="text-danger">*</span>:</label>
-                        <input type="text" formControlName="street" class="form-control">
-                    </div>
-                </div>
-                <div class="form-row">
-                    <div class="form-group col-md-6 ">
-                        <label class="form-label">Area<span class="text-danger">*</span>:</label>
-                        <input type="text" formControlName="area" class="form-control mb-1">
-                    </div>
-                    <div class="form-group col-md-6">
-                        <label class="form-label">Landmark<span class="text-danger">*</span>:</label>
-                        <input type="text" formControlName="landmark" class="form-control">
-                    </div>
-                </div>
-                <div class="form-row">
-                    <div class="form-group col-md-6">
-                        <label class="form-label">City<span class="text-danger">*</span>:</label>
-                        <input type="text" formControlName="city" class="form-control">
-                    </div>
-                    <div class="form-group col-md-6">
-                        <label class="form-label">State<span class="text-danger">*</span>:</label>
-                        <input type="text" formControlName="state" class="form-control mb-1">
-                    </div>
-                </div>
-                <div class="form-row">
-                    <div class="form-group col-md-6">
-                        <label class="form-label">Pincode<span class="text-danger">*</span>:</label>
-                        <input type="text" formControlName="pincode" class="form-control mb-1">
-                    </div>
+                    <label class="form-label">Role Name<span class="text-danger">*</span></label>
+                    <input type="text" formControlName="name" class="form-control">
                 </div>
             </div>
         </div>
@@ -87,25 +20,76 @@
 
     <div class="card mb-2">
         <div class="card-body pb-2">
-            <div class="form-row">
-                <div class="form-group col-md-6">
-                    <label class="form-label">Role<span class="text-danger">*</span></label>
-                    <select class="custom-select" formControlName="role">
-                        <option *ngFor="let i of [[1, 'Developer'], [2, 'Tester'], [3, 'Admin']]" [value]="i[1]">
-                            {{i[1]}}
-                        </option>
-                    </select>
-                </div>
-            </div>
-        </div>
-    </div>
 
-    <div class="card mb-2">
-        <div class="card-body">
-            <div class="media align-items-center">
-                <div class="media-body ml-3">
-                    <label class="form-label d-block mb-2">Profile Picture</label>
-                    <input type="file">
+            <div class="card overflow-hidden">
+                <div class="row no-gutters row-bordered row-border-light">
+                    <div class="col-md-3 pt-0">
+                        <div class="list-group list-group-flush account-settings-links">
+                            <button type="button" class="list-group-item list-group-item-action"
+                                (click)="curTab = 'all'">All</button>
+                            <button type="button" class="list-group-item list-group-item-action"
+                                (click)="curTab = 'features'">Features</button>
+                            <button type="button" class="list-group-item list-group-item-action"
+                                (click)="curTab = 'roles'">Roles</button>
+                            <button type="button" class="list-group-item list-group-item-action"
+                                (click)="curTab = 'projects'">Projects</button>
+                            <button type="button" class="list-group-item list-group-item-action"
+                                (click)="curTab = 'users'">Users</button>
+                            <button type="button" class="list-group-item list-group-item-action"
+                                (click)="curTab = 'tasks'">Task</button>
+                        </div>
+                    </div>
+                    <div class="col-md-9" *ngIf="curTab === 'all'">
+                        <label class="ui-todo-item custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input">
+                            <span class="custom-control-label">Id</span>-
+                            <span class="custom-control-label">feature Name</span>-
+                            <span class="custom-control-label">module Name</span>
+                        </label>
+                    </div>
+
+
+                    <div class="col-md-9" *ngIf="curTab === 'features'">
+                        <label class="ui-todo-item custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input">
+                            <span class="custom-control-label">Id</span>-
+                            <span class="custom-control-label">feature Name</span>-
+                            <span class="custom-control-label">module Name</span>
+                        </label>
+                    </div>
+                    <div class="col-md-9" *ngIf="curTab === 'roles'">
+                        <label class="ui-todo-item custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input">
+                            <span class="custom-control-label">Id</span>-
+                            <span class="custom-control-label">feature Name</span>-
+                            <span class="custom-control-label">module Name</span>
+                        </label>
+                    </div>
+                    <div class="col-md-9" *ngIf="curTab === 'projects'">
+                        <label class="ui-todo-item custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input">
+                            <span class="custom-control-label">Id</span>-
+                            <span class="custom-control-label">feature Name</span>-
+                            <span class="custom-control-label">module Name</span>
+                        </label>
+                    </div>
+                    <div class="col-md-9" *ngIf="curTab === 'users'">
+                        <label class="ui-todo-item custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input">
+                            <span class="custom-control-label">Id</span>-
+                            <span class="custom-control-label">feature Name</span>-
+                            <span class="custom-control-label">module Name</span>
+                        </label>
+                    </div>
+                    <div class="col-md-9" *ngIf="curTab === 'tasks'">
+                        <label class="ui-todo-item custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input">
+                            <span class="custom-control-label">Id</span>-
+                            <span class="custom-control-label">feature Name</span>-
+                            <span class="custom-control-label">module Name</span>
+                        </label>
+                    </div>
+
                 </div>
             </div>
         </div>
@@ -114,8 +98,8 @@
 
 <div class="text-right mt-3">
     <button type="button" class="btn btn-primary" (click)="onApiCall()">
-        <span >
-            Add</span><span >Edit</span>
+        <span>
+            Add</span><span>Edit</span>
     </button>&nbsp;
     <button type="button" class="btn btn-default" (click)="onCancel()">Cancel</button>
 </div>

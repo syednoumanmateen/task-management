@@ -1,4 +1,4 @@
-import { FormGroup } from "@angular/forms";
+import { FormControl, FormGroup } from "@angular/forms";
 import { AppService } from "src/app/providers/app.service";
 import { Component, OnInit } from "@angular/core";
 
@@ -9,6 +9,7 @@ import { Component, OnInit } from "@angular/core";
 })
 export class AddRoleComponent implements OnInit {
   formGroup: FormGroup;
+  curTab = "all";
   constructor(private appService: AppService) {
     this.appService.pageTitle = "addrole - Task Management";
     this.formGroup = this.getFormGroup();
@@ -17,15 +18,17 @@ export class AddRoleComponent implements OnInit {
   ngOnInit(): void {}
 
   getFormGroup() {
-    let fg = new FormGroup({});
+    let fg = new FormGroup({
+      name: new FormControl(""),
+    });
     return fg;
   }
 
   validateForm() {
     let fg = this.formGroup.value;
     let msg = "";
-    if (fg) {
-      msg = "";
+    if (!fg.name) {
+      msg = "Enter the Role";
     }
     return {
       msg: msg,
