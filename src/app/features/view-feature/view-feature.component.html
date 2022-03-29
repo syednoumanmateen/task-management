@@ -1,1 +1,37 @@
-<p>view-feature works!</p>
+<div class="card">
+    <div class="row no-gutters row-bordered">
+        <div class="d-flex col-md align-items-center">
+            <div class="card-body d-block text-body">
+                <div class="text-muted small line-height-1">Feature</div>
+                <div class="text-xlarge">{{userData.featureName}}</div>
+                <div class="text-xlarge">{{userData.featureCode}}</div>
+                <a class="btn btn-primary btn-sm" (click)="onEdit(userData._id)">Edit</a>
+            </div>
+        </div>
+
+    </div>
+    <div class="card-body">
+
+        <table class="table user-view-table m-0">
+            <tbody>
+                <tr>
+                    <td>Name:</td>
+                    <td>{{userData.createdBy}}</td>
+                </tr>
+                <tr>
+                    <td>description:</td>
+                    <td>{{userData.decription}}</td>
+                </tr>
+                <tr>
+                    <td>fetureName:</td>
+                    <td>{{userData.featureName}}</td>
+                </tr>
+                <tr>
+                    <td>ModuleNAme:</td>
+                    <td>{{userData.moduleName}}</td>
+                </tr>
+            </tbody>
+        </table>
+
+    </div>
+</div>

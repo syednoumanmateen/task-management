@@ -1,4 +1,5 @@
-import { AppService } from 'src/app/providers/app.service';
+import { Router } from "@angular/router";
+import { AppService } from "src/app/providers/app.service";
 import { Component, OnInit } from "@angular/core";
 
 @Component({
@@ -8,11 +9,13 @@ import { Component, OnInit } from "@angular/core";
 })
 export class TasksComponent implements OnInit {
   curTab = "project";
-  constructor(
-    private appService:AppService
-  ) {
+  constructor(private appService: AppService, private router: Router) {
     this.appService.pageTitle = "tasks - Task Management";
   }
 
   ngOnInit(): void {}
+
+  onAddTask() {
+    this.router.navigate(["/tasks/add-task"]);
+  }
 }

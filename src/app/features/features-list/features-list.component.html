@@ -48,6 +48,12 @@
                     <th class="text-nowrap cursor-pointer">
                         createdBy<i class="ion text-muted ml-2"></i>
                     </th>
+                    <th class="text-nowrap cursor-pointer">
+                        Created On<i class="ion text-muted ml-2"></i>
+                    </th>
+                    <th class="text-nowrap cursor-pointer">
+                        Actions<i class="ion text-muted ml-2"></i>
+                    </th>
                 </tr>
             </thead>
             <tbody>
@@ -57,6 +63,7 @@
                     <td class="align-middle">{{user.moduleName}}</td>
                     <td class="align-middle">{{user.decription}}</td>
                     <td class="align-middle">{{user.createdBy}}</td>
+                    <td class="align-middle">{{user.createdOn|date:'dd/MM/yyyy'}}</td>
                     <td class="text-center text-nowrap align-middle">
                         <a class="btn btn-primary btn-sm" (click)="onView(user._id)">View</a>&nbsp;
                         <a (click)="onDelete(user._id)" class="btn btn-danger btn-sm">Delete</a>

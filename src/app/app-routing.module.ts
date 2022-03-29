@@ -1,3 +1,4 @@
+import { AddTaskComponent } from "./project/add-task/add-task.component";
 import { ViewRoleComponent } from "./roles/view-role/view-role.component";
 
 import { SettingsComponent } from "./user/settings/settings.component";
@@ -40,7 +41,6 @@ const routes: Routes = [
   {
     path: "dashboard",
     component: Layout1Component,
-    // canActivate: [AuthGuardService],
     children: [{ path: "", component: DashboardComponent }],
   },
   {
@@ -54,84 +54,169 @@ const routes: Routes = [
     children: [{ path: "", component: ProfileComponent }],
   },
   {
-    path: "settings",
+    path: "change-password",
     component: Layout1Component,
     children: [{ path: "", component: SettingsComponent }],
   },
   {
-    path: "forget-password",
+    path: "forgot-password",
     component: LayoutBlankComponent,
     children: [{ path: "", component: ForgetPasswordComponent }],
   },
   {
-    path: "project",
+    path: "projects",
     component: Layout1Component,
-    children: [{ path: "", component: ProjectComponent }],
+    children: [
+      {
+        path: "",
+        component: ProjectComponent,
+      },
+      {
+        path: "add-project",
+        component: AddProjectComponent,
+      },
+      {
+        path: "view-project",
+        component: ProjectDetailsComponent,
+      },
+    ],
   },
-  {
-    path: "project-details",
-    component: Layout1Component,
-    children: [{ path: "", component: ProjectDetailsComponent }],
-  },
-  {
-    path: "add-project",
-    component: Layout1Component,
-    children: [{ path: "", component: AddProjectComponent }],
-  },
+  // {
+  //   path: "project",
+  //   component: Layout1Component,
+  //   children: [{ path: "", component: ProjectComponent }],
+  // },
+  // {
+  //   path: "project-details",
+  //   component: Layout1Component,
+  //   children: [{ path: "", component: ProjectDetailsComponent }],
+  // },
+  // {
+  //   path: "add-project",
+  //   component: Layout1Component,
+  //   children: [{ path: "", component: AddProjectComponent }],
+  // },
   {
     path: "tasks",
     component: Layout1Component,
-    children: [{ path: "", component: TasksComponent }],
+    children: [
+      {
+        path: "",
+        component: TasksComponent,
+      },
+      {
+        path: "add-task",
+        component: AddTaskComponent,
+      },
+      {
+        path: "view-task",
+        component: TasksViewComponent,
+      },
+    ],
+  },
+  // {
+  //   path: "tasks",
+  //   component: Layout1Component,
+  //   children: [{ path: "", component: TasksComponent }],
+  // },
+  // {
+  //   path: "tasks-view",
+  //   component: Layout1Component,
+  //   children: [{ path: "", component: TasksViewComponent }],
+  // },
+  // {
+  //   path: "add-user",
+  //   component: Layout1Component,
+  //   children: [{ path: "", component: AddComponent }],
+  // },
+  // {
+  //   path: "view-user",
+  //   component: Layout1Component,
+  //   children: [{ path: "", component: ViewComponent }],
+  // },
+  {
+    path: "users",
+    component: Layout1Component,
+    children: [
+      {
+        path: "",
+        component: ListComponent,
+      },
+      {
+        path: "add-user",
+        component: AddComponent,
+      },
+      {
+        path: "view-user",
+        component: ViewComponent,
+      },
+    ],
   },
   {
-    path: "tasks-view",
+    path: "features",
     component: Layout1Component,
-    children: [{ path: "", component: TasksViewComponent }],
+    children: [
+      {
+        path: "",
+        component: FeaturesListComponent,
+      },
+      {
+        path: "add-feature",
+        component: AddFeatureComponent,
+      },
+      {
+        path: "view-feature",
+        component: ViewFeatureComponent,
+      },
+    ],
   },
+  // {
+  //   path: "add-feature",
+  //   component: Layout1Component,
+  //   children: [{ path: "", component: AddFeatureComponent }],
+  // },
+  // {
+  //   path: "view-feature",
+  //   component: Layout1Component,
+  //   children: [{ path: "", component: ViewFeatureComponent }],
+  // },
+  // {
+  //   path: "features-list",
+  //   component: Layout1Component,
+  //   children: [{ path: "", component: FeaturesListComponent }],
+  // },
+  // {
+  //   path: "add-role",
+  //   component: Layout1Component,
+  //   children: [{ path: "", component: AddRoleComponent }],
+  // },
+  // {
+  //   path: "view-role",
+  //   component: Layout1Component,
+  //   children: [{ path: "", component: ViewRoleComponent }],
+  // },
+  // {
+  //   path: "roles-list",
+  //   component: Layout1Component,
+  //   children: [{ path: "", component: RolesListComponent }],
+  // },
   {
-    path: "add-user",
+    path: "roles",
     component: Layout1Component,
-    children: [{ path: "", component: AddComponent }],
-  },
-  {
-    path: "view-user",
-    component: Layout1Component,
-    children: [{ path: "", component: ViewComponent }],
-  },
-  {
-    path: "list-user",
-    component: Layout1Component,
-    children: [{ path: "", component: ListComponent }],
-  },
-  {
-    path: "add-feature",
-    component: Layout1Component,
-    children: [{ path: "", component: AddFeatureComponent }],
-  },
-  {
-    path: "view-feature",
-    component: Layout1Component,
-    children: [{ path: "", component: ViewFeatureComponent }],
-  },
-  {
-    path: "features-list",
-    component: Layout1Component,
-    children: [{ path: "", component: FeaturesListComponent }],
-  },
-  {
-    path: "add-role",
-    component: Layout1Component,
-    children: [{ path: "", component: AddRoleComponent }],
-  },
-  {
-    path: "view-role",
-    component: Layout1Component,
-    children: [{ path: "", component: ViewRoleComponent }],
-  },
-  {
-    path: "roles-list",
-    component: Layout1Component,
-    children: [{ path: "", component: RolesListComponent }],
+    children: [
+      {
+        path: "",
+        component: RolesListComponent,
+      },
+      {
+        path: "add-role",
+        component: AddRoleComponent,
+      },
+      {
+        path: "view-role",
+        component: ViewRoleComponent,
+      },
+    ],
   },
 
   // 404 Not Found page

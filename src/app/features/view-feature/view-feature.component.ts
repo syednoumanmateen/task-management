@@ -1,6 +1,6 @@
 import { ToastrService } from "ngx-toastr";
 import { AppService } from "src/app/providers/app.service";
-import { ActivatedRoute } from "@angular/router";
+import { ActivatedRoute, Router } from "@angular/router";
 import { Component, OnInit } from "@angular/core";
 import { UserService } from "src/app/providers/user.service";
 
@@ -11,11 +11,13 @@ import { UserService } from "src/app/providers/user.service";
 })
 export class ViewFeatureComponent implements OnInit {
   urlParams: any;
+  userData: any;
   constructor(
     private activatedRoute: ActivatedRoute,
     private userService: UserService,
     private appService: AppService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private router: Router
   ) {
     this.appService.pageTitle = "viewfeature - Task Management";
   }
@@ -29,10 +31,21 @@ export class ViewFeatureComponent implements OnInit {
 
   getfeatures() {
     this.userService.viewFeature(this.urlParams.id).subscribe(
-      (res: any) => {},
+      (res: any) => {
+        this.userData = res || {};
+      },
       (err: any) => {
-        this.toastr.error(err.message);
+        this.router.navigate(["**"]);
+        this.toastr.error(err.error.message);
       }
     );
+  }
+
+  onEdit(id: any) {
+    this.router.navigate(["/features/add-feature"], {
+      queryParams: {
+        id: id,
+      },
+    });
   }
 }

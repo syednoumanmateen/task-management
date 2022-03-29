@@ -28,13 +28,13 @@ export class ListComponent implements OnInit {
   }
 
   onAddUser() {
-    this.router.navigate(["/add-user"]);
+    this.router.navigate(["/users/add-user"]);
   }
 
   userList() {
     this.userService.listUser().subscribe(
       (res: any) => {
-        this.userData = res;
+        this.userData = res||{};
       },
       (err: any) => {
         this.toastr.error(err.message);
@@ -43,7 +43,7 @@ export class ListComponent implements OnInit {
   }
 
   onView(id: any) {
-    this.router.navigate(["./view-user"], {
+    this.router.navigate(["/users/view-user"], {
       queryParams: {
         id: id,
       },

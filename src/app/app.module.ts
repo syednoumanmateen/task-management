@@ -45,6 +45,7 @@ import { FeaturesListComponent } from './features/features-list/features-list.co
 import { AddRoleComponent } from './roles/add-role/add-role.component';
 import { ViewRoleComponent } from './roles/view-role/view-role.component';
 import { RolesListComponent } from './roles/roles-list/roles-list.component';
+import { AddTaskComponent } from './project/add-task/add-task.component';
 
 // *******************************************************************************
 //
@@ -74,6 +75,7 @@ import { RolesListComponent } from './roles/roles-list/roles-list.component';
     AddRoleComponent,
     ViewRoleComponent,
     RolesListComponent,
+    AddTaskComponent,
   ],
 
   imports: [
@@ -91,7 +93,7 @@ import { RolesListComponent } from './roles/roles-list/roles-list.component';
     ToastrModule.forRoot({
       preventDuplicates: true,
       onActivateTick: false,
-      timeOut:30000
+      timeOut:1000
     }),
   ],
 

@@ -129,7 +129,7 @@ export class ForgetPasswordComponent implements OnInit {
       this.toastr.error(v.msg);
     } else {
       let p = {
-        email: this.formGroup.value.email,
+        email: this.formGroup.value.email||'',
       };
       this.userService.forgetPassword(p).subscribe(
         (res: any) => {
@@ -148,7 +148,7 @@ export class ForgetPasswordComponent implements OnInit {
       this.toastr.error(v.msg);
     } else {
       let p = {
-        code: this.otpGroup.value.otp,
+        code: this.otpGroup.value.otp||'',
       };
 
       this.userService.OTPValidation(p).subscribe(
@@ -173,7 +173,7 @@ export class ForgetPasswordComponent implements OnInit {
       this.toastr.error(v.msg);
     } else {
       let p = {
-        password: f.newpsw,
+        password: f.newpsw||'',
       };
       this.userService.resetPassword(this.formGroup.value.email, p).subscribe(
         (res: any) => {

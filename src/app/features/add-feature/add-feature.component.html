@@ -1,1 +1,44 @@
-<p>add-feature works!</p>
+<h4 class="font-weight-bold py-3 mb-4" *ngIf="userData">
+    Edit user <span class="text-muted">#{{userData.featureCode}}</span>
+</h4>
+<h4 class="font-weight-bold py-3 mb-4" *ngIf="!userData">
+    Add user
+</h4>
+
+<form action="" [formGroup]="formGroup">
+    <div class="card mb-2">
+        <div class="card-body pb-2">
+
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label class="form-label">Featreu Name<span class="text-danger">*</span></label>
+                    <input type="text" formControlName="name" class="form-control">
+                </div>
+                <div class="form-group col-md-6">
+                    <label class="form-label">Module Name</label>
+                    <select formControlName="module" class="custom-select">
+                        <option value="user">User</option>
+                        <option value="feature">Feature</option>
+                        <option value="role">Role</option>
+                        <option value="project">Project</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label class="form-label">Description<span class="text-danger">*</span></label>
+                    <textarea name="description" class="form-control" formControlName="description"></textarea>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</form>
+
+<div class="text-right mt-3">
+    <button type="button" class="btn btn-primary" (click)="onApiCall()">
+        <span *ngIf="!userData">
+            Add</span><span *ngIf="userData">Edit</span>
+    </button>&nbsp;
+    <button type="button" class="btn btn-default" (click)="onCancel()">Cancel</button>
+</div>

@@ -33,16 +33,17 @@ export class ViewComponent implements OnInit {
   userView() {
     this.userService.viewUser(this.urlParams.id).subscribe(
       (res: any) => {
-        this.userData = res.userData;
+        this.userData = res.userData||{};
       },
       (err: any) => {
-        this.toastr.error(err.meassage);
+        this.router.navigate(["**"]);
+        this.toastr.error(err.error.message);
       }
     );
   }
 
   onEdit() {
-    this.router.navigate(["/add-user"], {
+    this.router.navigate(["/users/add-user"], {
       queryParams: {
         id: this.urlParams.id,
       },

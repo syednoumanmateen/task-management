@@ -1,4 +1,4 @@
-import { AppService } from 'src/app/providers/app.service';
+import { AppService } from "src/app/providers/app.service";
 import { DataStorageService } from "src/app/providers/data-storage.service";
 import { ToastrService } from "ngx-toastr";
 import { Router } from "@angular/router";
@@ -17,7 +17,7 @@ export class RolesListComponent implements OnInit {
     private userService: UserService,
     private toastr: ToastrService,
     private storage: DataStorageService,
-    private appService:AppService
+    private appService: AppService
   ) {
     this.appService.pageTitle = "list of role - Task Management";
   }
@@ -27,7 +27,7 @@ export class RolesListComponent implements OnInit {
   }
 
   addRole() {
-    this.router.navigate(["/add-role"]);
+    this.router.navigate(["/roles/add-role"]);
   }
 
   getRoles() {
@@ -42,7 +42,7 @@ export class RolesListComponent implements OnInit {
   }
 
   onView(id: any) {
-    this.router.navigate(["/view-feature"], {
+    this.router.navigate(["/roles/view-role"], {
       queryParams: {
         id: id,
       },
@@ -62,6 +62,6 @@ export class RolesListComponent implements OnInit {
 
   viewFeatures(data: any) {
     this.storage.setData("featureList", data);
-    this.router.navigate(["/features-list"]);
+    this.router.navigate(["/features"]);
   }
 }

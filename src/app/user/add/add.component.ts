@@ -85,37 +85,54 @@ export class AddComponent implements OnInit {
       status: (msg = "") ? true : false,
     };
   }
-  onSave() {
+  onApiCall() {
     let v = this.validateForm();
     if (v.status == false) {
       this.toastr.error(v.msg);
     } else {
       let fg = this.formGroup.value;
       let p = {
-        fName: fg.fname,
-        lName: fg.lname,
+        fName: fg.fname || "",
+        lName: fg.lname || "",
         address: {
-          doorNumber: fg.dno,
-          street: fg.street,
-          area: fg.area,
-          landmark: fg.landmark,
-          city: fg.city,
-          state: fg.state,
-          postalCode: fg.pincode,
+          doorNumber: fg.dno || "",
+          street: fg.street || "",
+          area: fg.area || "",
+          landmark: fg.landmark || "",
+          city: fg.city || "",
+          state: fg.state || "",
+          postalCode: fg.pincode || 0,
         },
-        phone: fg.mobileno,
-        email: fg.email,
-        role: fg.role,
+        phone: fg.mobileno || 0,
+        email: fg.email || "",
+        role: fg.role || "",
       };
-      this.userService.addUser(p).subscribe(
-        (res: any) => {
-          this.toastr.success(res.message);
-        },
-        (err: any) => {
-          this.toastr.error(err.message);
-        }
-      );
+      if (this.urlParams.id) {
+        this.editUser(this.urlParams.id, p);
+      } else {
+        this.addUser(p);
+      }
     }
+  }
+  addUser(p: any) {
+    this.userService.addUser(p).subscribe(
+      (res: any) => {
+        this.toastr.success(res.message);
+      },
+      (err: any) => {
+        this.toastr.error(err.message);
+      }
+    );
+  }
+  editUser(url: string, p: any) {
+    this.userService.editUser(url, p).subscribe(
+      (res: any) => {
+        this.toastr.success(res.message);
+      },
+      (err: any) => {
+        this.toastr.error(err.message);
+      }
+    );
   }
 
   onCancel() {
@@ -126,7 +143,7 @@ export class AddComponent implements OnInit {
   userView() {
     this.userService.viewUser(this.urlParams.id).subscribe(
       (res: any) => {
-        this.userData = res.userData;
+        this.userData = res.userData || {};
         this.toastr.success(res.message);
         this.setValue();
       },
@@ -139,17 +156,17 @@ export class AddComponent implements OnInit {
   setValue() {
     let fg = this.formGroup;
     let u = this.userData;
-    fg.controls.fname.setValue(u.fName);
-    fg.controls.lname.setValue(u.lName);
-    fg.controls.dno.setValue(u.address.doorNumber);
-    fg.controls.street.setValue(u.address.street);
-    fg.controls.area.setValue(u.address.area);
-    fg.controls.landmark.setValue(u.address.landmark);
-    fg.controls.city.setValue(u.address.city);
-    fg.controls.state.setValue(u.address.state);
-    fg.controls.pincode.setValue(u.address.postalCode);
-    fg.controls.mobileno.setValue(u.phone);
-    fg.controls.email.setValue(u.email);
-    fg.controls.role.setValue(u.role);
+    fg.controls.fname.setValue(u.fName || "");
+    fg.controls.lname.setValue(u.lName || "");
+    fg.controls.dno.setValue(u.address.doorNumber || "");
+    fg.controls.street.setValue(u.address.street || "");
+    fg.controls.area.setValue(u.address.area || "");
+    fg.controls.landmark.setValue(u.address.landmark || "");
+    fg.controls.city.setValue(u.address.city || "");
+    fg.controls.state.setValue(u.address.state || "");
+    fg.controls.pincode.setValue(u.address.postalCode || "");
+    fg.controls.mobileno.setValue(u.phone || "");
+    fg.controls.email.setValue(u.email || "");
+    fg.controls.role.setValue(u.role || "");
   }
 }

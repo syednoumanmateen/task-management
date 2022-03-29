@@ -45,19 +45,25 @@
                     <th class="text-nowrap cursor-pointer">
                         Created By<i class="ion text-muted ml-2"></i>
                     </th>
+                    <th class="text-nowrap cursor-pointer">
+                        Created On<i class="ion text-muted ml-2"></i>
+                    </th>
+                    <th class="text-center cursor-pointer">
+                        Actions<i class="ion text-muted ml-2"></i>
+                    </th>
                 </tr>
             </thead>
             <tbody>
                 <tr *ngFor="let user of userData">
                     <td class="align-middle">{{user.roleCode}}</td>
-                    <td class="align-middle"><a href="javascript:void(0)">{{user.roleName}}</a></td>
+                    <td class="align-middle">{{user.roleName}}</td>
                     <td class="align-middle">
                         <button type="button" class="btn btn-primary d-block"
                             (click)="viewFeatures(user.featureList)">View
                             Features</button>
                     </td>
                     <td class="align-middle">{{user.createdBy}}</td>
-
+                    <td class="align-middle">{{user.createdOn |date:'dd/MM/yyyy'}}</td>
                     <td class="text-center text-nowrap align-middle">
                         <a class="btn btn-primary btn-sm" (click)="onView(user._id)">View</a>&nbsp;
                         <a (click)="onDelete(user._id)" class="btn btn-danger btn-sm">Delete</a>

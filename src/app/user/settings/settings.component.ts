@@ -59,8 +59,8 @@ export class SettingsComponent implements OnInit {
       this.toastr.error(v.msg);
     }
     let p = {
-      Password: this.formGroup.value.currentpsw,
-      newPassword: this.formGroup.value.newpsw,
+      Password: this.formGroup.value.currentpsw || "",
+      newPassword: this.formGroup.value.newpsw || "",
     };
     this.userService.changePassword(p).subscribe(
       (res: any) => {

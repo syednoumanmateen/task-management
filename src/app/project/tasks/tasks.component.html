@@ -51,7 +51,7 @@
 
         <div class="card">
             <div class="card-header py-3">
-                <button type="button" class="btn btn-primary"><i class="ion ion-md-add"></i>&nbsp; Add
+                <button type="button" class="btn btn-primary" (click)="onAddTask()"><i class="ion ion-md-add"></i>&nbsp; Add
                     task</button>&nbsp;
             </div>
 
@@ -59,8 +59,7 @@
                 <div class="card-body">
                     <p class="text-muted small">section.title</p>
 
-                    <div
-                        class="task-list custom-controls-stacked">
+                    <div class="task-list custom-controls-stacked">
                         <div class="task-list-item">
 
                             <label class="ui-todo-item custom-control custom-checkbox">
