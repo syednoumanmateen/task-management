@@ -1,10 +1,11 @@
+import { ModalDismissReasons, NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { FormControl, FormGroup } from "@angular/forms";
 import { ToastrService } from "ngx-toastr";
 import { AppService } from "src/app/providers/app.service";
 import { Router } from "@angular/router";
 import { UserService } from "src/app/providers/user.service";
 import { Component, ElementRef, OnInit, ViewChild } from "@angular/core";
-import { DataStorageService } from "src/app/providers/data-storage.service";
+import * as moment from "moment";
 
 @Component({
   selector: "app-list",
@@ -16,17 +17,18 @@ export class ListComponent implements OnInit {
   userData: any;
   role: Array<any>;
   status: Array<any>;
-  formGroup: FormGroup;
+  roleValue = "";
+  statusValue = "";
+  date: any;
   constructor(
     private userService: UserService,
     private router: Router,
     private appService: AppService,
     private toastr: ToastrService,
-    private storage: DataStorageService
+    private modelService: NgbModal
   ) {
     this.appService.pageTitle = "userList - Task Management";
     this.userData = {};
-    this.formGroup = this.getFormGroup();
     this.role = this.getRole();
     this.status = this.getStatus();
   }
@@ -81,16 +83,6 @@ export class ListComponent implements OnInit {
     ];
   }
 
-  getFormGroup() {
-    let fg = new FormGroup({
-      startDate: new FormControl(""),
-      endDate: new FormControl(""),
-      role: new FormControl(""),
-      status: new FormControl(""),
-    });
-    return fg;
-  }
-
   onAddUser() {
     this.router.navigate(["/users/add-user"]);
   }
@@ -128,12 +120,11 @@ export class ListComponent implements OnInit {
   }
 
   onFilter() {
-    let fg = this.formGroup.value;
     let p = {
-      role: fg.role,
-      status: fg.status,
-      startDate: fg.startDate,
-      endDate: fg.endDate,
+      role: this.roleValue,
+      status: this.statusValue,
+      startDate: this.date[0],
+      endDate: this.date[1],
     };
     this.userService.filterUser(p).subscribe(
       (res: any) => {

@@ -1,1 +1,60 @@
-<p>add-project works!</p>
+<h4 class="font-weight-bold py-3 mb-4" *ngIf="projectData">
+	Edit Project <span class="text-muted">#{{projectData.projectCode}}</span>
+</h4>
+<h4 class="font-weight-bold py-3 mb-4" *ngIf="!projectData">
+	Add Project
+</h4>
+
+<form action="" [formGroup]="formGroup">
+	<div class="card mb-2">
+		<div class="card-body pb-2">
+
+			<div class="form-row">
+				<div class="form-group col-md-6">
+					<label class="form-label">Project Name<span class="text-danger">*</span></label>
+					<input type="text" formControlName="name" class="form-control">
+				</div>
+				<div class="form-group col-md-6">
+					<label class="form-label">Handled By<span class="text-danger">*</span></label>
+					<ng-select [items]="userData" [closeOnSelect]="false" bindLabel="fName" [hideSelected]="true"
+						formControlName="lead">
+					</ng-select>
+				</div>
+			</div>
+			<div class="form-row">
+				<div class="form-group col-md-6">
+					<label class="form-label">Members<span class="text-danger">*</span></label>
+					<ng-select [items]="userData" [closeOnSelect]="false" [multiple]="true" bindLabel="fName"
+						[hideSelected]="true" formControlName="user">
+					</ng-select>
+				</div>
+				<div class="form-group col-md-6">
+					<label class="form-label">Role<span class="text-danger">*</span></label>
+					<ng-select [items]="roleData" [closeOnSelect]="false" bindLabel="roleName" [hideSelected]="true"
+						formControlName="role">
+					</ng-select>
+				</div>
+			</div>
+			<div class="form-row">
+				<div class="form-group col-md-6">
+					<label class="form-label">description<span class="text-danger">*</span></label>
+					<textarea type="text" placeholder="Project Descrption" class="form-control mb-1"
+						formControlName="description"></textarea>
+				</div>
+				<div class="form-group col-md-6">
+					<label class="form-label">Created-Dedline<span class="text-danger">*</span></label>
+					<custom-daterange-picker [(ngModel)]="date"></custom-daterange-picker>
+				</div>
+			</div>
+		</div>
+	</div>
+
+</form>
+
+<div class="text-right mt-3">
+	<button type="button" class="btn btn-primary" (click)="onApiCall()">
+		<span *ngIf="!projectData">
+			Add</span><span *ngIf="projectData">Edit</span>
+	</button>&nbsp;
+	<button type="button" class="btn btn-default" (click)="onCancel()">Cancel</button>
+</div>

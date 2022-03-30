@@ -1,3 +1,4 @@
+import { CustomDaterangePickerComponent } from "./custom-daterange-picker/custom-daterange-picker.component";
 import { AuthInterceptorService } from "./providers/auth-interceptor.service";
 import { UserService } from "./providers/user.service";
 import { BrowserModule, Title } from "@angular/platform-browser";
@@ -11,6 +12,7 @@ import { ToastrModule } from "ngx-toastr";
 // NgBootstrap
 
 import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
+import { NgSelectModule } from "@ng-select/ng-select";
 
 // *******************************************************************************
 // App
@@ -37,13 +39,14 @@ import { AddComponent } from "./user/add/add.component";
 import { ViewComponent } from "./user/view/view.component";
 import { ListComponent } from "./user/list/list.component";
 import { AddProjectComponent } from "./project/add-project/add-project.component";
-import { AddFeatureComponent } from './features/add-feature/add-feature.component';
-import { ViewFeatureComponent } from './features/view-feature/view-feature.component';
-import { FeaturesListComponent } from './features/features-list/features-list.component';
-import { AddRoleComponent } from './roles/add-role/add-role.component';
-import { ViewRoleComponent } from './roles/view-role/view-role.component';
-import { RolesListComponent } from './roles/roles-list/roles-list.component';
-import { AddTaskComponent } from './project/add-task/add-task.component';
+import { AddFeatureComponent } from "./features/add-feature/add-feature.component";
+import { ViewFeatureComponent } from "./features/view-feature/view-feature.component";
+import { FeaturesListComponent } from "./features/features-list/features-list.component";
+import { AddRoleComponent } from "./roles/add-role/add-role.component";
+import { ViewRoleComponent } from "./roles/view-role/view-role.component";
+import { RolesListComponent } from "./roles/roles-list/roles-list.component";
+import { AddTaskComponent } from "./project/add-task/add-task.component";
+import { CommonModule } from "@angular/common";
 
 // *******************************************************************************
 //
@@ -74,6 +77,7 @@ import { AddTaskComponent } from './project/add-task/add-task.component';
     ViewRoleComponent,
     RolesListComponent,
     AddTaskComponent,
+    CustomDaterangePickerComponent,
   ],
 
   imports: [
@@ -82,7 +86,8 @@ import { AddTaskComponent } from './project/add-task/add-task.component';
     FormsModule,
     ReactiveFormsModule,
     NgbModule,
-
+    NgSelectModule,
+    CommonModule,
     // App
     AppRoutingModule,
     LayoutModule,
@@ -91,7 +96,7 @@ import { AddTaskComponent } from './project/add-task/add-task.component';
     ToastrModule.forRoot({
       preventDuplicates: true,
       onActivateTick: false,
-      timeOut:1000
+      timeOut: 1000,
     }),
   ],
 
