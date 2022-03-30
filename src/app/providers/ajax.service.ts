@@ -1,4 +1,4 @@
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpParams } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 
 @Injectable({
@@ -6,13 +6,12 @@ import { Injectable } from "@angular/core";
 })
 export class AjaxService {
   baseUrl: string;
+
   constructor(private http: HttpClient) {
     this.baseUrl = "http://localhost:3000";
   }
 
   get(url: any, params?: any) {
-    console.log("param === ", params);
-
     return this.http.get<any>(this.baseUrl + url, params);
   }
 
@@ -26,5 +25,11 @@ export class AjaxService {
 
   delete(url: any, params?: any) {
     return this.http.delete<any>(this.baseUrl + url, params);
+  }
+
+  getFilter(url: any, params?: any) {
+    let queryParams = new HttpParams({ fromObject: params });
+    queryParams = queryParams.append("params", params);
+    return this.http.get<any>(this.baseUrl + url, { params: queryParams });
   }
 }

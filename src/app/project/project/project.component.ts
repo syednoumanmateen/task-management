@@ -36,6 +36,17 @@ export class ProjectComponent implements OnInit {
     });
   }
 
+  onRemove(id: any) {
+    this.userService.removeProject(id).subscribe(
+      (res: any) => {
+        this.toastr.success(res.message);
+      },
+      (err: any) => {
+        this.toastr.error(err.error.message);
+      }
+    );
+  }
+
   getProject() {
     this.userService.projectList().subscribe(
       (res: any) => {

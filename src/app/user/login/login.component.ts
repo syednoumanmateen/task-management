@@ -1,7 +1,6 @@
 import { DataStorageService } from "./../../providers/data-storage.service";
 import { UserService } from "./../../providers/user.service";
 import { Router } from "@angular/router";
-import { AuthService } from "./../../providers/auth.service";
 
 import { Component, OnInit } from "@angular/core";
 import { FormControl, FormGroup } from "@angular/forms";

@@ -1,7 +1,5 @@
 import { AuthInterceptorService } from "./providers/auth-interceptor.service";
 import { UserService } from "./providers/user.service";
-import { AuthGuardService } from "./providers/auth-guard.service";
-import { AuthService } from "./providers/auth.service";
 import { BrowserModule, Title } from "@angular/platform-browser";
 import { NgModule } from "@angular/core";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
@@ -100,8 +98,6 @@ import { AddTaskComponent } from './project/add-task/add-task.component';
   providers: [
     Title,
     AppService,
-    AuthService,
-    AuthGuardService,
     UserService,
     {
       provide: HTTP_INTERCEPTORS,

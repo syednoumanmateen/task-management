@@ -14,6 +14,8 @@ import { DataStorageService } from "src/app/providers/data-storage.service";
 export class ListComponent implements OnInit {
   @ViewChild("BlockMsg") BlockMsg!: ElementRef;
   userData: any;
+  role: Array<any>;
+  status: Array<any>;
   formGroup: FormGroup;
   constructor(
     private userService: UserService,
@@ -25,15 +27,64 @@ export class ListComponent implements OnInit {
     this.appService.pageTitle = "userList - Task Management";
     this.userData = {};
     this.formGroup = this.getFormGroup();
+    this.role = this.getRole();
+    this.status = this.getStatus();
   }
 
   ngOnInit(): void {
     this.userList();
   }
 
+  getRole() {
+    return [
+      {
+        title: "Any",
+        value: "",
+      },
+      {
+        title: "User",
+        value: "User",
+      },
+      {
+        title: "Developer",
+        value: "Developer",
+      },
+      {
+        title: "Tester",
+        value: "Tester",
+      },
+      {
+        title: "Admin",
+        value: "Admin",
+      },
+    ];
+  }
+
+  getStatus() {
+    return [
+      {
+        title: "Any",
+        value: "",
+      },
+      {
+        title: "Active",
+        value: "Active",
+      },
+      {
+        title: "Created",
+        value: "Created",
+      },
+      {
+        title: "Blocked",
+        value: "Blocked",
+      },
+    ];
+  }
+
   getFormGroup() {
     let fg = new FormGroup({
-      created: new FormControl(""),
+      startDate: new FormControl(""),
+      endDate: new FormControl(""),
       role: new FormControl(""),
       status: new FormControl(""),
     });
@@ -77,27 +128,18 @@ export class ListComponent implements OnInit {
   }
 
   onFilter() {
-    // let fg = this.formGroup.value;
-    // let role = fg.role;
-    // let status = fg.status;
-    // let date = fg.created;
-    // this.userService.filterRole(role).subscribe(
-    //   (res: any) => {
-    //     console.log(res);
-    //   },
-    //   (err: any) => {}
-    // );
-    // this.userService.filterStatus(status).subscribe(
-    //   (res: any) => {
-    //     console.log(res);
-    //   },
-    //   (err: any) => {}
-    // );
-    // this.userService.filterDate(date).subscribe(
-    //   (res: any) => {
-    //     console.log(res);
-    //   },
-    //   (err: any) => {}
-    // );
+    let fg = this.formGroup.value;
+    let p = {
+      role: fg.role,
+      status: fg.status,
+      startDate: fg.startDate,
+      endDate: fg.endDate,
+    };
+    this.userService.filterUser(p).subscribe(
+      (res: any) => {
+        this.userData = res;
+      },
+      (err: any) => {}
+    );
   }
 }

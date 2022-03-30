@@ -8,21 +8,21 @@
 <!-- Filters -->
 <div class="ui-bordered px-4 pt-4 mb-4">
     <form class="form-row align-items-center" [formGroup]="formGroup">
-        <div class="col-md mb-4">
+        <div class="col-md mb-4 form-group">
             <label class="form-label">Created On</label>
-            <input formControlName="created" type="date">
+            <input class="form-control" formControlName="startDate" type="date">
         </div>
         <div class="col-md mb-4">
             <label class="form-label">Role</label>
             <select class="custom-select" formControlName="role">
-                <option *ngFor="let item of ['Any', 'User', 'Developer','Tester', 'Admin']" [value]="item">{{item}}
+                <option *ngFor="let item of role" [value]="item.value">{{item.title}}
                 </option>
             </select>
         </div>
         <div class="col-md mb-4">
             <label class="form-label">Status</label>
             <select class="custom-select" formControlName="status">
-                <option *ngFor="let item of ['Any', 'Active', 'Created', 'Blocked']" [value]="item">{{item}}</option>
+                <option *ngFor="let item of status" [value]="item.value">{{item.title}}</option>
             </select>
         </div>
 

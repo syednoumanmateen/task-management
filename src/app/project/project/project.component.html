@@ -21,7 +21,7 @@
               class="ion ion-ios-more"></i></button>
           <div ngbDropdownMenu>
             <a class="dropdown-item" (click)="onView(userData._id)">View</a>
-            <a class="dropdown-item" href="javascript:void(0)">Remove</a>
+            <a class="dropdown-item" (click)="onRemove(userData._id)">Remove</a>
           </div>
         </div>
       </div>

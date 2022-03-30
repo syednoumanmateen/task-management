@@ -114,15 +114,7 @@ export class UserService {
   removeProject(id: any) {
     return this.ajax.put("/project/remove/" + id);
   }
-  // filterRole(id: any) {
-  //   return this.ajax.get("/user/filtered-list?" + "role" + "=" + id);
-  // }
-
-  // filterStatus(id: any) {
-  //   return this.ajax.get("/user/filtered-list?" + "status" + "=" + id);
-  // }
-
-  // filterDate(id: any) {
-  //   return this.ajax.get("/user/filtered-list?" + "date" + "=" + id);
-  // }
+  filterUser(params?: any) {
+    return this.ajax.getFilter("/user/filtered-list", params);
+  }
 }
