@@ -104,7 +104,7 @@ export class UserService {
   }
 
   editProject(id: any, params: any) {
-    return this.ajax.get("/project/update/" + id, params);
+    return this.ajax.put("/project/update/" + id, params);
   }
 
   deleteProject(id: any) {

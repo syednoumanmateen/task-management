@@ -1,11 +1,9 @@
 import { ToastrService } from "ngx-toastr";
 import { UserService } from "src/app/providers/user.service";
-import { ActivatedRoute } from "@angular/router";
+import { ActivatedRoute, Router } from "@angular/router";
 import { FormControl, FormGroup } from "@angular/forms";
 import { AppService } from "src/app/providers/app.service";
 import { Component, OnInit } from "@angular/core";
-import { S_IFREG } from "constants";
-import { threadId } from "worker_threads";
 
 @Component({
   selector: "app-add-project",
@@ -23,16 +21,19 @@ export class AddProjectComponent implements OnInit {
   userData: any;
   roleData: any;
   projectData: any;
+  date: any;
 
   disabled = false;
   constructor(
     private appService: AppService,
     private activatedRoute: ActivatedRoute,
     private userService: UserService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private router: Router
   ) {
     this.appService.pageTitle = "addProject - Task Management";
     this.formGroup = this.getFormGroup();
+    this.date = "";
   }
 
   ngOnInit(): void {
@@ -73,9 +74,8 @@ export class AddProjectComponent implements OnInit {
       name: new FormControl(""),
       lead: new FormControl(""),
       user: new FormControl(""),
-      role: new FormControl(""),
       description: new FormControl(""),
-      date: new FormControl(""),
+      date: new FormControl([]),
     });
     return fg;
   }
@@ -89,8 +89,6 @@ export class AddProjectComponent implements OnInit {
       msg = "Select  The Team Leader";
     } else if (!fg.user) {
       msg = "Select the Team Members";
-    } else if (!fg.role) {
-      msg = "Select The Role";
     } else if (!fg.description.trim()) {
       msg = "Enter The Description";
     } else if (!fg.date[0] || !fg.date[1]) {
@@ -113,18 +111,7 @@ export class AddProjectComponent implements OnInit {
       let p = {
         nameOfProject: fg.name,
         handledBy: fg.lead,
-        //  {
-        //   _id: "i._id",
-        //   fName: "i.fName",
-        //   lName: "i.lName",
-        // },
         members: fg.user,
-        // {
-        //   _id: "j._id",
-        //   fName: "j.fName",
-        //   lName: "j.lName",
-        // },
-        // role: fg.role,
         projectDescription: fg.description,
         startDate: fg.date[0],
         endDate: fg.date[1],
@@ -171,7 +158,10 @@ export class AddProjectComponent implements OnInit {
     );
   }
 
-  onCancel() {}
+  onCancel() {
+    this.formGroup.reset();
+    this.router.navigate(["/dashboard"]);
+  }
 
   setValue() {
     let fg = this.formGroup;
@@ -179,8 +169,23 @@ export class AddProjectComponent implements OnInit {
     fg.controls.name.setValue(p.nameOfProject || "");
     fg.controls.lead.setValue(p.handledBy || "");
     fg.controls.user.setValue(p.members || "");
-    // fg.controls.role.setValue(p.nameOfProject || "");
     fg.controls.description.setValue(p.projectDescription || "");
-    fg.controls.date.setValue(p.startDate - p.endDate || "");
+    fg.controls.date.setValue(
+      [
+        this.formatDate(this.projectData.startDate),
+        this.formatDate(this.projectData.endDate),
+      ] || ""
+    );
+    this.date = this.projectData.startDate - this.projectData.endDate;
+  }
+
+  private formatDate(date: any) {
+    const d = new Date(date);
+    let month = "" + (d.getMonth() + 1);
+    let day = "" + d.getDate();
+    const year = d.getFullYear();
+    if (month.length < 2) month = "0" + month;
+    if (day.length < 2) day = "0" + day;
+    return [month, day, year].join("/");
   }
 }

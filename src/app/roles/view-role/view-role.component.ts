@@ -48,5 +48,11 @@ export class ViewRoleComponent implements OnInit {
     this.router.navigate(["/features"]);
   }
 
-  onEdit() {}
+  onEdit(id: any) {
+    this.router.navigate(["/roles/add-role"], {
+      queryParams: {
+        id: id,
+      },
+    });
+  }
 }
