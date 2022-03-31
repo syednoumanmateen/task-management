@@ -140,7 +140,7 @@ export class UserService {
   }
 
   removeTask(id: any) {
-    return this.ajax.put("/task                                                                                                                                                                                                                                                                                                                                                                                                                               /remove/" + id);
+    return this.ajax.put("/task                                                                                                                                                                                                                                                                                                                                                                                                                                                         /remove/" + id);
   }
 
 }
