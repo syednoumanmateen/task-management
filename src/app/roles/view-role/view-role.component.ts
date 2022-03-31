@@ -1,3 +1,5 @@
+import { ModalDismissReasons, NgbModal } from "@ng-bootstrap/ng-bootstrap";
+import { RoleFeaturesComponent } from "./../role-features/role-features.component";
 import { DataStorageService } from "src/app/providers/data-storage.service";
 import { ToastrService } from "ngx-toastr";
 import { UserService } from "src/app/providers/user.service";
@@ -13,12 +15,14 @@ import { ActivatedRoute, Router } from "@angular/router";
 export class ViewRoleComponent implements OnInit {
   urlParams: any;
   userData: any;
+  closeResult: any;
   constructor(
     private appService: AppService,
     private activatedRoute: ActivatedRoute,
     private userService: UserService,
     private toastr: ToastrService,
     private storage: DataStorageService,
+    private modalService: NgbModal,
     private router: Router
   ) {
     this.appService.pageTitle = "viewrole - Task Management";
@@ -43,16 +47,41 @@ export class ViewRoleComponent implements OnInit {
     );
   }
 
-  viewFeatures(data: any) {
-    this.storage.setData("featureList", data);
-    this.router.navigate(["/features"]);
-  }
-
   onEdit(id: any) {
     this.router.navigate(["/roles/add-role"], {
       queryParams: {
         id: id,
       },
     });
+  }
+
+  viewFeatures(data: any) {
+    this.storage.setData("featureList", data);
+    this.open();
+  }
+
+  open() {
+    this.modalService
+      .open(RoleFeaturesComponent, {
+        ariaLabelledBy: "modal-basic-title",
+      })
+      .result.then(
+        (result) => {
+          this.closeResult = `Closed with: ${result}`;
+        },
+        (reason) => {
+          this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+        }
+      );
+  }
+
+  private getDismissReason(reason: any): string {
+    if (reason === ModalDismissReasons.ESC) {
+      return "by pressing ESC";
+    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
+      return "by clicking on a backdrop";
+    } else {
+      return `with: ${reason}`;
+    }
   }
 }

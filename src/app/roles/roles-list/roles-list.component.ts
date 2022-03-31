@@ -1,3 +1,6 @@
+import { RoleFeaturesComponent } from "./../role-features/role-features.component";
+import { ModalDismissReasons } from "@ng-bootstrap/ng-bootstrap";
+import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { AppService } from "src/app/providers/app.service";
 import { DataStorageService } from "src/app/providers/data-storage.service";
 import { ToastrService } from "ngx-toastr";
@@ -12,12 +15,14 @@ import { UserService } from "src/app/providers/user.service";
 })
 export class RolesListComponent implements OnInit {
   userData: any;
+  closeResult: any;
   constructor(
     private router: Router,
     private userService: UserService,
     private toastr: ToastrService,
-    private storage: DataStorageService,
-    private appService: AppService
+    private appService: AppService,
+    private modalService: NgbModal,
+    private storage: DataStorageService
   ) {
     this.appService.pageTitle = "list of role - Task Management";
   }
@@ -53,6 +58,7 @@ export class RolesListComponent implements OnInit {
     this.userService.deletRole(id).subscribe(
       (res: any) => {
         this.toastr.success(res.message);
+        this.ngOnInit();
       },
       (err: any) => {
         this.toastr.error(err.message);
@@ -62,6 +68,31 @@ export class RolesListComponent implements OnInit {
 
   viewFeatures(data: any) {
     this.storage.setData("featureList", data);
-    this.router.navigate(["/features"]);
+    this.open();
+  }
+
+  open() {
+    this.modalService
+      .open(RoleFeaturesComponent, {
+        ariaLabelledBy: "modal-basic-title",
+      })
+      .result.then(
+        (result) => {
+          this.closeResult = `Closed with: ${result}`;
+        },
+        (reason) => {
+          this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+        }
+      );
+  }
+
+  private getDismissReason(reason: any): string {
+    if (reason === ModalDismissReasons.ESC) {
+      return "by pressing ESC";
+    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
+      return "by clicking on a backdrop";
+    } else {
+      return `with: ${reason}`;
+    }
   }
 }

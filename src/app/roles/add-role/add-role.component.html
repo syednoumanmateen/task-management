@@ -38,7 +38,8 @@
                                         <span>
                                             <span>
                                                 <span class="p-3">
-                                                    <input type="checkbox" formControlNAme="all">
+                                                    <input type="checkbox" [(ngModel)]="feature.isChecked"
+                                                        (change)="featureSelected()">
                                                 </span>
                                                 {{feature.decription}}
                                             </span>

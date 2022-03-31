@@ -1,0 +1,38 @@
+<div class="card">
+  <!-- Table controls -->
+  <div class="card-body">
+    <h4>Features</h4>
+  </div>
+  <!-- / Table controls -->
+
+  <!-- Table -->
+  <hr class="border-light m-0">
+  <div class="table-responsive">
+    <table class="table table-striped table-bordered card-table">
+      <thead>
+        <tr>
+          <th class="text-nowrap cursor-pointer">
+            ID<i class="ion text-muted ml-2"></i>
+          </th>
+          <th class="text-nowrap cursor-pointer">
+            Name<i class="ion text-muted ml-2"></i>
+          </th>
+          <th class="text-nowrap cursor-pointer">
+            Module Name<i class="ion text-muted ml-2"></i>
+          </th>
+          <th class="text-nowrap cursor-pointer">
+            Description<i class="ion text-muted ml-2"></i>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let user of userData">
+          <td class="align-middle">{{user.featureCode}}</td>
+          <td class="align-middle">{{user.featureName}}</td>
+          <td class="align-middle">{{user.moduleName}}</td>
+          <td class="align-middle">{{user.decription}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <!-- / Table -->

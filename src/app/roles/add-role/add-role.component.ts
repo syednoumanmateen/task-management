@@ -17,7 +17,7 @@ export class AddRoleComponent implements OnInit {
   featureData: any;
   roleData: any;
   urlParams: any;
-  all: any;
+  featureSelect: Array<any>;
   constructor(
     private appService: AppService,
     private userService: UserService,
@@ -27,6 +27,7 @@ export class AddRoleComponent implements OnInit {
   ) {
     this.appService.pageTitle = "addrole - Task Management";
     this.formGroup = this.getFormGroup();
+    this.featureSelect = [];
   }
 
   ngOnInit(): void {
@@ -39,10 +40,18 @@ export class AddRoleComponent implements OnInit {
     }
   }
 
+  featureSelected() {
+    this.featureSelect = this.featureData.filter(
+      (value: string, Index: number) => {
+        return value;
+      }
+    );
+  }
+
   getFormGroup() {
     let fg = new FormGroup({
       name: new FormControl(""),
-      all: new FormControl(""),
+      feature: new FormControl(""),
     });
     return fg;
   }
@@ -62,7 +71,10 @@ export class AddRoleComponent implements OnInit {
   getFeatures() {
     this.userService.featureList().subscribe(
       (res: any) => {
-        this.featureData = res || {};
+        this.featureData = (res.slice[0] || []).map((e: any) => {
+          e.isChecked = false;
+          return e;
+        });
       },
       (err: any) => {
         this.toastr.error(err.error.message);
@@ -83,11 +95,10 @@ export class AddRoleComponent implements OnInit {
   }
 
   onApiCall() {
-    console.log(this.formGroup.value.all);
-
+    console.log(this.featureSelect);
     let p = {
       roleName: this.formGroup.value.name,
-      fetureList: "",
+      featureList: this.featureSelect,
     };
     if (this.urlParams.id) {
       this.editRole(this.urlParams.id, p);

@@ -1,17 +1,16 @@
 import { AppService } from "src/app/providers/app.service";
+import { Router } from "@angular/router";
 import { ToastrService } from "ngx-toastr";
-import { Component, OnInit } from "@angular/core";
 import { DataStorageService } from "src/app/providers/data-storage.service";
 import { UserService } from "src/app/providers/user.service";
-import { Router } from "@angular/router";
+import { Component, OnInit } from "@angular/core";
 
 @Component({
-  selector: "app-features-list",
-  templateUrl: "./features-list.component.html",
-  styleUrls: ["./features-list.component.css"],
+  selector: "app-role-features",
+  templateUrl: "./role-features.component.html",
+  styleUrls: ["./role-features.component.css"],
 })
-export class FeaturesListComponent implements OnInit {
-  userId: any;
+export class RoleFeaturesComponent implements OnInit {
   userData: any;
   constructor(
     private userService: UserService,
@@ -24,22 +23,7 @@ export class FeaturesListComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getFeatures();
-  }
-
-  addFeature() {
-    this.router.navigate(["/features/add-feature"]);
-  }
-
-  getFeatures() {
-    this.userService.featureList().subscribe(
-      (res: any) => {
-        this.userData = res || {};
-      },
-      (err: any) => {
-        this.toastr.error(err.error.message);
-      }
-    );
+    this.userData = this.storage.getData("featureList");
   }
 
   onView(id: any) {

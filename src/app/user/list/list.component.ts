@@ -112,6 +112,7 @@ export class ListComponent implements OnInit {
     this.userService.deleteUser(id).subscribe(
       (res: any) => {
         this.toastr.success(res.message);
+        this.ngOnInit();
       },
       (err: any) => {
         this.toastr.error(err.message);

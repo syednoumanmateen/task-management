@@ -27,5 +27,8 @@ export class DataStorageService {
     return this.Data[key];
   }
 
-  clearData() {}
+  clearData(key: any) {
+    this.Data[key] = {};
+    return this.Data[key];
+  }
 }
