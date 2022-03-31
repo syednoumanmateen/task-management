@@ -5,8 +5,8 @@
 	Add Project
 </h4>
 
-<form action="" [formGroup]="formGroup">
-	<div class="card mb-2">
+<div class="card mb-2">
+	<form action="" [formGroup]="formGroup">
 		<div class="card-body pb-2">
 
 			<div class="form-row">
@@ -43,13 +43,12 @@
 				</div>
 				<div class="form-group col-md-6">
 					<label class="form-label">Created-Dedline<span class="text-danger">*</span></label>
-					<custom-daterange-picker [(ngModel)]="date"></custom-daterange-picker>
+					<custom-daterange-picker formControlName="date"></custom-daterange-picker>
 				</div>
 			</div>
 		</div>
-	</div>
-
-</form>
+	</form>
+</div>
 
 <div class="text-right mt-3">
 	<button type="button" class="btn btn-primary" (click)="onApiCall()">

@@ -50,7 +50,7 @@ export class ProjectComponent implements OnInit {
   getProject() {
     this.userService.projectList().subscribe(
       (res: any) => {
-        this.userData = res[0];
+        this.userData = res;
       },
       (err: any) => {
         this.toastr.error(err.error.message);

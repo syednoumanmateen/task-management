@@ -56,7 +56,7 @@ export class AddFeatureComponent implements OnInit {
     }
     return {
       msg: msg,
-      status: (msg = "") ? true : false,
+      status: (msg == "") ? true : false,
     };
   }
 

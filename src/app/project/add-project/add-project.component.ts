@@ -4,6 +4,8 @@ import { ActivatedRoute } from "@angular/router";
 import { FormControl, FormGroup } from "@angular/forms";
 import { AppService } from "src/app/providers/app.service";
 import { Component, OnInit } from "@angular/core";
+import { S_IFREG } from "constants";
+import { threadId } from "worker_threads";
 
 @Component({
   selector: "app-add-project",
@@ -16,7 +18,7 @@ import { Component, OnInit } from "@angular/core";
 })
 export class AddProjectComponent implements OnInit {
   formGroup: FormGroup;
-  date: any;
+  // date: any;
   urlParams: any;
   userData: any;
   roleData: any;
@@ -48,7 +50,6 @@ export class AddProjectComponent implements OnInit {
     this.userService.listUser().subscribe(
       (res: any) => {
         this.userData = res || {};
-        console.log(res[0].fName);
       },
       (err: any) => {
         this.toastr.error(err.message);
@@ -70,7 +71,11 @@ export class AddProjectComponent implements OnInit {
   getFormGroup() {
     let fg = new FormGroup({
       name: new FormControl(""),
-      
+      lead: new FormControl(""),
+      user: new FormControl(""),
+      role: new FormControl(""),
+      description: new FormControl(""),
+      date: new FormControl(""),
     });
     return fg;
   }
@@ -78,19 +83,64 @@ export class AddProjectComponent implements OnInit {
   validateForm() {
     let fg = this.formGroup.value;
     let msg = "";
-    if (fg) {
+    if (!fg.name.trim()) {
+      msg = "enter The Pr oject Name";
+    } else if (!fg.lead) {
+      msg = "Select  The Team Leader";
+    } else if (!fg.user) {
+      msg = "Select the Team Members";
+    } else if (!fg.role) {
+      msg = "Select The Role";
+    } else if (!fg.description.trim()) {
+      msg = "Enter The Description";
+    } else if (!fg.date[0] || !fg.date[1]) {
+      msg = "Select The Start Date And Dedline Date Of Project";
+    } else {
       msg = "";
     }
     return {
       msg: msg,
-      status: (msg = "") ? true : false,
+      status: msg == "" ? true : false,
     };
   }
 
-  viewProject() {
-    this.userService.viewProject(this.urlParams.id).subscribe(
+  onApiCall() {
+    let v = this.validateForm();
+    if (v.status == false) {
+      this.toastr.error(v.msg);
+    } else {
+      let fg = this.formGroup.value;
+      let p = {
+        nameOfProject: fg.name,
+        handledBy: fg.lead,
+        //  {
+        //   _id: "i._id",
+        //   fName: "i.fName",
+        //   lName: "i.lName",
+        // },
+        members: fg.user,
+        // {
+        //   _id: "j._id",
+        //   fName: "j.fName",
+        //   lName: "j.lName",
+        // },
+        // role: fg.role,
+        projectDescription: fg.description,
+        startDate: fg.date[0],
+        endDate: fg.date[1],
+      };
+      if (this.urlParams.id) {
+        this.onEditProject(this.urlParams.id, p);
+      } else {
+        this.onAddProject(p);
+      }
+    }
+  }
+
+  onAddProject(p: any) {
+    this.userService.addProject(p).subscribe(
       (res: any) => {
-        this.projectData = res[0];
+        this.toastr.success(res.message);
       },
       (err: any) => {
         this.toastr.error(err.error.message);
@@ -98,15 +148,39 @@ export class AddProjectComponent implements OnInit {
     );
   }
 
-  onApiCall() {}
+  onEditProject(id: any, p: any) {
+    this.userService.editProject(id, p).subscribe(
+      (res: any) => {
+        this.toastr.success(res.message);
+      },
+      (err: any) => {
+        this.toastr.error(err.error.message);
+      }
+    );
+  }
+
+  viewProject() {
+    this.userService.viewProject(this.urlParams.id).subscribe(
+      (res: any) => {
+        this.projectData = res[0];
+        this.setValue();
+      },
+      (err: any) => {
+        this.toastr.error(err.error.message);
+      }
+    );
+  }
 
   onCancel() {}
 
   setValue() {
     let fg = this.formGroup;
-    let u = "";
-    fg.controls.name.setValue(u || "");
-    fg.controls.module.setValue(u || "");
-    fg.controls.description.setValue(u || "");
+    let p = this.projectData;
+    fg.controls.name.setValue(p.nameOfProject || "");
+    fg.controls.lead.setValue(p.handledBy || "");
+    fg.controls.user.setValue(p.members || "");
+    // fg.controls.role.setValue(p.nameOfProject || "");
+    fg.controls.description.setValue(p.projectDescription || "");
+    fg.controls.date.setValue(p.startDate - p.endDate || "");
   }
 }

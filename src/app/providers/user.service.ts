@@ -27,8 +27,8 @@ export class UserService {
     return this.ajax.get("/user/get/" + id);
   }
 
-  editUser(url: any, params: any) {
-    return this.ajax.put("/user/update/" + url, params);
+  editUser(id: any, params: any) {
+    return this.ajax.put("/user/update/" + id, params);
   }
 
   deleteUser(id: any) {
@@ -47,8 +47,8 @@ export class UserService {
     return this.ajax.post("/user/otp-validation", params);
   }
 
-  resetPassword(url: any, params: any) {
-    return this.ajax.post("/user/reset-password/" + url, params);
+  resetPassword(id: any, params: any) {
+    return this.ajax.post("/user/reset-password/" + id, params);
   }
 
   addFeature(params: any) {
@@ -59,16 +59,16 @@ export class UserService {
     return this.ajax.get("/feature/list/");
   }
 
-  viewFeature(url: any) {
-    return this.ajax.get("/feature/get/" + url);
+  viewFeature(id: any) {
+    return this.ajax.get("/feature/get/" + id);
   }
 
-  editFeature(url: any, params: any) {
-    return this.ajax.put("/feature/update/" + url, params);
+  editFeature(id: any, params: any) {
+    return this.ajax.put("/feature/update/" + id, params);
   }
 
-  deletFeature(url: any) {
-    return this.ajax.delete("/feature/remove/" + url);
+  deletFeature(id: any) {
+    return this.ajax.delete("/feature/remove/" + id);
   }
 
   addRole(params: any) {
@@ -79,16 +79,16 @@ export class UserService {
     return this.ajax.get("/role/list/");
   }
 
-  viewRole(url: any) {
-    return this.ajax.get("/role/get/" + url);
+  viewRole(id: any) {
+    return this.ajax.get("/role/get/" + id);
   }
 
-  editRole(url: any, params: any) {
-    return this.ajax.put("/role/update/" + url, params);
+  editRole(id: any, params: any) {
+    return this.ajax.put("/role/update/" + id, params);
   }
 
-  deletRole(url: any) {
-    return this.ajax.delete("/role/remove/" + url);
+  deletRole(id: any) {
+    return this.ajax.delete("/role/remove/" + id);
   }
 
   addProject(params: any) {
@@ -103,8 +103,8 @@ export class UserService {
     return this.ajax.get("/project/get/" + id);
   }
 
-  editProject(id: any) {
-    return this.ajax.get("/project/update/" + id);
+  editProject(id: any, params: any) {
+    return this.ajax.get("/project/update/" + id, params);
   }
 
   deleteProject(id: any) {
@@ -114,6 +114,7 @@ export class UserService {
   removeProject(id: any) {
     return this.ajax.put("/project/remove/" + id);
   }
+
   filterUser(params?: any) {
     return this.ajax.getFilter("/user/filtered-list", params);
   }

@@ -6,13 +6,13 @@
 </h4>
 
 <div class="row">
-  <div class="col-sm-6 col-xl-4">
+  <div class="col-sm-6 col-xl-4"  *ngFor="let project of userData">
     <div class="card mb-4">
 
       <div class="card-body d-flex justify-content-between align-items-start pb-3">
         <div>
-          <a class="text-body text-big font-weight-semibold">{{userData.nameOfProject}}({{userData.projectCode}})</a>
-          <span class="badge align-text-bottom ml-1">{{userData.status}}</span>
+          <a class="text-body text-big font-weight-semibold">{{project.nameOfProject}}({{project.projectCode}})</a>
+          <span class="badge align-text-bottom ml-1">{{project.status}}</span>
 
         </div>
 
@@ -20,37 +20,36 @@
             class="btn btn-default btn-sm icon-btn borderless rounded-pill md-btn-flat hide-arrow" ngbDropdownToggle><i
               class="ion ion-ios-more"></i></button>
           <div ngbDropdownMenu>
-            <a class="dropdown-item" (click)="onView(userData._id)">View</a>
-            <a class="dropdown-item" (click)="onRemove(userData._id)">Remove</a>
+            <a class="dropdown-item" (click)="onView(project._id)">View</a>
+            <a class="dropdown-item" (click)="onRemove(project._id)">Remove</a>
           </div>
         </div>
       </div>
 
-
       <div class="card-body pb-3">
-        {{userData.projectDescription}}
+        {{project.projectDescription}}
       </div>
 
       <div class="card-body pb-3">
-        {{userData.handledBy.fName}}&nbsp;{{userData.handledBy.lName}}
+        {{project.handledBy.fName}}&nbsp;{{project.handledBy.lName}}
       </div>
 
       <div class="card-body pt-0">
         <div class="row">
           <div class="col">
-            <div class="text-muted small">Created</div>
-            <div class="font-weight-bold">{{userData.createdOn |date:'dd/MM/yyyy'}}</div>
+            <div class="text-muted small">Started</div>
+            <div class="font-weight-bold">{{project.startDate |date:'dd/MM/yyyy'}}</div>
           </div>
           <div class="col">
             <div class="text-muted small">Deadline</div>
-            <div class="font-weight-bold">{{userData.endDate|date:'dd/MM/yyyy'}}</div>
+            <div class="font-weight-bold">{{project.endDate|date:'dd/MM/yyyy'}}</div>
           </div>
         </div>
       </div>
       <hr class="m-0">
       <div class="card-body py-3">
         <div class="text-muted small mb-2">Team</div>
-        <div class="d-flex flex-wrap" *ngFor="let member of userData.members">
+        <div class="d-flex flex-wrap" *ngFor="let member of project.members">
           {{member.fName}}&nbsp;{{member.lName}}
         </div>
       </div>
