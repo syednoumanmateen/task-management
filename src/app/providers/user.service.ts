@@ -118,4 +118,29 @@ export class UserService {
   filterUser(params?: any) {
     return this.ajax.getFilter("/user/filtered-list", params);
   }
+
+  addTask(params: any) {
+    return this.ajax.post("/task/add/", params);
+  }
+
+  taskList() {
+    return this.ajax.get("/task/list/");
+  }
+
+  viewTask(id: any) {
+    return this.ajax.get("/task/get/" + id);
+  }
+
+  editTask(id: any, params: any) {
+    return this.ajax.put("/task/update/" + id, params);
+  }
+
+  deleteTask(id: any) {
+    return this.ajax.delete("/task/remove/" + id);
+  }
+
+  removeTask(id: any) {
+    return this.ajax.put("/task                                                                                                                                                                                                                                                                                                                                                                                                                               /remove/" + id);
+  }
+
 }
