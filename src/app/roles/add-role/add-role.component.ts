@@ -4,7 +4,7 @@ import { FormControl, FormGroup } from "@angular/forms";
 import { AppService } from "src/app/providers/app.service";
 import { Component, OnInit } from "@angular/core";
 import { UserService } from "src/app/providers/user.service";
-import { analyzeAndValidateNgModules } from "@angular/compiler";
+import { throws } from "assert";
 
 @Component({
   selector: "app-add-role",
@@ -14,11 +14,11 @@ import { analyzeAndValidateNgModules } from "@angular/compiler";
 export class AddRoleComponent implements OnInit {
   formGroup: FormGroup;
   curTab = "all";
-  featureData: any;
   urlParams: any;
-  roleName: any;
+  features: any;
+  roleData: any;
+  selectedFeatures: any;
   featureList: any;
-  featureSelect: Array<any>;
   constructor(
     private appService: AppService,
     private userService: UserService,
@@ -28,38 +28,16 @@ export class AddRoleComponent implements OnInit {
   ) {
     this.appService.pageTitle = "addrole - Task Management";
     this.formGroup = this.getFormGroup();
-    this.featureSelect = [];
   }
 
   ngOnInit(): void {
     this.activatedRoute.queryParams.subscribe((data) => {
       this.urlParams = data;
     });
-    if (!this.urlParams.id) {
-      this.getFeatures();
-    } else {
+    if (this.urlParams.id) {
       this.viewRole();
     }
-  }
-
-  featureSelected() {
-    if (this.urlParams.id) {
-      this.featureSelect = this.featureData.featureList.filter(
-        (value: any, Index: number) => {
-          return value.isChecked;
-        }
-      );
-    }
-    this.featureSelect = this.featureData.filter(
-      (value: any, Index: number) => {
-        return value.isChecked;
-      }
-    );
-    this.featureList = this.featureSelect.concat(
-      this.features.filter((feature1) =>
-        this.selectedFeatures.every((feature2) => feature2._id !== feature1._id)
-      )
-    );
+    this.getFeatures();
   }
 
   getFormGroup() {
@@ -85,10 +63,24 @@ export class AddRoleComponent implements OnInit {
   getFeatures() {
     this.userService.featureList().subscribe(
       (res: any) => {
-        this.featureData = (res.slice(0) || []).map((e: any) => {
-          e.isChecked = false;
-          return e;
-        });
+        if (this.urlParams.id) {
+          this.featureList = (res.slice(0) || []).map((e: any) => {
+            e.isChecked = false;
+            return e;
+          });
+          this.features = this.selectedFeatures.concat(
+            this.featureList.filter((feature1: any) =>
+              this.selectedFeatures.every(
+                (feature2: any) => feature2._id !== feature1._id
+              )
+            )
+          );
+        } else {
+          this.features = (res.slice(0) || []).map((e: any) => {
+            e.isChecked = false;
+            return e;
+          });
+        }
       },
       (err: any) => {
         this.toastr.error(err.error.message);
@@ -99,20 +91,24 @@ export class AddRoleComponent implements OnInit {
   viewRole() {
     this.userService.viewRole(this.urlParams.id || "").subscribe(
       (res: any) => {
-        this.roleName = res;
-        this.featureData = (this.roleName.featureList.slice(0) || []).map(
-          (e: any) => {
-            e.isChecked = true;
-            return e;
-          }
-        );
+        this.roleData = res;
         this.setValue();
+        this.selectedFeatures = (res.featureList.slice(0) || []).map((e: any) => {
+          e.isChecked = true;
+          return e;
+        });
       },
       (err: any) => {
         this.router.navigate(["**"]);
         this.toastr.error(err.error.message);
       }
     );
+  }
+
+  featureSelected() {
+    this.selectedFeatures = this.features.filter((value: any) => {
+      return value.isChecked;
+    });
   }
 
   onApiCall() {
@@ -122,7 +118,7 @@ export class AddRoleComponent implements OnInit {
     } else {
       let p = {
         roleName: this.formGroup.value.name,
-        featureList: this.featureSelect,
+        featureList: this.selectedFeatures,
       };
       if (this.urlParams.id) {
         this.editRole(this.urlParams.id, p);
@@ -155,7 +151,7 @@ export class AddRoleComponent implements OnInit {
   }
 
   setValue() {
-    this.formGroup.controls.name.setValue(this.roleName.roleName);
+    this.formGroup.controls.name.setValue(this.roleData.roleName);
   }
 
   onCancel() {
