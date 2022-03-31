@@ -21,7 +21,7 @@ export class AddProjectComponent implements OnInit {
   userData: any;
   roleData: any;
   projectData: any;
-  date: any;
+  date: Array<any>;
 
   disabled = false;
   constructor(
@@ -33,7 +33,7 @@ export class AddProjectComponent implements OnInit {
   ) {
     this.appService.pageTitle = "addProject - Task Management";
     this.formGroup = this.getFormGroup();
-    this.date = "";
+    this.date = [];
   }
 
   ngOnInit(): void {
@@ -75,7 +75,6 @@ export class AddProjectComponent implements OnInit {
       lead: new FormControl(""),
       user: new FormControl(""),
       description: new FormControl(""),
-      date: new FormControl([]),
     });
     return fg;
   }
@@ -91,8 +90,6 @@ export class AddProjectComponent implements OnInit {
       msg = "Select the Team Members";
     } else if (!fg.description.trim()) {
       msg = "Enter The Description";
-    } else if (!fg.date[0] || !fg.date[1]) {
-      msg = "Select The Start Date And Dedline Date Of Project";
     } else {
       msg = "";
     }
@@ -113,8 +110,8 @@ export class AddProjectComponent implements OnInit {
         handledBy: fg.lead,
         members: fg.user,
         projectDescription: fg.description,
-        startDate: fg.date[0],
-        endDate: fg.date[1],
+        startDate: this.date[0],
+        endDate: this.date[1],
       };
       if (this.urlParams.id) {
         this.onEditProject(this.urlParams.id, p);
@@ -170,22 +167,19 @@ export class AddProjectComponent implements OnInit {
     fg.controls.lead.setValue(p.handledBy || "");
     fg.controls.user.setValue(p.members || "");
     fg.controls.description.setValue(p.projectDescription || "");
-    fg.controls.date.setValue(
-      [
-        this.formatDate(this.projectData.startDate),
-        this.formatDate(this.projectData.endDate),
-      ] || ""
-    );
-    this.date = this.projectData.startDate - this.projectData.endDate;
+    this.date = [
+      this.projectData.startDate,
+      this.projectData.endDate
+    ];
   }
 
-  private formatDate(date: any) {
-    const d = new Date(date);
-    let month = "" + (d.getMonth() + 1);
-    let day = "" + d.getDate();
-    const year = d.getFullYear();
-    if (month.length < 2) month = "0" + month;
-    if (day.length < 2) day = "0" + day;
-    return [month, day, year].join("/");
-  }
+  // private formatDate(date: any) {
+  //   const d = new Date(date);
+  //   let month = "" + (d.getMonth() + 1);
+  //   let day = "" + d.getDate();
+  //   const year = d.getFullYear();
+  //   if (month.length < 2) month = "0" + month;
+  //   if (day.length < 2) day = "0" + day;
+  //   return [month, day, year].join("/");
+  // }
 }

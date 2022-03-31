@@ -110,7 +110,6 @@ const after = (one: NgbDateStruct, two: NgbDateStruct) =>
         class="form-control"
         [value]="inputValue"
         (keydown)="clear($event)"
-        readonly
         style="min-width: 150px; background-color:#fff"
       />
       <div class="input-group-append">
@@ -194,6 +193,7 @@ export class CustomDaterangePickerComponent implements ControlValueAccessor {
     this.isRTL = appService.isRTL;
     this.startDateValue = this.startDate;
     this._parseModel(this.ngModel);
+    console.log(this.inputValue);
   }
 
   writeValue(value: any) {

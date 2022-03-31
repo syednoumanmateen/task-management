@@ -15,8 +15,9 @@ export class AddRoleComponent implements OnInit {
   formGroup: FormGroup;
   curTab = "all";
   featureData: any;
-  roleData: any;
   urlParams: any;
+  roleName: any;
+  featureList: any;
   featureSelect: Array<any>;
   constructor(
     private appService: AppService,
@@ -34,17 +35,30 @@ export class AddRoleComponent implements OnInit {
     this.activatedRoute.queryParams.subscribe((data) => {
       this.urlParams = data;
     });
-    this.getFeatures();
-    if (this.urlParams.id) {
+    if (!this.urlParams.id) {
+      this.getFeatures();
+    } else {
       this.viewRole();
     }
   }
 
   featureSelected() {
+    if (this.urlParams.id) {
+      this.featureSelect = this.featureData.featureList.filter(
+        (value: any, Index: number) => {
+          return value.isChecked;
+        }
+      );
+    }
     this.featureSelect = this.featureData.filter(
-      (value: string, Index: number) => {
-        return value;
+      (value: any, Index: number) => {
+        return value.isChecked;
       }
+    );
+    this.featureList = this.featureSelect.concat(
+      this.features.filter((feature1) =>
+        this.selectedFeatures.every((feature2) => feature2._id !== feature1._id)
+      )
     );
   }
 
@@ -71,7 +85,7 @@ export class AddRoleComponent implements OnInit {
   getFeatures() {
     this.userService.featureList().subscribe(
       (res: any) => {
-        this.featureData = (res.slice[0] || []).map((e: any) => {
+        this.featureData = (res.slice(0) || []).map((e: any) => {
           e.isChecked = false;
           return e;
         });
@@ -85,7 +99,14 @@ export class AddRoleComponent implements OnInit {
   viewRole() {
     this.userService.viewRole(this.urlParams.id || "").subscribe(
       (res: any) => {
-        this.roleData = res;
+        this.roleName = res;
+        this.featureData = (this.roleName.featureList.slice(0) || []).map(
+          (e: any) => {
+            e.isChecked = true;
+            return e;
+          }
+        );
+        this.setValue();
       },
       (err: any) => {
         this.router.navigate(["**"]);
@@ -95,15 +116,20 @@ export class AddRoleComponent implements OnInit {
   }
 
   onApiCall() {
-    console.log(this.featureSelect);
-    let p = {
-      roleName: this.formGroup.value.name,
-      featureList: this.featureSelect,
-    };
-    if (this.urlParams.id) {
-      this.editRole(this.urlParams.id, p);
+    let v = this.validateForm();
+    if (v.status == false) {
+      this.toastr.error(v.msg);
+    } else {
+      let p = {
+        roleName: this.formGroup.value.name,
+        featureList: this.featureSelect,
+      };
+      if (this.urlParams.id) {
+        this.editRole(this.urlParams.id, p);
+      } else {
+        this.addRole(p);
+      }
     }
-    this.addRole(p);
   }
 
   addRole(p: any) {
@@ -126,6 +152,10 @@ export class AddRoleComponent implements OnInit {
         this.toastr.error(err.error.message);
       }
     );
+  }
+
+  setValue() {
+    this.formGroup.controls.name.setValue(this.roleName.roleName);
   }
 
   onCancel() {
