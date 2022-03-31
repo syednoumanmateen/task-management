@@ -27,10 +27,10 @@
       </thead>
       <tbody>
         <tr *ngFor="let user of userData">
-          <td class="align-middle">{{user.featureCode}}</td>
-          <td class="align-middle">{{user.featureName}}</td>
-          <td class="align-middle">{{user.moduleName}}</td>
-          <td class="align-middle">{{user.decription}}</td>
+          <td class="align-middle">{{user.featureCode||""}}</td>
+          <td class="align-middle">{{user.featureName||""}}</td>
+          <td class="align-middle">{{user.moduleName||""}}</td>
+          <td class="align-middle">{{user.decription||""}}</td>
         </tr>
       </tbody>
     </table>

@@ -40,7 +40,7 @@
         <div class="row">
             <div class="col">
                 Total Number Of Roles: &nbsp;
-                <span>{{userData.length}}</span>
+                <span>{{userData.length||0}}</span>
             </div>
         </div>
 
@@ -75,19 +75,19 @@
             </thead>
             <tbody>
                 <tr *ngFor="let user of userData">
-                    <td class="align-middle">{{user.roleCode}}</td>
-                    <td class="align-middle">{{user.roleName}}</td>
+                    <td class="align-middle">{{user.roleCode||""}}</td>
+                    <td class="align-middle">{{user.roleName||""}}</td>
                     <td class="align-middle">
                         <button type="button" class="btn btn-primary d-block"
-                            (click)="viewFeatures(user.featureList)">View
+                            (click)="viewFeatures(user.featureList||'')">View
                             Features</button>
                     </td>
-                    <td class="align-middle">{{user.createdBy}}</td>
-                    <td class="align-middle">{{user.createdOn |date:'dd/MM/yyyy'}}</td>
+                    <td class="align-middle">{{user.createdBy||""}</td>
+                    <td class="align-middle">{{user.createdOn |date:'dd/MM/yyyy'||""}}</td>
                     <td class="text-center text-nowrap align-middle">
                         <a class="btn btn-danger btn-sm">Block</a>&nbsp;
-                        <a class="btn btn-primary btn-sm" (click)="onView(user._id)">View</a>&nbsp;
-                        <a (click)="onDelete(user._id)" class="btn btn-danger btn-sm">Remove</a>
+                        <a class="btn btn-primary btn-sm" (click)="onView(user._id||'')">View</a>&nbsp;
+                        <a (click)="onDelete(user._id||'')" class="btn btn-danger btn-sm">Remove</a>
                     </td>
                 </tr>
             </tbody>

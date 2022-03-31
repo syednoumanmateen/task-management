@@ -12,6 +12,7 @@ import { UserService } from "src/app/providers/user.service";
 export class ViewComponent implements OnInit {
   urlParams: any;
   userData: any;
+
   constructor(
     private router: Router,
     private activatedRoute: ActivatedRoute,
@@ -20,11 +21,13 @@ export class ViewComponent implements OnInit {
     private toastr: ToastrService
   ) {
     this.appService.pageTitle = "addUser - Task Management";
+    this.urlParams = {};
+    this.userData = {};
   }
 
   ngOnInit(): void {
     this.activatedRoute.queryParams.subscribe((data) => {
-      this.urlParams = data;
+      this.urlParams = data || "";
     });
     this.userView();
   }
@@ -32,11 +35,11 @@ export class ViewComponent implements OnInit {
   userView() {
     this.userService.viewUser(this.urlParams.id).subscribe(
       (res: any) => {
-        this.userData = res.userData||{};
+        this.userData = res.userData || {};
       },
       (err: any) => {
         this.router.navigate(["**"]);
-        this.toastr.error(err.error.message);
+        this.toastr.error(err.error.message || "");
       }
     );
   }
@@ -44,7 +47,7 @@ export class ViewComponent implements OnInit {
   onEdit() {
     this.router.navigate(["/users/add-user"], {
       queryParams: {
-        id: this.urlParams.id,
+        id: this.urlParams.id || "",
       },
     });
   }

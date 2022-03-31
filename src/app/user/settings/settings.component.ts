@@ -1,3 +1,4 @@
+import { Router } from "@angular/router";
 import { AppService } from "src/app/providers/app.service";
 import { FormControl } from "@angular/forms";
 import { FormGroup } from "@angular/forms";
@@ -14,10 +15,12 @@ import { ToastrService } from "ngx-toastr";
 export class SettingsComponent implements OnInit {
   curTab = "password";
   formGroup: FormGroup;
+
   constructor(
     private userService: UserService,
     private appService: AppService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private router: Router
   ) {
     this.appService.pageTitle = "settings - Task Management";
     this.formGroup = this.getFormGroup();
@@ -33,42 +36,49 @@ export class SettingsComponent implements OnInit {
     });
     return fg;
   }
+
   validateForm() {
     let fg = this.formGroup.value;
     let msg = "";
     if (!fg.newpsw.trim()) {
-      msg = "Please Enter the Password";
+      msg = "Please Enter the New Password";
     } else if (!fg.repeatnewpsw.trim()) {
       msg = "Please Enter the Confirm Password";
     } else if (fg.repeatnewpsw.trim() !== fg.newpsw.trim()) {
       msg = "Enter the Password Does Not Match with Confirm Password";
-    } else if (fg.currentpsw.trim()) {
-      msg = "Please Enter The Current Password";
+    } else if (!fg.currentpsw.trim()) {
+      msg = "Please Enter The Current correct Password";
     } else {
       msg = "";
     }
     return {
       msg: msg,
-      status: (msg = "") ? true : false,
+      status: (msg == "") ? true : false,
     };
   }
 
-  onSave() {
+  onSaveChanges() {
     let v = this.validateForm();
     if (v.status == false) {
       this.toastr.error(v.msg);
+    } else {
+      let p = {
+        Password: this.formGroup.value.currentpsw || "",
+        newPassword: this.formGroup.value.newpsw || "",
+      };
+      this.userService.changePassword(p).subscribe(
+        (res: any) => {
+          this.toastr.success(res.message||"");
+        },
+        (err: any) => {
+          this.toastr.error(err.error.message||"");
+        }
+      );
     }
-    let p = {
-      Password: this.formGroup.value.currentpsw || "",
-      newPassword: this.formGroup.value.newpsw || "",
-    };
-    this.userService.changePassword(p).subscribe(
-      (res: any) => {
-        this.toastr.success(res.message);
-      },
-      (err: any) => {
-        this.toastr.error(err.message);
-      }
-    );
+  }
+
+  onCancel() {
+    this.formGroup.reset();
+    this.router.navigate(["/dashboard"]);
   }
 }

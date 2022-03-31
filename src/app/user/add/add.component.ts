@@ -23,8 +23,10 @@ export class AddComponent implements OnInit {
   ) {
     this.appService.pageTitle = "addUser - Task Management";
     this.formGroup = this.getFormGroup();
+    this.urlParams = {};
+    this.userData = {};
     this.activatedRoute.queryParams.subscribe((data) => {
-      this.urlParams = data;
+      this.urlParams = data || "";
     });
   }
 
@@ -82,7 +84,7 @@ export class AddComponent implements OnInit {
     }
     return {
       msg: msg,
-      status: (msg == "") ? true : false,
+      status: msg == "" ? true : false,
     };
   }
   onApiCall() {
@@ -117,20 +119,20 @@ export class AddComponent implements OnInit {
   addUser(p: any) {
     this.userService.addUser(p).subscribe(
       (res: any) => {
-        this.toastr.success(res.message);
+        this.toastr.success(res.data.message || "");
       },
       (err: any) => {
-        this.toastr.error(err.message);
+        this.toastr.error(err.error.message || "");
       }
     );
   }
   editUser(url: string, p: any) {
     this.userService.editUser(url, p).subscribe(
       (res: any) => {
-        this.toastr.success(res.message);
+        this.toastr.success(res.data.message || "");
       },
       (err: any) => {
-        this.toastr.error(err.message);
+        this.toastr.error(err.error.message || "");
       }
     );
   }
@@ -144,11 +146,11 @@ export class AddComponent implements OnInit {
     this.userService.viewUser(this.urlParams.id).subscribe(
       (res: any) => {
         this.userData = res.userData || {};
-        this.toastr.success(res.message);
+        this.toastr.success(res.data.message || "");
         this.setValue();
       },
       (err: any) => {
-        this.toastr.error(err.message);
+        this.toastr.error(err.error.message || "");
       }
     );
   }

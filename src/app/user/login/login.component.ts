@@ -73,13 +73,13 @@ export class LoginComponent implements OnInit {
     };
     this.user.userLogin(p).subscribe(
       (res: any) => {
-        this.toastr.success(res.status);
+        this.toastr.success(res.status||"");
         this.storage.setToken(res.data.token || "");
         this.storage.setData("user", this.formGroup.value.userName || "");
         this.router.navigate(["/dashboard"]);
       },
       (err: any) => {
-        this.toastr.error(err.error.message);
+        this.toastr.error(err.error.message||"");
       }
     );
   }

@@ -20,11 +20,13 @@ export class ViewFeatureComponent implements OnInit {
     private router: Router
   ) {
     this.appService.pageTitle = "viewfeature - Task Management";
+    this.urlParams = {};
+    this.userData = {};
   }
 
   ngOnInit(): void {
     this.activatedRoute.queryParams.subscribe((data) => {
-      this.urlParams = data;
+      this.urlParams = data || "";
     });
     this.getfeatures();
   }
@@ -36,7 +38,7 @@ export class ViewFeatureComponent implements OnInit {
       },
       (err: any) => {
         this.router.navigate(["**"]);
-        this.toastr.error(err.error.message);
+        this.toastr.error(err.error.message || "");
       }
     );
   }
@@ -44,7 +46,7 @@ export class ViewFeatureComponent implements OnInit {
   onEdit(id: any) {
     this.router.navigate(["/features/add-feature"], {
       queryParams: {
-        id: id,
+        id: id || "",
       },
     });
   }

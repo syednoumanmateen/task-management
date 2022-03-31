@@ -21,11 +21,13 @@ export class ProjectDetailsComponent implements OnInit {
     private router: Router
   ) {
     this.appService.pageTitle = "projectDetails - Task Management";
+    this.urlParams = {};
+    this.userData = {};
   }
 
   ngOnInit(): void {
     this.activatedRoute.queryParams.subscribe((data) => {
-      this.urlParams = data;
+      this.urlParams = data || "";
     });
     this.viewProject();
   }
@@ -33,10 +35,10 @@ export class ProjectDetailsComponent implements OnInit {
   viewProject() {
     this.userService.viewProject(this.urlParams.id).subscribe(
       (res: any) => {
-        this.userData = res[0];
+        this.userData = res[0] || [];
       },
       (err: any) => {
-        this.toastr.error(err.error.message);
+        this.toastr.error(err.error.message || "");
       }
     );
   }
@@ -44,7 +46,7 @@ export class ProjectDetailsComponent implements OnInit {
   onEdit(id: any) {
     this.router.navigate(["/projects/add-project"], {
       queryParams: {
-        id: id,
+        id: id || "",
       },
     });
   }

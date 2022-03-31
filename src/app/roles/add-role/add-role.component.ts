@@ -28,11 +28,16 @@ export class AddRoleComponent implements OnInit {
   ) {
     this.appService.pageTitle = "addrole - Task Management";
     this.formGroup = this.getFormGroup();
+    this.urlParams = {};
+    this.features = {};
+    this.roleData = {};
+    this.selectedFeatures = {};
+    this.featureList = {};
   }
 
   ngOnInit(): void {
     this.activatedRoute.queryParams.subscribe((data) => {
-      this.urlParams = data;
+      this.urlParams = data || "";
     });
     if (this.urlParams.id) {
       this.viewRole();
@@ -93,10 +98,12 @@ export class AddRoleComponent implements OnInit {
       (res: any) => {
         this.roleData = res;
         this.setValue();
-        this.selectedFeatures = (res.featureList.slice(0) || []).map((e: any) => {
-          e.isChecked = true;
-          return e;
-        });
+        this.selectedFeatures = (res.featureList.slice(0) || []).map(
+          (e: any) => {
+            e.isChecked = true;
+            return e;
+          }
+        );
       },
       (err: any) => {
         this.router.navigate(["**"]);
@@ -131,10 +138,10 @@ export class AddRoleComponent implements OnInit {
   addRole(p: any) {
     this.userService.addRole(p).subscribe(
       (res: any) => {
-        this.toastr.success(res.message);
+        this.toastr.success(res.data.message || "");
       },
       (err: any) => {
-        this.toastr.error(err.error.message);
+        this.toastr.error(err.error.message || "");
       }
     );
   }
@@ -142,16 +149,16 @@ export class AddRoleComponent implements OnInit {
   editRole(url: any, p: any) {
     this.userService.editRole(url, p).subscribe(
       (res: any) => {
-        this.toastr.success(res.message);
+        this.toastr.success(res.data.message || "");
       },
       (err: any) => {
-        this.toastr.error(err.error.message);
+        this.toastr.error(err.error.message || "");
       }
     );
   }
 
   setValue() {
-    this.formGroup.controls.name.setValue(this.roleData.roleName);
+    this.formGroup.controls.name.setValue(this.roleData.roleName || "");
   }
 
   onCancel() {

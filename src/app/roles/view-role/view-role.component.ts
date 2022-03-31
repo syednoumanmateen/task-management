@@ -26,11 +26,14 @@ export class ViewRoleComponent implements OnInit {
     private router: Router
   ) {
     this.appService.pageTitle = "viewrole - Task Management";
+    this.urlParams = "";
+    this.userData = {};
+    this.closeResult = "";
   }
 
   ngOnInit(): void {
     this.activatedRoute.queryParams.subscribe((data) => {
-      this.urlParams = data;
+      this.urlParams = data || "";
     });
     this.viewRole();
   }
@@ -38,11 +41,11 @@ export class ViewRoleComponent implements OnInit {
   viewRole() {
     this.userService.viewRole(this.urlParams.id || "").subscribe(
       (res: any) => {
-        this.userData = res;
+        this.userData = res || {};
       },
       (err: any) => {
         this.router.navigate(["**"]);
-        this.toastr.error(err.error.message);
+        this.toastr.error(err.error.message || "");
       }
     );
   }
@@ -50,7 +53,7 @@ export class ViewRoleComponent implements OnInit {
   onEdit(id: any) {
     this.router.navigate(["/roles/add-role"], {
       queryParams: {
-        id: id,
+        id: id || "",
       },
     });
   }

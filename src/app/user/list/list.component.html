@@ -21,7 +21,7 @@
     <div class="col-md mb-4">
         <label class="form-label">Status</label>
         <select class="custom-select" [(ngModel)]="statusValue">
-            <option *ngFor="let item of status" [value]="item.value">{{item.title}}</option>
+            <option *ngFor="let item of status" [value]="item.value||0">{{item.title||""}}</option>
         </select>
     </div>
 
@@ -40,7 +40,7 @@
         <div class="row">
             <div class="col">
                 Total Number Of Users: &nbsp;
-                <span>{{userData.length}}</span>
+                <span>{{userData.length||0}}</span>
             </div>
         </div>
 
@@ -84,13 +84,13 @@
             </thead>
             <tbody>
                 <tr *ngFor="let user of userData">
-                    <td class="align-middle">{{user.userCode}}</td>
-                    <td class="align-middle"><a href="javascript:void(0)">{{user.email}}</a></td>
-                    <td class="align-middle">{{user.email}}</td>
-                    <td class="align-middle">{{user.fName}}&nbsp;{{user.lName}}</td>
-                    <td class="align-middle">{{user.createdOn |date: 'dd/MM/yyyy'}}</td>
+                    <td class="align-middle">{{user.userCode||''}}</td>
+                    <td class="align-middle"><a href="javascript:void(0)">{{user.email||""}}</a></td>
+                    <td class="align-middle">{{user.email||""}}</td>
+                    <td class="align-middle">{{user.fName||""}}&nbsp;{{user.lName||""}}</td>
+                    <td class="align-middle">{{user.createdOn |date: 'dd/MM/yyyy'||""}}</td>
                     <td class="align-middle">
-                        <span class="">{{user.role}}</span>
+                        <span class="">{{user.role||""}}</span>
                     </td>
                     <td class="align-middle">
                         <span
@@ -106,9 +106,9 @@
                         <span *ngIf="user.status=='Created'" class="badge badge-outline-default">Created</span>
                     </td>
                     <td class="text-center text-nowrap">
-                        <a class="btn btn-danger btn-sm" (click)="onBlock(user._id)">block</a>&nbsp;
-                        <a class="btn btn-primary btn-sm" (click)="onView(user._id)">View</a>&nbsp;
-                        <a (click)="onDelete(user._id)" class="btn btn-danger btn-sm">Remove</a>
+                        <a class="btn btn-danger btn-sm" (click)="onBlock(user._id||'')">block</a>&nbsp;
+                        <a class="btn btn-primary btn-sm" (click)="onView(user._id||'')">View</a>&nbsp;
+                        <a (click)="onDelete(user._id||'')" class="btn btn-danger btn-sm">Remove</a>
                     </td>
                 </tr>
             </tbody>

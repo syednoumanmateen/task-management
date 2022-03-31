@@ -1,7 +1,6 @@
 import { AppService } from "src/app/providers/app.service";
 import { ToastrService } from "ngx-toastr";
 import { Component, OnInit } from "@angular/core";
-import { DataStorageService } from "src/app/providers/data-storage.service";
 import { UserService } from "src/app/providers/user.service";
 import { Router } from "@angular/router";
 
@@ -15,12 +14,13 @@ export class FeaturesListComponent implements OnInit {
   userData: any;
   constructor(
     private userService: UserService,
-    private storage: DataStorageService,
     private toastr: ToastrService,
     private router: Router,
     private appService: AppService
   ) {
     this.appService.pageTitle = "list of features - Task Management";
+    this.userId="";
+    this.userData={}
   }
 
   ngOnInit(): void {
@@ -37,7 +37,7 @@ export class FeaturesListComponent implements OnInit {
         this.userData = res || {};
       },
       (err: any) => {
-        this.toastr.error(err.error.message);
+        this.toastr.error(err.error.message||"");
       }
     );
   }
@@ -45,7 +45,7 @@ export class FeaturesListComponent implements OnInit {
   onView(id: any) {
     this.router.navigate(["/features/view-feature"], {
       queryParams: {
-        id: id,
+        id: id||"",
       },
     });
   }
@@ -53,11 +53,11 @@ export class FeaturesListComponent implements OnInit {
   onDelete(id: any) {
     this.userService.deletFeature(id).subscribe(
       (res: any) => {
-        this.toastr.success(res.message || "");
+        this.toastr.success(res.data.message || "");
         this.ngOnInit();
       },
       (err: any) => {
-        this.toastr.error(err.error.message);
+        this.toastr.error(err.error.message||"");
       }
     );
   }

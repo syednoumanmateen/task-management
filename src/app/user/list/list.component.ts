@@ -17,8 +17,8 @@ export class ListComponent implements OnInit {
   userData: any;
   role: Array<any>;
   status: Array<any>;
-  roleValue = "";
-  statusValue = "";
+  roleValue: string;
+  statusValue: string;
   date: any;
   constructor(
     private userService: UserService,
@@ -31,6 +31,8 @@ export class ListComponent implements OnInit {
     this.userData = {};
     this.role = this.getRole();
     this.status = this.getStatus();
+    this.roleValue = "";
+    this.statusValue = "";
   }
 
   ngOnInit(): void {
@@ -93,7 +95,7 @@ export class ListComponent implements OnInit {
         this.userData = res || {};
       },
       (err: any) => {
-        this.toastr.error(err.message);
+        this.toastr.error(err.error.message||"");
       }
     );
   }
@@ -111,27 +113,29 @@ export class ListComponent implements OnInit {
   onDelete(id: any) {
     this.userService.deleteUser(id).subscribe(
       (res: any) => {
-        this.toastr.success(res.message);
+        this.toastr.success(res.data.message || "");
         this.ngOnInit();
       },
       (err: any) => {
-        this.toastr.error(err.message);
+        this.toastr.error(err.error.message);
       }
     );
   }
 
   onFilter() {
     let p = {
-      role: this.roleValue,
-      status: this.statusValue,
-      startDate: this.date[0],
-      endDate: this.date[1],
+      role: this.roleValue||"",
+      status: this.statusValue||"",
+      startDate: this.date[0]||{},
+      endDate: this.date[1]||{},
     };
     this.userService.filterUser(p).subscribe(
       (res: any) => {
-        this.userData = res;
+        this.userData = res || {};
       },
-      (err: any) => {}
+      (err: any) => {
+        this.toastr.error(err.message.message || err.error.message||"");
+      }
     );
   }
 }

@@ -1,10 +1,10 @@
 <div class="media align-items-center py-3 mb-3">
     <img src="assets/profile.png" alt="" class="d-block ui-w-100 rounded-circle">
     <div class="media-body ml-4">
-        <h4 class="font-weight-bold mb-0">{{userData.fName}}&nbsp;{{userData.lName}}<div
-                class="text-muted font-weight-normal">{{userData.email}}</div>
+        <h4 class="font-weight-bold mb-0">{{userData.fName||""}}&nbsp;{{userData.lName||""}}<div
+                class="text-muted font-weight-normal">{{userData.email||""}}</div>
         </h4>
-        <div class="text-muted mb-2">ID: {{userData.userCode}}</div>
+        <div class="text-muted mb-2">ID: {{userData.userCode||""}}</div>
         <a class="btn btn-primary btn-sm" (click)="onEdit()">Edit</a>
     </div>
 </div>
@@ -14,7 +14,7 @@
         <div class="d-flex col-md align-items-center">
             <div class="card-body d-block text-body">
                 <div class="text-muted small line-height-1">Posts</div>
-                <div class="text-xlarge">{{userData.role}}</div>
+                <div class="text-xlarge">{{userData.role||""}}</div>
             </div>
         </div>
 
@@ -25,15 +25,15 @@
             <tbody>
                 <tr>
                     <td>Username:</td>
-                    <td>{{userData.email}}</td>
+                    <td>{{userData.email||""}}</td>
                 </tr>
                 <tr>
                     <td>Name:</td>
-                    <td>{{userData.fName}}&nbsp;{{userData.lName}}</td>
+                    <td>{{userData.fName||""}}&nbsp;{{userData.lName||""}}</td>
                 </tr>
                 <tr>
                     <td>E-mail:</td>
-                    <td>{{userData.email}}</td>
+                    <td>{{userData.email||""}}</td>
                 </tr>
                 <tr>
                     <td>Company:</td>
@@ -41,8 +41,6 @@
                 </tr>
             </tbody>
         </table>
-
-
 
         <h6 class="mt-4 mb-3">Personal info</h6>
 
@@ -55,7 +53,7 @@
                 <tr>
                     <td>Address:</td>
                     <td class="pl-5">
-                        {{userData.address.doorNumber}},{{userData.address.street}},{{userData.address.area}},{{userData.address.landmark}},{{userData.address.city}},{{userData.address.state}}-{{userData.address.postalCode}}
+                        {{userData.address.doorNumber||""}},{{userData.address.street||""}},{{userData.address.area||""}},{{userData.address.landmark||""}},{{userData.address.city||""}},{{userData.address.state||""}}-{{userData.address.postalCode||0}}
                     </td>
                 </tr>
             </tbody>
@@ -67,7 +65,7 @@
             <tbody>
                 <tr>
                     <td>Phone:</td>
-                    <td>{{userData.phone}}</td>
+                    <td>{{userData.phone||0}}</td>
                 </tr>
         </table>
     </div>
@@ -87,7 +85,7 @@
                 <tr>
                     <td>Role:</td>
                     <td>
-                        <span>{{userData.role}}</span>
+                        <span>{{userData.rol||""}}</span>
                     </td>
                 </tr>
                 <tr>

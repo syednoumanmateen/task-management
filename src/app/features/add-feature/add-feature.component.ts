@@ -23,11 +23,13 @@ export class AddFeatureComponent implements OnInit {
   ) {
     this.appService.pageTitle = "addfeature - Task Management";
     this.formGroup = this.getFormGroup();
+    this.urlParams = {};
+    this.userData = {};
   }
 
   ngOnInit(): void {
     this.activatedroute.queryParams.subscribe((data) => [
-      (this.urlParams = data),
+      (this.urlParams = data || ""),
     ]);
     if (this.urlParams.id) {
       this.onViewFeature();
@@ -56,7 +58,7 @@ export class AddFeatureComponent implements OnInit {
     }
     return {
       msg: msg,
-      status: (msg == "") ? true : false,
+      status: msg == "" ? true : false,
     };
   }
 
@@ -82,10 +84,10 @@ export class AddFeatureComponent implements OnInit {
   addFeature(p: any) {
     this.userService.addFeature(p).subscribe(
       (res: any) => {
-        this.toastr.success(res.message);
+        this.toastr.success(res.data.message || "");
       },
       (err: any) => {
-        this.toastr.error(err.error.message);
+        this.toastr.error(err.error.message || "");
       }
     );
   }
@@ -93,10 +95,10 @@ export class AddFeatureComponent implements OnInit {
   editFeature(url: any, p: any) {
     this.userService.editFeature(url, p).subscribe(
       (res: any) => {
-        this.toastr.success(res.message);
+        this.toastr.success(res.data.message || "");
       },
       (err: any) => {
-        this.toastr.error(err.error.message);
+        this.toastr.error(err.error.message || "");
       }
     );
   }
@@ -113,7 +115,7 @@ export class AddFeatureComponent implements OnInit {
         this.setValue();
       },
       (err: any) => {
-        this.toastr.error(err.error.message);
+        this.toastr.error(err.error.message || "");
       }
     );
   }

@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from "@angular/router";
 import { FormControl, FormGroup } from "@angular/forms";
 import { AppService } from "src/app/providers/app.service";
 import { Component, OnInit } from "@angular/core";
+import { timeStamp } from "console";
 
 @Component({
   selector: "app-add-project",
@@ -16,7 +17,6 @@ import { Component, OnInit } from "@angular/core";
 })
 export class AddProjectComponent implements OnInit {
   formGroup: FormGroup;
-  // date: any;
   urlParams: any;
   userData: any;
   roleData: any;
@@ -34,11 +34,15 @@ export class AddProjectComponent implements OnInit {
     this.appService.pageTitle = "addProject - Task Management";
     this.formGroup = this.getFormGroup();
     this.date = [];
+    this.urlParams = {};
+    this.userData = {};
+    this.roleData = {};
+    this.projectData = {};
   }
 
   ngOnInit(): void {
     this.activatedRoute.queryParams.subscribe((data) => {
-      this.urlParams = data;
+      this.urlParams = data || "";
     });
     this.userList();
     this.getRoles();
@@ -53,7 +57,7 @@ export class AddProjectComponent implements OnInit {
         this.userData = res || {};
       },
       (err: any) => {
-        this.toastr.error(err.message);
+        this.toastr.error(err.error.message || "");
       }
     );
   }
@@ -61,10 +65,10 @@ export class AddProjectComponent implements OnInit {
   getRoles() {
     this.userService.roleList().subscribe(
       (res: any) => {
-        this.roleData = res;
+        this.roleData = res || {};
       },
       (err: any) => {
-        this.toastr.error(err.message);
+        this.toastr.error(err.error.message || "");
       }
     );
   }
@@ -106,12 +110,12 @@ export class AddProjectComponent implements OnInit {
     } else {
       let fg = this.formGroup.value;
       let p = {
-        nameOfProject: fg.name,
-        handledBy: fg.lead,
-        members: fg.user,
-        projectDescription: fg.description,
-        startDate: this.date[0],
-        endDate: this.date[1],
+        nameOfProject: fg.name || "",
+        handledBy: fg.lead || "",
+        members: fg.user || "",
+        projectDescription: fg.description || "",
+        startDate: this.date[0] || [],
+        endDate: this.date[1] || [],
       };
       if (this.urlParams.id) {
         this.onEditProject(this.urlParams.id, p);
@@ -124,10 +128,10 @@ export class AddProjectComponent implements OnInit {
   onAddProject(p: any) {
     this.userService.addProject(p).subscribe(
       (res: any) => {
-        this.toastr.success(res.message);
+        this.toastr.success(res.data.message || "");
       },
       (err: any) => {
-        this.toastr.error(err.error.message);
+        this.toastr.error(err.error.message || "");
       }
     );
   }
@@ -135,10 +139,10 @@ export class AddProjectComponent implements OnInit {
   onEditProject(id: any, p: any) {
     this.userService.editProject(id, p).subscribe(
       (res: any) => {
-        this.toastr.success(res.message);
+        this.toastr.success(res.data.message || "");
       },
       (err: any) => {
-        this.toastr.error(err.error.message);
+        this.toastr.error(err.error.message || "");
       }
     );
   }
@@ -146,11 +150,11 @@ export class AddProjectComponent implements OnInit {
   viewProject() {
     this.userService.viewProject(this.urlParams.id).subscribe(
       (res: any) => {
-        this.projectData = res[0];
+        this.projectData = res[0] || [];
         this.setValue();
       },
       (err: any) => {
-        this.toastr.error(err.error.message);
+        this.toastr.error(err.error.message || "");
       }
     );
   }
@@ -167,10 +171,7 @@ export class AddProjectComponent implements OnInit {
     fg.controls.lead.setValue(p.handledBy || "");
     fg.controls.user.setValue(p.members || "");
     fg.controls.description.setValue(p.projectDescription || "");
-    this.date = [
-      this.projectData.startDate,
-      this.projectData.endDate
-    ];
+    this.date = [this.projectData.startDate, this.projectData.endDate];
   }
 
   // private formatDate(date: any) {

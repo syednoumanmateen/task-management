@@ -1,5 +1,5 @@
 <h4 class="font-weight-bold py-3 mb-4" *ngIf="projectData">
-	Edit Project <span class="text-muted">#{{projectData.projectCode}}</span>
+	Edit Project <span class="text-muted">#{{projectData.projectCode||""}}</span>
 </h4>
 <h4 class="font-weight-bold py-3 mb-4" *ngIf="!projectData">
 	Add Project

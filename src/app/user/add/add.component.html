@@ -1,5 +1,5 @@
 <h4 class="font-weight-bold py-3 mb-4" *ngIf="userData">
-    Edit User <span class="text-muted">#{{userData.userCode}}</span>
+    Edit User <span class="text-muted">#{{userData.userCode||""}}</span>
 </h4>
 <h4 class="font-weight-bold py-3 mb-4" *ngIf="!userData">
     Add User

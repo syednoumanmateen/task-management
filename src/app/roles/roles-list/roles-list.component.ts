@@ -25,6 +25,8 @@ export class RolesListComponent implements OnInit {
     private storage: DataStorageService
   ) {
     this.appService.pageTitle = "list of role - Task Management";
+    this.userData = {};
+    this.closeResult = "";
   }
 
   ngOnInit(): void {
@@ -38,10 +40,10 @@ export class RolesListComponent implements OnInit {
   getRoles() {
     this.userService.roleList().subscribe(
       (res: any) => {
-        this.userData = res;
+        this.userData = res||"";
       },
       (err: any) => {
-        this.toastr.error(err.message);
+        this.toastr.error(err.error.message||"");
       }
     );
   }
@@ -49,7 +51,7 @@ export class RolesListComponent implements OnInit {
   onView(id: any) {
     this.router.navigate(["/roles/view-role"], {
       queryParams: {
-        id: id,
+        id: id||"",
       },
     });
   }
@@ -57,17 +59,17 @@ export class RolesListComponent implements OnInit {
   onDelete(id: any) {
     this.userService.deletRole(id).subscribe(
       (res: any) => {
-        this.toastr.success(res.message);
+        this.toastr.success(res.data.message||"");
         this.ngOnInit();
       },
       (err: any) => {
-        this.toastr.error(err.message);
+        this.toastr.error(err.error.message||"");
       }
     );
   }
 
   viewFeatures(data: any) {
-    this.storage.setData("featureList", data);
+    this.storage.setData("featureList", data||{});
     this.open();
   }
 

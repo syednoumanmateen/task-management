@@ -18,6 +18,7 @@ export class ProjectComponent implements OnInit {
     private toastr: ToastrService
   ) {
     this.appService.pageTitle = "Project - Task Management";
+    this.userData || {};
   }
 
   ngOnInit(): void {
@@ -31,7 +32,7 @@ export class ProjectComponent implements OnInit {
   onView(id: any) {
     this.router.navigate(["/projects/view-project"], {
       queryParams: {
-        id: id,
+        id: id || "",
       },
     });
   }
@@ -39,10 +40,10 @@ export class ProjectComponent implements OnInit {
   onRemove(id: any) {
     this.userService.removeProject(id).subscribe(
       (res: any) => {
-        this.toastr.success(res.message);
+        this.toastr.success(res.data.message || "");
       },
       (err: any) => {
-        this.toastr.error(err.error.message);
+        this.toastr.error(err.error.message || "");
       }
     );
   }
@@ -50,10 +51,10 @@ export class ProjectComponent implements OnInit {
   getProject() {
     this.userService.projectList().subscribe(
       (res: any) => {
-        this.userData = res;
+        this.userData = res || {};
       },
       (err: any) => {
-        this.toastr.error(err.error.message);
+        this.toastr.error(err.error.message || "");
       }
     );
   }

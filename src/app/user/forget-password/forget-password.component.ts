@@ -156,7 +156,7 @@ export class ForgetPasswordComponent implements OnInit {
           this.open(this.restPassword);
         },
         (err: any) => {
-          this.toastr.error(err.message);
+          this.toastr.error(err.error.message||"");
         }
       );
     }
@@ -181,7 +181,7 @@ export class ForgetPasswordComponent implements OnInit {
           this.router.navigate(["/login"]);
         },
         (err: any) => {
-          this.toastr.error(err.message);
+          this.toastr.error(err.error.message||"");
         }
       );
     }

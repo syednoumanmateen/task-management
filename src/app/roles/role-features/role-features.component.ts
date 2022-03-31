@@ -20,16 +20,17 @@ export class RoleFeaturesComponent implements OnInit {
     private appService: AppService
   ) {
     this.appService.pageTitle = "list of features - Task Management";
+    this.userData = {};
   }
 
   ngOnInit(): void {
-    this.userData = this.storage.getData("featureList");
+    this.userData = this.storage.getData("featureList" || {});
   }
 
   onView(id: any) {
     this.router.navigate(["/features/view-feature"], {
       queryParams: {
-        id: id,
+        id: id || "",
       },
     });
   }
@@ -37,11 +38,11 @@ export class RoleFeaturesComponent implements OnInit {
   onDelete(id: any) {
     this.userService.deletFeature(id).subscribe(
       (res: any) => {
-        this.toastr.success(res.message || "");
+        this.toastr.success(res.data.message || "");
         this.ngOnInit();
       },
       (err: any) => {
-        this.toastr.error(err.error.message);
+        this.toastr.error(err.error.message || "");
       }
     );
   }
