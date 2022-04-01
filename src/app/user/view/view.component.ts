@@ -12,6 +12,7 @@ import { UserService } from "src/app/providers/user.service";
 export class ViewComponent implements OnInit {
   urlParams: any;
   userData: any;
+  resetPassword: any;
 
   constructor(
     private router: Router,
@@ -41,6 +42,14 @@ export class ViewComponent implements OnInit {
         this.router.navigate(["**"]);
         this.toastr.error(err.error.message || "");
       }
+    );
+  }
+
+  onResetpsw() {
+    let p = this.resetPassword;
+    this.userService.resetPassword(this.userData.email, p).subscribe(
+      (res: any) => {},
+      (err: any) => {}
     );
   }
 

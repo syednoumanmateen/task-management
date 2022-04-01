@@ -4,7 +4,6 @@ import { ActivatedRoute, Router } from "@angular/router";
 import { FormControl, FormGroup } from "@angular/forms";
 import { AppService } from "src/app/providers/app.service";
 import { Component, OnInit } from "@angular/core";
-import { timeStamp } from "console";
 
 @Component({
   selector: "app-add-project",
@@ -162,7 +161,7 @@ export class AddProjectComponent implements OnInit {
 
   onCancel() {
     this.formGroup.reset();
-    this.router.navigate(["/dashboard"]);
+    this.router.navigate(["/projects"]);
   }
 
   setValue() {

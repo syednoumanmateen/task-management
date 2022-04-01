@@ -35,11 +35,13 @@ export class UserService {
     return this.ajax.delete("/user/remove/" + id);
   }
 
-  changePassword(params: any) {
-    return this.ajax.post("/user/change-password/", params);
+  changePassword(id: any, params: any) {
+    return this.ajax.post("/user/change-password/" + id, params);
   }
 
-  forgetPassword(params: any) {
+  forgetPassword(params: any) { 
+    console.log("triger");
+    
     return this.ajax.post("/user/forget-password", params);
   }
 

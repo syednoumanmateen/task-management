@@ -89,7 +89,7 @@ export class ForgetPasswordComponent implements OnInit {
     }
     return {
       msg: msg,
-      status: (msg = "") ? true : false,
+      status: (msg == "") ? true : false,
     };
   }
   validateOTP() {
@@ -102,7 +102,7 @@ export class ForgetPasswordComponent implements OnInit {
     }
     return {
       msg: msg,
-      status: (msg = "") ? true : false,
+      status: (msg == "") ? true : false,
     };
   }
   validateResetPassword() {
@@ -119,7 +119,7 @@ export class ForgetPasswordComponent implements OnInit {
     }
     return {
       msg: msg,
-      status: (msg = "") ? true : false,
+      status: (msg == "") ? true : false,
     };
   }
 
@@ -128,8 +128,9 @@ export class ForgetPasswordComponent implements OnInit {
     if (v.status == false) {
       this.toastr.error(v.msg);
     } else {
+      console.log("trig1");
       let p = {
-        email: this.formGroup.value.email||'',
+        email: this.formGroup.value.email,
       };
       this.userService.forgetPassword(p).subscribe(
         (res: any) => {

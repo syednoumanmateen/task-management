@@ -13,7 +13,7 @@ export class AuthInterceptorService {
   constructor(private storage: DataStorageService, private router: Router) {}
 
   intercept(req: HttpRequest<any>, next: HttpHandler) {
-    let jwt = this.storage.getToken();
+    let jwt = this.storage.getToken("token");
     let reqOpt: any = {};
     if (jwt) {
       reqOpt["headers"] = req.headers.set("Authorization", "JWT " + jwt);

@@ -142,7 +142,7 @@ export class AddComponent implements OnInit {
 
   onCancel() {
     this.formGroup.reset();
-    this.router.navigate(["/dashboard"]);
+    this.router.navigate(["/users"]);
   }
 
   getRoles() {

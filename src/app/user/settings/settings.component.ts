@@ -15,18 +15,24 @@ import { ToastrService } from "ngx-toastr";
 export class SettingsComponent implements OnInit {
   curTab = "password";
   formGroup: FormGroup;
+  userId: any;
 
   constructor(
     private userService: UserService,
     private appService: AppService,
     private toastr: ToastrService,
-    private router: Router
+    private router: Router,
+    private storage: DataStorageService
   ) {
     this.appService.pageTitle = "settings - Task Management";
     this.formGroup = this.getFormGroup();
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.userId = this.storage.getToken("userId");
+    console.log(this.userId);
+    
+  }
 
   getFormGroup() {
     let fg = new FormGroup({
@@ -53,7 +59,7 @@ export class SettingsComponent implements OnInit {
     }
     return {
       msg: msg,
-      status: (msg == "") ? true : false,
+      status: msg == "" ? true : false,
     };
   }
 
@@ -66,12 +72,12 @@ export class SettingsComponent implements OnInit {
         Password: this.formGroup.value.currentpsw || "",
         newPassword: this.formGroup.value.newpsw || "",
       };
-      this.userService.changePassword(p).subscribe(
+      this.userService.changePassword(this.userId, p).subscribe(
         (res: any) => {
-          this.toastr.success(res.message||"");
+          this.toastr.success(res.message || "");
         },
         (err: any) => {
-          this.toastr.error(err.error.message||"");
+          this.toastr.error(err.error.message || "");
         }
       );
     }

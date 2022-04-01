@@ -1,5 +1,6 @@
+import { AppService } from "src/app/providers/app.service";
 import { FormGroup } from "@angular/forms";
-import { ActivatedRoute } from "@angular/router";
+import { ActivatedRoute, Router } from "@angular/router";
 import { UserService } from "src/app/providers/user.service";
 import { Component, OnInit } from "@angular/core";
 import { ToastrService } from "ngx-toastr";
@@ -13,12 +14,17 @@ export class AddTaskComponent implements OnInit {
   urlParams: any;
   taskData: any;
   date: any;
+  timeFrom: any;
+  timeTo: any;
   formGroup: FormGroup;
   constructor(
     private userService: UserService,
     private toastr: ToastrService,
-    private activtedRoute: ActivatedRoute
+    private activtedRoute: ActivatedRoute,
+    private appService: AppService,
+    private router: Router
   ) {
+    this.appService.pageTitle = "addTask - Task Management";
     this.formGroup = this.getFormGroup();
   }
 
@@ -26,6 +32,9 @@ export class AddTaskComponent implements OnInit {
     this.activtedRoute.queryParams.subscribe((data) => {
       this.urlParams = data;
     });
+    if (this.urlParams.id) {
+      this.viewTask(this.urlParams.id);
+    }
   }
 
   getFormGroup() {
@@ -62,6 +71,7 @@ export class AddTaskComponent implements OnInit {
     this.userService.editTask(url, p).subscribe(
       (res: any) => {
         this.toastr.success(res.data.message);
+        this.router.navigate(["/tasks"]);
       },
       (err: any) => {
         this.toastr.error(err.error.message);
@@ -73,6 +83,7 @@ export class AddTaskComponent implements OnInit {
     this.userService.addTask(p).subscribe(
       (res: any) => {
         this.toastr.success(res.data.message);
+        this.router.navigate(["/tasks"]);
       },
       (err: any) => {
         this.toastr.error(err.error.message);
@@ -80,5 +91,20 @@ export class AddTaskComponent implements OnInit {
     );
   }
 
-  onCancel() {}
+  onCancel() {
+    this.formGroup.reset();
+    this.router.navigate(["/tasks"]);
+  }
+
+  viewTask(url: any) {
+    let p = url;
+    this.userService.viewTask(p).subscribe(
+      (res: any) => {
+        this.taskData = res[0] || {};
+      },
+      (err: any) => {
+        this.toastr.error(err.error.message);
+      }
+    );
+  }
 }

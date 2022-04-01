@@ -68,18 +68,18 @@ export class LoginComponent implements OnInit {
   getLogin() {
     let fg = this.formGroup.value;
     let p = {
-      email: fg.userName||'',
-      password: fg.password||'',
+      email: fg.userName || "",
+      password: fg.password || "",
     };
     this.user.userLogin(p).subscribe(
       (res: any) => {
-        this.toastr.success(res.status||"");
-        this.storage.setToken(res.data.token || "");
-        this.storage.setData("user", this.formGroup.value.userName || "");
+        this.toastr.success(res.status || "");
+        this.storage.setToken("token", res.data.token);
+        this.storage.setToken("userId", res.data.userId);
         this.router.navigate(["/dashboard"]);
       },
       (err: any) => {
-        this.toastr.error(err.error.message||"");
+        this.toastr.error(err.error.message || "");
       }
     );
   }

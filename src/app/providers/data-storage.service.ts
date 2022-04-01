@@ -9,11 +9,11 @@ export class DataStorageService {
     this.Data = {};
   }
 
-  setToken(token: string) {
-    localStorage.setItem("token", token);
+  setToken(key:any,token: string) {
+    localStorage.setItem(key, token);
   }
-  getToken() {
-    return localStorage.getItem("token");
+  getToken(key: any) {
+    return localStorage.getItem(key);
   }
 
   removeToken() {

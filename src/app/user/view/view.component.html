@@ -82,6 +82,18 @@
                         <a class="btn btn-danger btn-sm" (click)="onReject(Inactive)">Reject</a>&nbsp; -->
                     </td>
                 </tr>
+                <tr *ngIf="userData.role=='Admin'">
+                    <td>Reset Password:</td>
+                    <td>
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <input type="text" [(ngModel)]="resetPassword" class="form-control">
+                                <button class="btn btn-primary btn-sm mt-2" (click)="onResetpsw()">Reset Password</button>
+                            </div>
+
+                        </div>
+                    </td>
+                </tr>
                 <tr>
                     <td>Role:</td>
                     <td>

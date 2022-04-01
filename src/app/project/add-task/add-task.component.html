@@ -12,31 +12,31 @@
       <div class="form-row">
         <div class="form-group col-md-6">
           <label class="form-label">Parent ID<span class="text-danger">*</span></label>
-          <input type="text" formControlName="fname" class="form-control">
+          <input type="text" formControlName="id" class="form-control">
         </div>
         <div class="form-group col-md-6">
           <label class="form-label">Type<span class="text-danger">*</span></label>
-          <input type="text" formControlName="lname" class="form-control">
+          <input type="text" formControlName="type" class="form-control">
         </div>
       </div>
       <div class="form-row">
         <div class="form-group col-md-6">
           <label class="form-label">Title<span class="text-danger">*</span></label>
-          <input type="email" formControlName="email" class="form-control mb-1">
+          <input type="email" formControlName="title" class="form-control mb-1">
         </div>
         <div class="form-group col-md-6">
           <label class="form-label">Description<span class="text-danger">*</span></label>
-          <input type="mobile" formControlName="mobileno" class="form-control">
+          <input type="mobile" formControlName="description" class="form-control">
         </div>
       </div>
       <div class="form-row">
         <div class="form-group col-md-6">
           <label class="form-label">Effort Type<span class="text-danger">*</span></label>
-          <input type="mobile" formControlName="mobileno" class="form-control">
+          <input type="mobile" formControlName="effortType" class="form-control">
         </div>
         <div class="form-group col-md-6">
-          <label class="form-label">effort Value<span class="text-danger">*</span></label>
-          <input type="mobile" formControlName="mobileno" class="form-control">
+          <label class="form-label">Effort Value<span class="text-danger">*</span></label>
+          <input type="mobile" formControlName="effortValue" class="form-control">
         </div>
       </div>
       <div class="form-row">
@@ -48,12 +48,18 @@
     </form>
     <div class="form-row">
       <div class="form-group col-md-6">
-        <label class="form-label">Created-Dedline<span class="text-danger">*</span></label>
+        <label class="form-label">From-To<span class="text-danger">*</span></label>
         <custom-daterange-picker [(ngModel)]="date"></custom-daterange-picker>
       </div>
-      <div class="form-group col-md-6">
-        <label class="form-label">Created-Dedline<span class="text-danger">*</span></label>
-        <custom-daterange-picker [(ngModel)]="date"></custom-daterange-picker>
+      <div class="form-group col-md-6 row">
+        <div class="col-md-6">
+          <label class="form-label">From<span class="text-danger">*</span></label>
+          <ngb-timepicker [seconds]="true" [(ngModel)]="timeFrom" [secondStep]="30"></ngb-timepicker>
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">To<span class="text-danger">*</span></label>
+          <ngb-timepicker [seconds]="true" [(ngModel)]="timeTo" [secondStep]="30"></ngb-timepicker>
+        </div>
       </div>
     </div>
   </div>
