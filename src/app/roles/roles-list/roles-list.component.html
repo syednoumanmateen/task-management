@@ -82,7 +82,7 @@
                             (click)="viewFeatures(user.featureList||'')">View
                             Features</button>
                     </td>
-                    <td class="align-middle">{{user.createdBy||""}</td>
+                    <td class="align-middle">{{user.createdBy ||""}}</td>
                     <td class="align-middle">{{user.createdOn |date:'dd/MM/yyyy'||""}}</td>
                     <td class="text-center text-nowrap align-middle">
                         <a class="btn btn-danger btn-sm">Block</a>&nbsp;

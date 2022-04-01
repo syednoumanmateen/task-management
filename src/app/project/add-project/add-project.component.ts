@@ -37,7 +37,6 @@ export class AddProjectComponent implements OnInit {
     this.urlParams = {};
     this.userData = {};
     this.roleData = {};
-    this.projectData = {};
   }
 
   ngOnInit(): void {
@@ -87,7 +86,7 @@ export class AddProjectComponent implements OnInit {
     let fg = this.formGroup.value;
     let msg = "";
     if (!fg.name.trim()) {
-      msg = "enter The Pr oject Name";
+      msg = "enter The Project Name";
     } else if (!fg.lead) {
       msg = "Select  The Team Leader";
     } else if (!fg.user) {
@@ -129,6 +128,7 @@ export class AddProjectComponent implements OnInit {
     this.userService.addProject(p).subscribe(
       (res: any) => {
         this.toastr.success(res.data.message || "");
+        this.router.navigate(["/projects"]);
       },
       (err: any) => {
         this.toastr.error(err.error.message || "");
@@ -140,6 +140,7 @@ export class AddProjectComponent implements OnInit {
     this.userService.editProject(id, p).subscribe(
       (res: any) => {
         this.toastr.success(res.data.message || "");
+        this.router.navigate(["/projects"]);
       },
       (err: any) => {
         this.toastr.error(err.error.message || "");

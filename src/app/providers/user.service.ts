@@ -51,6 +51,10 @@ export class UserService {
     return this.ajax.post("/user/reset-password/" + id, params);
   }
 
+  filterUser(params?: any) {
+    return this.ajax.getFilter("/user/filtered-list", params);
+  }
+
   addFeature(params: any) {
     return this.ajax.post("/feature/add/", params);
   }
@@ -115,32 +119,55 @@ export class UserService {
     return this.ajax.put("/project/remove/" + id);
   }
 
-  filterUser(params?: any) {
-    return this.ajax.getFilter("/user/filtered-list", params);
+  filterProject() {
+    return this.ajax.getFilter("/project/filtered-list");
   }
 
   addTask(params: any) {
-    return this.ajax.post("/task/add/", params);
+    return this.ajax.post("/project/add-tasklist/", params);
   }
 
   taskList() {
-    return this.ajax.get("/task/list/");
+    return this.ajax.get("/project/tasklist/");
   }
 
   viewTask(id: any) {
-    return this.ajax.get("/task/get/" + id);
+    return this.ajax.get("/project/get-tasklist/" + id);
   }
 
   editTask(id: any, params: any) {
-    return this.ajax.put("/task/update/" + id, params);
+    return this.ajax.put("/project/update-tasklist/" + id, params);
   }
 
   deleteTask(id: any) {
-    return this.ajax.delete("/task/remove/" + id);
+    return this.ajax.delete("/project/remove-tasklist/" + id);
   }
 
-  removeTask(id: any) {
-    return this.ajax.put("/task                                                                                                                                                                                                                                                                                                                                                                                                                                                         /remove/" + id);
+  filterTask(params?: any) {
+    return this.ajax.getFilter("/user/filtered-list", params);
   }
 
+  addTaskComment(params: any) {
+    return this.ajax.post("/project/add-taskComment/", params);
+  }
+
+  taskListComment() {
+    return this.ajax.get("/project/taskComment/");
+  }
+
+  viewTaskComment(id: any) {
+    return this.ajax.get("/project/get-taskComment/" + id);
+  }
+
+  editTaskComment(id: any, params: any) {
+    return this.ajax.put("/project/update-taskComment/" + id, params);
+  }
+
+  deleteTaskComment(id: any) {
+    return this.ajax.delete("/project/remove-taskComment/" + id);
+  }
+
+  filterTaskComment(params?: any) {
+    return this.ajax.getFilter("/user/filtered-list", params);
+  }
 }

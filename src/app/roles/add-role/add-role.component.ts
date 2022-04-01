@@ -4,7 +4,6 @@ import { FormControl, FormGroup } from "@angular/forms";
 import { AppService } from "src/app/providers/app.service";
 import { Component, OnInit } from "@angular/core";
 import { UserService } from "src/app/providers/user.service";
-import { throws } from "assert";
 
 @Component({
   selector: "app-add-role",
@@ -30,7 +29,6 @@ export class AddRoleComponent implements OnInit {
     this.formGroup = this.getFormGroup();
     this.urlParams = {};
     this.features = {};
-    this.roleData = {};
     this.selectedFeatures = {};
     this.featureList = {};
   }
@@ -138,7 +136,8 @@ export class AddRoleComponent implements OnInit {
   addRole(p: any) {
     this.userService.addRole(p).subscribe(
       (res: any) => {
-        this.toastr.success(res.data.message || "");
+        this.toastr.success(res.data || "");
+        this.router.navigate(["/roles"]);
       },
       (err: any) => {
         this.toastr.error(err.error.message || "");
@@ -149,7 +148,8 @@ export class AddRoleComponent implements OnInit {
   editRole(url: any, p: any) {
     this.userService.editRole(url, p).subscribe(
       (res: any) => {
-        this.toastr.success(res.data.message || "");
+        this.toastr.success(res.data || "");
+        this.router.navigate(["/roles"]);
       },
       (err: any) => {
         this.toastr.error(err.error.message || "");

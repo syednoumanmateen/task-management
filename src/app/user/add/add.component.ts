@@ -14,6 +14,7 @@ export class AddComponent implements OnInit {
   formGroup: FormGroup;
   urlParams: any;
   userData: any;
+  roleData: any;
   constructor(
     private appService: AppService,
     private userService: UserService,
@@ -24,13 +25,13 @@ export class AddComponent implements OnInit {
     this.appService.pageTitle = "addUser - Task Management";
     this.formGroup = this.getFormGroup();
     this.urlParams = {};
-    this.userData = {};
     this.activatedRoute.queryParams.subscribe((data) => {
       this.urlParams = data || "";
     });
   }
 
   ngOnInit(): void {
+    this.getRoles();
     if (this.urlParams.id) {
       this.userView();
     }
@@ -120,6 +121,7 @@ export class AddComponent implements OnInit {
     this.userService.addUser(p).subscribe(
       (res: any) => {
         this.toastr.success(res.data.message || "");
+        this.router.navigate(["/users"]);
       },
       (err: any) => {
         this.toastr.error(err.error.message || "");
@@ -130,6 +132,7 @@ export class AddComponent implements OnInit {
     this.userService.editUser(url, p).subscribe(
       (res: any) => {
         this.toastr.success(res.data.message || "");
+        this.router.navigate(["/users"]);
       },
       (err: any) => {
         this.toastr.error(err.error.message || "");
@@ -140,6 +143,17 @@ export class AddComponent implements OnInit {
   onCancel() {
     this.formGroup.reset();
     this.router.navigate(["/dashboard"]);
+  }
+
+  getRoles() {
+    this.userService.roleList().subscribe(
+      (res: any) => {
+        this.roleData = res || "";
+      },
+      (err: any) => {
+        this.toastr.error(err.error.message || "");
+      }
+    );
   }
 
   userView() {
