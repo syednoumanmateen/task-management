@@ -1,9 +1,10 @@
 import { AppService } from "src/app/providers/app.service";
-import { FormGroup } from "@angular/forms";
+import { FormControl, FormGroup } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
 import { UserService } from "src/app/providers/user.service";
 import { Component, OnInit } from "@angular/core";
 import { ToastrService } from "ngx-toastr";
+import { threadId } from "worker_threads";
 
 @Component({
   selector: "app-add-task",
@@ -14,8 +15,9 @@ export class AddTaskComponent implements OnInit {
   urlParams: any;
   taskData: any;
   date: any;
-  timeFrom: any;
-  timeTo: any;
+  timeFrom: string;
+  timeTo: string;
+  curOpt = "high";
   formGroup: FormGroup;
   constructor(
     private userService: UserService,
@@ -26,6 +28,8 @@ export class AddTaskComponent implements OnInit {
   ) {
     this.appService.pageTitle = "addTask - Task Management";
     this.formGroup = this.getFormGroup();
+    this.timeFrom = "";
+    this.timeTo = "";
   }
 
   ngOnInit(): void {
@@ -38,14 +42,37 @@ export class AddTaskComponent implements OnInit {
   }
 
   getFormGroup() {
-    let fg = new FormGroup({});
+    let fg = new FormGroup({
+      id: new FormControl(""),
+      type: new FormControl(""),
+      title: new FormControl(""),
+      description: new FormControl(""),
+      effortType: new FormControl(""),
+      effortValue: new FormControl(""),
+      attachment: new FormControl(""),
+      priority: new FormControl(""),
+    });
     return fg;
   }
 
   valiadateForm() {
     let fg = this.formGroup.value;
     let msg = "";
-    if (fg) {
+    if (!fg.id) {
+      msg = "Enter The Parent Id";
+    } else if (!fg.type) {
+      msg = "Enter The Type";
+    } else if (!fg.description) {
+      msg = "Enter The Description";
+    } else if (!fg.effortType) {
+      msg = "Enter The Effort Type";
+    } else if (!fg.effortValue) {
+      msg = "Enter The Effort Value";
+    } else if (!fg.attachment) {
+      msg = "Add The Attachment";
+    } else if (!fg.priority) {
+      msg = "Select The Priority";
+    } else {
       msg = "";
     }
     return {
@@ -56,9 +83,26 @@ export class AddTaskComponent implements OnInit {
 
   onApiCall() {
     let v = this.valiadateForm();
+    let fg = this.formGroup.value;
     if (v.status == false) {
+      this.toastr.error(v.msg);
     } else {
-      let p = {};
+      let p = {
+        parentId: fg.id,
+        type: fg.type,
+        title: fg.title,
+        description: fg.description,
+        attachment: fg.attachment,
+        fromDate: this.date[0],
+        toDate: this.date[1],
+        fromTime: "this.timeFrom",
+        toTime: "this.timeTo",
+        effort: {
+          type: fg.effortType,
+          value: fg.effortValue,
+        },
+        priority: fg.priority,
+      };
       if (this.urlParams.id) {
         this.editTask(this.urlParams.is, p);
       } else {

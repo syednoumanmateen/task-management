@@ -42,7 +42,15 @@
       <div class="form-row">
         <div class="form-group col-md-6">
           <label class="form-label">Attachment<span class="text-danger">*</span></label>
-          <input type="mobile" formControlName="mobileno" class="form-control">
+          <input type="mobile" formControlName="attachment" class="form-control">
+        </div>
+        <div class="form-group col-md-6">
+          <label class="form-label">Priority</label>
+          <select formControlName="priority" class="custom-select">
+            <option value="high">High</option>
+            <option value="medium">Medium</option>
+            <option value="low">Low</option>
+          </select>
         </div>
       </div>
     </form>
@@ -52,13 +60,13 @@
         <custom-daterange-picker [(ngModel)]="date"></custom-daterange-picker>
       </div>
       <div class="form-group col-md-6 row">
-        <div class="col-md-6">
+        <div class="col-md-4">
           <label class="form-label">From<span class="text-danger">*</span></label>
-          <ngb-timepicker [seconds]="true" [(ngModel)]="timeFrom" [secondStep]="30"></ngb-timepicker>
+          <ngb-timepicker [(ngModel)]="timeFrom"></ngb-timepicker>
         </div>
-        <div class="col-md-6">
+        <div class="col-md-3">
           <label class="form-label">To<span class="text-danger">*</span></label>
-          <ngb-timepicker [seconds]="true" [(ngModel)]="timeTo" [secondStep]="30"></ngb-timepicker>
+          <ngb-timepicker [(ngModel)]="timeTo"></ngb-timepicker>
         </div>
       </div>
     </div>
