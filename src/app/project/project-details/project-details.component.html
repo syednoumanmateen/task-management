@@ -58,122 +58,20 @@
         <!-- / Attached files -->
 
         <div class="nav-tabs-top mb-4">
-            <ul ngbNav #projectTabs="ngbNav" class="nav-tabs">
-                <li ngbNavItem>
-                    <a ngbNavLink>Tasks</a>
-                    <ng-template ngbNavContent>
-                        <div>
-                            <div class="card-body">
-                                <p class="text-muted small">section.title</p>
 
-                                <div class="project-task-list custom-controls-stacked">
-                                    <div class="project-task-item">
+            <a>Tasks</a>
+            <div>
+                <div class="card-body">
+                    <p class="text-muted small">section.title</p>
 
-                                        <label class="ui-todo-item custom-control custom-checkbox">
-                                            <input type="checkbox" class="custom-control-input">
-                                            <span class="custom-control-label">task.text</span>
-                                            <span>
-                                                <span class="badge font-weight-normal ml-2">Title</span>
-                                            </span>
-                                            <span
-                                                class="ui-todo-badge badge badge-outline-default font-weight-normal ml-2">task.lef
-                                                left</span>
-                                        </label>
-
-                                        <div class="d-flex align-items-center">
-                                            <div class="project-task-handle ion ion-ios-move text-lightest small mr-3">
-                                            </div>
-
-                                            <div class="btn-group" ngbDropdown>
-                                                <button type="button"
-                                                    class="btn btn-default btn-xs rounded-pill icon-btn borderless md-btn-flat hide-arrow"
-                                                    ngbDropdownToggle><i class="ion ion-ios-more"></i></button>
-                                                <div ngbDropdownMenu>
-                                                    <a class="dropdown-item" href="javascript:void(0)">Edit</a>
-                                                    <a class="dropdown-item" href="javascript:void(0)">Remove</a>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                </div>
-
-                            </div>
-                            <hr class="m-0">
+                    <div class="project-task-list custom-controls-stacked">
+                        <div class="project-task-item">
+                            tasks
                         </div>
+                    </div>
 
-                        <div class="card-footer py-3">
-                            <button type="button" class="btn btn-primary"><i class="ion ion-md-add"></i>&nbsp; Add
-                                task</button>&nbsp;
-                            <button type="button" class="btn btn-default md-btn-flat"><i
-                                    class="ion ion-md-close"></i>&nbsp; Clear</button>
-                        </div>
-                    </ng-template>
-                </li>
-                <li ngbNavItem>
-                    <a ngbNavLink>Discussion</a>
-                    <ng-template ngbNavContent>
-                        <div class="card-body">
-
-                            <div class="media mb-3">
-                                <div>
-                                    <img src="'assets/profile.png" class="ui-w-40 rounded-circle" alt>
-                                    <div class="text-muted small text-nowrap mt-2">message.date</div>
-                                </div>
-                                <div class="media-body bg-lighter rounded py-2 px-3 ml-3">
-                                    <div class="font-weight-semibold mb-1">message.user.name</div>
-                                    message.text
-                                </div>
-                            </div>
-
-                        </div>
-                        <div class="card-footer">
-                            <div class="input-group">
-                                <input type="text" class="form-control" placeholder="Type your message">
-                                <div class="input-group-append">
-                                    <button type="button" class="btn btn-primary">Send</button>
-                                </div>
-                            </div>
-                        </div>
-                    </ng-template>
-                </li>
-                <li ngbNavItem>
-                    <a ngbNavLink>Activity</a>
-                    <ng-template ngbNavContent>
-                        <div class="card-body">
-
-                            <div class="media pb-1 mb-3">
-                                <div class="ui-feed-icon-container">
-                                    <span class="ui-icon ui-feed-icon ion ion-md-add bg-primary text-white"></span>
-                                    <span class="ui-icon ui-feed-icon ion ion-md-code bg-warning text-body"></span>
-                                    <span
-                                        class="ui-icon ui-feed-icon ion ion-md-checkmark bg-success text-white"></span>
-                                    <span class="ui-icon ui-feed-icon ion ion-md-contact bg-info text-white"></span>
-
-                                    <img src="assets/profile.png" class="ui-w-40 rounded-circle" alt>
-                                </div>
-                                <div class="media-body align-self-center ml-3">
-                                    <div><a href="javascript:void(0)">user.name</a> added new task
-                                        <strong>taskTitle</strong>
-                                    </div>
-                                    <div><a href="javascript:void(0)">user.name</a> pushed commit
-                                        <strong>data.commitId</strong>
-                                    </div>
-                                    <div><a href="javascript:void(0)">user.name</a> completed task
-                                        <strong>taskTitle</strong>
-                                    </div>
-                                    <div><a href="javascript:void(0)">user.name</a> assigned new participant
-                                        <a href="javascript:void(0)"><strong>data.userName</strong></a>
-                                    </div>
-
-                                    <div class="text-muted small">.date}} ago</div>
-                                </div>
-                            </div>
-
-                        </div>
-                    </ng-template>
-                </li>
-            </ul>
+                </div>
+            </div>
         </div>
 
     </div>

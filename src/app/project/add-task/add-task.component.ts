@@ -72,6 +72,10 @@ export class AddTaskComponent implements OnInit {
       msg = "Add The Attachment";
     } else if (!fg.priority) {
       msg = "Select The Priority";
+    } else if (!this.date[0]) {
+      msg = "Select The Start Date";
+    } else if (!this.date[1]) {
+      msg = "Select The End Date";
     } else {
       msg = "";
     }
@@ -88,20 +92,36 @@ export class AddTaskComponent implements OnInit {
       this.toastr.error(v.msg);
     } else {
       let p = {
-        parentId: fg.id,
-        type: fg.type,
-        title: fg.title,
-        description: fg.description,
-        attachment: fg.attachment,
-        fromDate: this.date[0],
-        toDate: this.date[1],
-        fromTime: "this.timeFrom",
-        toTime: "this.timeTo",
+        // parentId: fg.id,
+        // type: fg.type,
+        // title: fg.title,
+        // description: fg.description,
+        // attachment: fg.attachment,
+        // fromDate: this.date[0],
+        // toDate: this.date[1],
+        // fromTime: 12,
+        // toTime: 12,
+        // effort: {
+        //   type: fg.effortType,
+        //   value: fg.effortValue,
+        // },
+        // priority: fg.priority,
+
+        parentId: "62356236534",
+        type: "xyz",
+        title: "Task List Test",
+        description: "hasjjgas dshdhjds dsjkksdkjhsd",
+        attachment: "dsdsjhhdsh",
+        status: "created",
+        fromDate: "2022-03-26T14:47:24.035Z",
+        toDate: "2022-03-26T14:47:24.035Z",
+        fromTime: "12:00",
+        toTime: "12:00",
         effort: {
-          type: fg.effortType,
-          value: fg.effortValue,
+          type: "123",
+          value: "2215",
         },
-        priority: fg.priority,
+        priority: "high",
       };
       if (this.urlParams.id) {
         this.editTask(this.urlParams.is, p);
