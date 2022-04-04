@@ -2,10 +2,10 @@
 <div class="container-m-nx container-m-ny bg-white mb-4">
   <div class="media col-md-10 col-lg-8 col-xl-7 py-5 mx-auto">
     <img src="assets/profile.png" alt class="d-block ui-w-100 rounded-circle">
-    <span *ngIf="loading">
+    <!-- <span *ngIf="loading">
       <app-spinner></app-spinner>
-    </span>
-    <div class="media-body ml-5" *ngIf="!loading">
+    </span> -->
+    <div class="media-body ml-5">
       <h4 class="font-weight-bold mt-2">{{userData.fName}}&nbsp;{{userData.lName}}</h4>
       <div class="text-muted mb-4">
         Emp ID: {{userData.userCode}}
@@ -25,9 +25,9 @@
 
         <div class="row mb-2">
           <div class="col-md-3 text-muted">Date Of Joining:</div>
-          <span *ngIf="loading">
+          <!-- <span *ngIf="loading">
             <app-spinner></app-spinner>
-          </span>
+          </span> -->
           <div class="col-md-9">
             {{userData.date|date:"dd/MM/yyyy"}}
           </div>
@@ -42,9 +42,9 @@
 
         <div class="row mb-2">
           <div class="col-md-3 text-muted">Address:</div>
-          <span *ngIf="loading">
+          <!-- <span *ngIf="loading">
             <app-spinner></app-spinner>
-          </span>
+          </span> -->
           <div class="col-md-9">
             {{userData.address.doorNumber}},{{userData.address.street}},{{userData.address.landmark}},{{userData.address.area}},{{userData.address.city}},{{userData.address.state}}-{{userData.address.postalCode}}
           </div>
@@ -54,9 +54,9 @@
 
         <div class="row mb-2">
           <div class="col-md-3 text-muted">Phone:</div>
-          <span *ngIf="loading">
+          <!-- <span *ngIf="loading">
             <app-spinner></app-spinner>
-          </span>
+          </span> -->
           <div class="col-md-9">
             {{userData.phone}}
           </div>
@@ -64,9 +64,9 @@
 
         <div class="row mb-2">
           <div class="col-md-3 text-muted">Email:</div>
-          <span *ngIf="loading">
+          <!-- <span *ngIf="loading">
             <app-spinner></app-spinner>
-          </span>
+          </span> -->
           <div class="col-md-9">
             {{userData.email}}
           </div>

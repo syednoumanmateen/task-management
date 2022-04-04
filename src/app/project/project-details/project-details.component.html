@@ -1,7 +1,7 @@
 <h4 class="py-3 mb-4">
 	<ol class="breadcrumb font-weight-bold m-0">
 		<li class="breadcrumb-item"><a href="javascript:void(0)">Projects</a></li>
-		<li class="breadcrumb-item active">{{ userData.nameOfProject || "" }}</li>
+		<li class="breadcrumb-item active">{{userData.nameOfProject || "" }}</li>
 	</ol>
 </h4>
 
@@ -30,7 +30,7 @@
 
 		<div class="nav-tabs-top mb-4 ">
 			<h4 class="d-flex justify-content-between align-items-center w-100 font-weight-bold py-3 mb-4">
-				<div>Projects</div>
+				<div>Tasks</div>
 				<button type="button" class="btn btn-primary rounded-pill d-block" (click)="onAddTask()"><span
 						class="ion ion-md-add"></span>&nbsp; Create
 					Task</button>
@@ -65,34 +65,20 @@
 									</th>
 								</tr>
 							</thead>
-							<span *ngIf="loading">
+							<!-- <span *ngIf="loading">
 								<app-spinner></app-spinner>
-							</span>
-							<tbody *ngIf="!loading">
+							</span> -->
+							<tbody>
 								<tr *ngFor="let task of taskData">
 									<td class="align-middle">{{task.taskCode||''}}</td>
 									<td class="align-middle">{{task.title||""}}</td>
 									<td class="align-middle">{{task.type||""}}</td>
 									<td class="align-middle">{{task.createdBy||""}}</td>
-									<td class="align-middle">{{task.toDate |date: 'dd/MM/yyyy'||""}}</td>
+									<td class="align-middle">{{task.createdAt |date: 'dd/MM/yyyy'||""}}</td>
 									<td class="align-middle">
 										<span class="">{{task.status||""}}</span>
 									</td>
-									<td class="align-middle">
-										<span
-											*ngIf="(task.verification.emailConfirmation && task.verification.phoneConfirmation)=='Confirmed'"
-											class="text-success">Confirmed</span>
-										<span
-											*ngIf="(task.verification.emailConfirmation && task.verification.phoneConfirmation)=='Pending'"
-											class=" text-warning">Pending</span>
-									</td>
-
-									<td class="align-middle">
-										<span *ngIf="task.status=='Active'" class="badge badge-outline-success">Active</span>
-										<span *ngIf="task.status=='Created'" class="badge badge-outline-default">Created</span>
-									</td>
 									<td class="text-center text-nowrap">
-										<a class="btn btn-danger btn-sm" (click)="onBlock(task._id||'')">Block</a>&nbsp;
 										<a class="btn btn-primary btn-sm" (click)="onView(task._id||'')">View</a>&nbsp;
 										<a (click)="onDelete(task._id||'')" class="btn btn-danger btn-sm">Remove</a>
 									</td>
@@ -113,39 +99,39 @@
 			<ul class="list-group list-group-flush">
 				<li class="list-group-item d-flex justify-content-between align-items-center">
 					<div class="text-muted">ID</div>
-					<span *ngIf="loading">
+					<!-- <span *ngIf="loading">
 						<app-spinner></app-spinner>
-					</span>
-					<div *ngIf="!loading">
+					</span> -->
+					<div>
 						{{ userData.projectCode || "" }}</div>
 				</li>
 				<li class="list-group-item d-flex justify-content-between align-items-center">
 					<div class="text-muted">Created by</div>
-					<span *ngIf="loading">
+					<!-- <span *ngIf="loading">
 						<app-spinner></app-spinner>
-					</span>
-					<div *ngIf="!loading">{{ userData.createdBy || "" }}</div>
+					</span> -->
+					<div>{{ userData.createdBy || "" }}</div>
 				</li>
 				<li class="list-group-item d-flex justify-content-between align-items-center">
 					<div class="text-muted">Created at</div>
-					<span *ngIf="loading">
+					<!-- <span *ngIf="loading">
 						<app-spinner></app-spinner>
-					</span>
-					<div *ngIf="!loading">{{ userData.createdOn | date: "dd/MM/yyyy" || "" }}</div>
+					</span> -->
+					<div>{{ userData.createdOn | date: "dd/MM/yyyy" || "" }}</div>
 				</li>
 				<li class="list-group-item d-flex justify-content-between align-items-center">
 					<div class="text-muted">Started</div>
-					<span *ngIf="loading">
+					<!-- <span *ngIf="loading">
 						<app-spinner></app-spinner>
-					</span>
-					<div *ngIf="!loading">{{ userData.startDate | date: "dd/MM/yyyy" || "" }}</div>
+					</span> -->
+					<div>{{ userData.startDate | date: "dd/MM/yyyy" || "" }}</div>
 				</li>
 				<li class="list-group-item d-flex justify-content-between align-items-center">
 					<div class="text-muted">Deadline</div>
-					<span *ngIf="loading">
+					<!-- <span *ngIf="loading">
 						<app-spinner></app-spinner>
-					</span>
-					<div *ngIf="!loading">{{ userData.endDate | date: "dd/MM/yyyy" || "" }}</div>
+					</span> -->
+					<div>{{ userData.endDate | date: "dd/MM/yyyy" || "" }}</div>
 				</li>
 				<li class="list-group-item d-flex justify-content-between align-items-center">
 					<div class="text-muted">Priority</div>
@@ -175,12 +161,10 @@
 				<div class="list-group-item">
 					<div class="media align-items-center">
 						<div class="media-body px-2">
-							<span *ngIf="loading">
-								<app-spinner></app-spinner>
-							</span>
-							<a *ngIf="!loading"> class="text-body">{{ userData.handledBy.fName }}&nbsp;{{
-								userData.handledBy.lName
-								}}</a>
+							<!-- <span *ngIf="loading">
+								
+							</span> -->
+							<a  class="text-body">{{ userData.handledBy.fName }}&nbsp;{{userData.handledBy.lName}}</a>
 						</div>
 					</div>
 				</div>
@@ -197,10 +181,10 @@
 				<div class="list-group-item" *ngFor="let member of userData.members">
 					<div class="media align-items-center">
 						<div class="media-body px-2">
-							<span *ngIf="loading">
-								<app-spinner></app-spinner>
-							</span>
-							<a *ngIf="!loading"> class="text-body">{{ member.fName }}&nbsp;{{ member.lName }}</a>
+							<!-- <span *ngIf="loading">
+								
+							</span> -->
+							<a  class="text-body">{{member.fName }}&nbsp;{{member.lName }}</a>
 						</div>
 					</div>
 				</div>

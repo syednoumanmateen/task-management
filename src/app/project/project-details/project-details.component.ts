@@ -81,15 +81,25 @@ export class ProjectDetailsComponent implements OnInit {
     });
   }
 
-  onBlock(id: any) {}
-
-  onDelete(id: any) {}
-
   onAddTask() {
     this.router.navigate(["/tasks/add-task"], {
       queryParams: {
         id: this.userData._id,
       },
     });
+  }
+
+  onDelete(id: any) {
+    this.loading = true;
+    this.userService.deleteTask(id).subscribe(
+      (res: any) => {
+        this.loading = false;
+        this.toastr.success(res.data.message);
+      },
+      (err: any) => {
+        this.loading = false;
+        this.toastr.error(err.error.message);
+      }
+    );
   }
 }

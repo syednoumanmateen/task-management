@@ -1,10 +1,10 @@
 <div class="media align-items-center py-3 mb-3">
     <img src="assets/profile.png" alt="" class="d-block ui-w-100 rounded-circle">
     <div class="media-body ml-4">
-        <span *ngIf="loading">
+        <!-- <span *ngIf="loading">
             <app-spinner></app-spinner>
-        </span>
-        <h4 *ngIf="!loading" class="font-weight-bold mb-0">{{userData.fName||""}}&nbsp;{{userData.lName||""}}<div
+        </span> -->
+        <h4 class="font-weight-bold mb-0">{{userData.fName||""}}&nbsp;{{userData.lName||""}}<div
                 class="text-muted font-weight-normal">{{userData.email||""}}</div>
         </h4>
         <div class="text-muted mb-2">Emp ID: {{userData.userCode||""}}</div>
@@ -15,10 +15,10 @@
 <div class="card">
     <div class="row no-gutters row-bordered">
         <div class="d-flex col-md align-items-center">
-            <span *ngIf="loading">
+            <!-- <span *ngIf="loading">
                 <app-spinner></app-spinner>
-            </span>
-            <div class="card-body d-block text-body" *ngIf="!loading">
+            </span> -->
+            <div class="card-body d-block text-body">
                 <div class="text-muted small line-height-1">Posts</div>
                 <div class="text-xlarge">{{userData.role||""}}</div>
             </div>
@@ -31,31 +31,31 @@
             <tbody>
                 <tr>
                     <td class="col-sm-4">Username:</td>
-                    <span *ngIf="loading">
+                    <!-- <span *ngIf="loading">
                         <app-spinner></app-spinner>
-                    </span>
-                    <td *ngIf="!loading">{{userData.email||""}}</td>
+                    </span> -->
+                    <td>{{userData.email||""}}</td>
                 </tr>
                 <tr>
                     <td class="col-sm-4">Name:</td>
-                    <span *ngIf="loading">
+                    <!-- <span *ngIf="loading">
                         <app-spinner></app-spinner>
-                    </span>
-                    <td *ngIf="!loading">{{userData.fName||""}}&nbsp;{{userData.lName||""}}</td>
+                    </span> -->
+                    <td>{{userData.fName||""}}&nbsp;{{userData.lName||""}}</td>
                 </tr>
                 <tr>
                     <td class="col-sm-4">E-mail:</td>
-                    <span *ngIf="loading">
+                    <!-- <span *ngIf="loading">
                         <app-spinner></app-spinner>
-                    </span>
-                    <td *ngIf="!loading">{{userData.email||""}}</td>
+                    </span> -->
+                    <td>{{userData.email||""}}</td>
                 </tr>
                 <tr>
                     <td class="col-sm-4">Company:</td>
-                    <span *ngIf="loading">
+                    <!-- <span *ngIf="loading">
                         <app-spinner></app-spinner>
-                    </span>
-                    <td *ngIf="!loading">StoreKing</td>
+                    </span> -->
+                    <td>StoreKing</td>
                 </tr>
             </tbody>
         </table>
@@ -66,17 +66,17 @@
             <tbody>
                 <tr>
                     <td>Birthday:</td>
-                    <span *ngIf="loading">
+                    <!-- <span *ngIf="loading">
                         <app-spinner></app-spinner>
-                    </span>
-                    <td *ngIf="!loading"></td>
+                    </span> -->
+                    <td></td>
                 </tr>
                 <tr>
                     <td class="col-sm-4">Address:</td>
-                    <span *ngIf="loading">
+                    <!-- <span *ngIf="loading">
                         <app-spinner></app-spinner>
-                    </span>
-                    <td *ngIf="!loading">
+                    </span> -->
+                    <td>
                         {{userData.address.doorNumber||""}},{{userData.address.street||""}},{{userData.address.area||""}},{{userData.address.landmark||""}},{{userData.address.city||""}},{{userData.address.state||""}}-{{userData.address.postalCode||0}}
                     </td>
                 </tr>
@@ -89,10 +89,10 @@
             <tbody>
                 <tr>
                     <td class="col-sm-4">Phone:</td>
-                    <span *ngIf="loading">
+                    <!-- <span *ngIf="loading">
                         <app-spinner></app-spinner>
-                    </span>
-                    <td *ngIf="!loading">{{userData.phone||0}}</td>
+                    </span> -->
+                    <td>{{userData.phone||0}}</td>
                 </tr>
         </table>
     </div>
@@ -104,10 +104,10 @@
             <tbody>
                 <tr>
                     <td class="col-sm-4">verify user:</td>
-                    <span *ngIf="loading">
+                    <!-- <span *ngIf="loading">
                         <app-spinner></app-spinner>
-                    </span>
-                    <td *ngIf="!loading">
+                    </span> -->
+                    <td>
                         <!-- <a class="btn btn-primary btn-sm" (click)="onAccept(Active)">accept</a>&nbsp;
                         <a class="btn btn-danger btn-sm" (click)="onReject(Inactive)">Reject</a>&nbsp; -->
                     </td>
@@ -127,10 +127,10 @@
                 </tr>
                 <tr>
                     <td class="col-sm-4">Role:</td>
-                    <span *ngIf="loading">
+                    <!-- <span *ngIf="loading">
                         <app-spinner></app-spinner>
-                    </span>
-                    <td *ngIf="!loading">
+                    </span> -->
+                    <td>
                         <span>{{userData.role||""}}</span>
                     </td>
                 </tr>

@@ -2,9 +2,8 @@ import { AppService } from "src/app/providers/app.service";
 import { FormControl, FormGroup } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
 import { UserService } from "src/app/providers/user.service";
-import { Component, OnInit } from "@angular/core";
+import { Component, OnChanges, OnInit } from "@angular/core";
 import { ToastrService } from "ngx-toastr";
-import { threadId } from "worker_threads";
 
 @Component({
   selector: "app-add-task",
@@ -15,7 +14,7 @@ import { threadId } from "worker_threads";
     "../../../vendor/libs/ng-select/ng-select.scss",
   ],
 })
-export class AddTaskComponent implements OnInit {
+export class AddTaskComponent implements OnChanges, OnInit {
   urlParams: any;
   abc: any;
   taskData: any;
@@ -50,6 +49,8 @@ export class AddTaskComponent implements OnInit {
     }
     this.userList();
   }
+
+  ngOnChanges() {}
 
   getFormGroup() {
     let fg = new FormGroup({
@@ -99,66 +100,12 @@ export class AddTaskComponent implements OnInit {
   }
 
   onApiCall() {
-    console.log(this.timeFrom.hour);
     let v = this.valiadateForm();
-    let fg = this.formGroup.value;
     if (v.status == false) {
       this.toastr.error(v.msg);
     } else {
       this.userView();
-      let p = {
-        parentId: fg.id,
-        type: fg.type,
-        title: fg.title,
-        description: fg.description,
-        attachment: fg.attachment,
-        projectId: this.urlParams.id,
-        member: {
-          id: fg.user,
-          name: this.userDetails.fName,
-        },
-        fromDate: this.date[0],
-        toDate: this.date[1],
-        fromTime: this.timeFrom.hour + ":" + this.timeFrom.minute,
-        toTime: this.timeTo.hour + ":" + this.timeTo.minute,
-        effort: {
-          type: fg.effortType,
-          value: fg.effortValue,
-        },
-        priority: fg.priority,
-      };
-      this.addtask(p);
     }
-  }
-
-  // editTask(url: any, p: any) {
-  //   this.loading = true;
-  //   this.userService.editTask(url, p).subscribe(
-  //     (res: any) => {
-  //       this.loading = false;
-  //       this.toastr.success(res.data.message);
-  //       this.router.navigate(["/Projects/view-project"]);
-  //     },
-  //     (err: any) => {
-  //       this.loading = false;
-  //       this.toastr.error(err.error.message);
-  //     }
-  //   );
-  // }
-
-  addtask(p: any) {
-    this.loading = true;
-    this.userService.addTask(p).subscribe(
-      (res: any) => {
-        this.loading = false;
-        this.toastr.success(res.data.message);
-        this.router.navigate(["/projects/view-project"]);
-      },
-      (err: any) => {
-        this.loading = false;
-        this.toastr.error(err.error.message);
-      }
-    );
   }
 
   onCancel() {
@@ -201,11 +148,52 @@ export class AddTaskComponent implements OnInit {
       (res: any) => {
         this.loading = false;
         this.userDetails = res.userData || {};
+        this.addTask();
       },
       (err: any) => {
         this.loading = false;
         this.router.navigate(["**"]);
         this.toastr.error(err.error.message || "");
+      }
+    );
+  }
+
+  addTask() {
+    let fg = this.formGroup.value;
+    let p = {
+      parentId: fg.id,
+      type: fg.type,
+      title: fg.title,
+      description: fg.description,
+      attachment: fg.attachment,
+      member: {
+        id: fg.user,
+        name: this.userDetails.fName,
+      },
+      fromDate: this.date[0],
+      toDate: this.date[1],
+      fromTime: this.timeFrom.hour + ":" + this.timeFrom.minute,
+      toTime: this.timeTo.hour + ":" + this.timeTo.minute,
+      effort: {
+        type: fg.effortType,
+        value: fg.effortValue,
+      },
+      priority: fg.priority,
+    };
+    this.loading = true;
+    this.userService.addTask(this.urlParams.id, p).subscribe(
+      (res: any) => {
+        this.loading = false;
+        this.toastr.success(res.data.message);
+        this.router.navigate(["/projects/view-project"], {
+          queryParams: {
+            id: this.urlParams.id,
+          },
+        });
+      },
+      (err: any) => {
+        this.loading = false;
+        this.toastr.error(err.error.message);
       }
     );
   }

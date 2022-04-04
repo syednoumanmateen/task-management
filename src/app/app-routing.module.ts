@@ -15,7 +15,7 @@ import { DashboardComponent } from "./dashboard/dashboard.component";
 import { LoginComponent } from "./user/login/login.component";
 import { ProfileComponent } from "./user/profile/profile.component";
 import { ForgetPasswordComponent } from "./user/forget-password/forget-password.component";
-import { ProjectComponent } from "./project/project/project.component";
+import { ProjectComponent } from "./project/add-task/project/project.component";
 import { ProjectDetailsComponent } from "./project/project-details/project-details.component";
 import { TasksViewComponent } from "./project/tasks-view/tasks-view.component";
 import { LayoutBlankComponent } from "./layout/layout-blank/layout-blank.component";

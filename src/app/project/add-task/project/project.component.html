@@ -11,10 +11,10 @@
 
       <div class="card-body d-flex justify-content-between align-items-start pb-3">
         <div>
-          <span *ngIf="loading">
+          <!-- <span *ngIf="loading">
             <app-spinner></app-spinner>
-          </span>
-          <a *ngIf="!loading" class="text-body text-big
+          </span> -->
+          <a class="text-body text-big
             font-weight-semibold">{{project.nameOfProject||""}}({{project.projectCode||""}})</a>
           <span class="badge align-text-bottom ml-1">{{project.status||""}}</span>
 
@@ -30,17 +30,17 @@
         </div>
       </div>
 
-      <span *ngIf="loading">
+      <!-- <span *ngIf="loading">
         <app-spinner></app-spinner>
-      </span>
-      <div *ngIf="!loading" class="card-body pb-3">
+      </span> -->
+      <div class="card-body pb-3">
         {{project.projectDescription||""}}
       </div>
 
-      <span *ngIf="loading">
+      <!-- <span *ngIf="loading">
         <app-spinner></app-spinner>
-      </span>
-      <div *ngIf="!loading" class="card-body pb-3">
+      </span> -->
+      <div class="card-body pb-3">
         {{project.handledBy.fName||""}}&nbsp;{{project.handledBy.lName||""}}
       </div>
 
@@ -48,27 +48,27 @@
         <div class="row">
           <div class="col">
             <div class="text-muted small">Started</div>
-            <span *ngIf="loading">
+            <!-- <span *ngIf="loading">
               <app-spinner></app-spinner>
-            </span>
-            <div *ngIf="!loading" class="font-weight-bold">{{project.startDate |date:'dd/MM/yyyy'||""}}</div>
+            </span> -->
+            <div class="font-weight-bold">{{project.startDate |date:'dd/MM/yyyy'||""}}</div>
           </div>
           <div class="col">
             <div class="text-muted small">Deadline</div>
-            <span *ngIf="loading">
+            <!-- <span *ngIf="loading">
               <app-spinner></app-spinner>
-            </span>
-            <div *ngIf="!loading" class="font-weight-bold">{{project.endDate|date:'dd/MM/yyyy'||""}}</div>
+            </span> -->
+            <div class="font-weight-bold">{{project.endDate|date:'dd/MM/yyyy'||""}}</div>
           </div>
         </div>
       </div>
       <hr class="m-0">
       <div class="card-body py-3">
         <div class="text-muted small mb-2">Team</div>
-        <span *ngIf="loading">
+        <!-- <span *ngIf="loading">
           <app-spinner></app-spinner>
-        </span>
-        <div *ngIf="!loading">
+        </span> -->
+        <div>
           <div class="d-flex flex-wrap" *ngFor="let member of project.members">
             {{member.fName||""}}&nbsp;{{member.lName||""}}
           </div>

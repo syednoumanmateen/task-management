@@ -125,8 +125,8 @@ export class UserService {
     return this.ajax.getParamsObject("/project/filtered-list");
   }
   // task
-  addTask(params: any) {
-    return this.ajax.post("/project/add-tasklist/", params);
+  addTask(id: any, params: any) {
+    return this.ajax.post("/project/add-tasklist/" + id, params);
   }
 
   taskList(id: any) {
