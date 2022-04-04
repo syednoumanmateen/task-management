@@ -1,5 +1,9 @@
+import { ToastrService } from "ngx-toastr";
 import { AppService } from "src/app/providers/app.service";
 import { Component, OnInit } from "@angular/core";
+import { DataStorageService } from "src/app/providers/data-storage.service";
+import { UserService } from "src/app/providers/user.service";
+import { Router } from "@angular/router";
 
 @Component({
   selector: "app-profile",
@@ -7,9 +11,37 @@ import { Component, OnInit } from "@angular/core";
   styleUrls: ["./profile.component.css"],
 })
 export class ProfileComponent implements OnInit {
-  constructor(private appService: AppService) {
+  userId: any;
+  loading: Boolean;
+  userData: any;
+  constructor(
+    private appService: AppService,
+    private storage: DataStorageService,
+    private userService: UserService,
+    private router: Router,
+    private toastr: ToastrService
+  ) {
     this.appService.pageTitle = "profile - Task Management";
+    this.loading = false;
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.userId = this.storage.getToken("userId");
+    this.userView();
+  }
+
+  userView() {
+    this.loading = true;
+    this.userService.viewUser(this.userId).subscribe(
+      (res: any) => {
+        this.loading = false;
+        this.userData = res.userData || {};
+      },
+      (err: any) => {
+        this.loading = false;
+        this.router.navigate(["**"]);
+        this.toastr.error(err.error.message || "");
+      }
+    );
+  }
 }

@@ -3,8 +3,14 @@
         <div class="d-flex col-md align-items-center">
             <div class="card-body d-block text-body">
                 <div class="text-muted small line-height-1">Feature</div>
-                <div class="text-xlarge">{{userData.featureName||""}}</div>
-                <div class="text-xlarge">{{userData.featureCode||""}}</div>
+                <span *ngIf="loading">
+                    <app-spinner></app-spinner>
+                </span>
+                <div *ngIf="!loading"> class="text-xlarge">{{userData.featureName||""}}</div>
+                <span *ngIf="loading">
+                    <app-spinner></app-spinner>
+                </span>
+                <div *ngIf="!loading"> class="text-xlarge">{{userData.featureCode||""}}</div>
                 <a class="btn btn-primary btn-sm" (click)="onEdit(userData._id||'')">Edit</a>
             </div>
         </div>
@@ -16,19 +22,31 @@
             <tbody>
                 <tr>
                     <td>Name:</td>
-                    <td>{{userData.createdBy||""}}</td>
+                    <span *ngIf="loading">
+                        <app-spinner></app-spinner>
+                    </span>
+                    <td *ngIf="!loading">{{userData.createdBy||""}}</td>
                 </tr>
                 <tr>
                     <td>description:</td>
-                    <td>{{userData.decription||""}}</td>
+                    <span *ngIf="loading">
+                        <app-spinner></app-spinner>
+                    </span>
+                    <td *ngIf="!loading">{{userData.decription||""}}</td>
                 </tr>
                 <tr>
                     <td>fetureName:</td>
-                    <td>{{userData.featureName||""}}</td>
+                    <span *ngIf="loading">
+                        <app-spinner></app-spinner>
+                    </span>
+                    <td *ngIf="!loading">{{userData.featureName||""}}</td>
                 </tr>
                 <tr>
                     <td>ModuleNAme:</td>
-                    <td>{{userData.moduleName||""}}</td>
+                    <span *ngIf="loading">
+                        <app-spinner></app-spinner>
+                    </span>
+                    <td *ngIf="!loading">{{userData.moduleName||""}}</td>
                 </tr>
             </tbody>
         </table>

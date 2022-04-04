@@ -48,6 +48,7 @@ import { AddTaskComponent } from "./project/add-task/add-task.component";
 import { CommonModule } from "@angular/common";
 import { MyFilterPipe } from './directive/my-filter.pipe';
 import { RoleFeaturesComponent } from './roles/role-features/role-features.component';
+import { SpinnerComponent } from './spinner/spinner.component';
 
 // *******************************************************************************
 //
@@ -80,6 +81,7 @@ import { RoleFeaturesComponent } from './roles/role-features/role-features.compo
     CustomDaterangePickerComponent,
     MyFilterPipe,
     RoleFeaturesComponent,
+    SpinnerComponent,
   ],
 
   imports: [

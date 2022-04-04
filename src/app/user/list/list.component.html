@@ -40,7 +40,10 @@
         <div class="row">
             <div class="col">
                 Total Number Of Users: &nbsp;
-                <span>{{userData.length||0}}</span>
+                <span *ngIf="loading">
+                    <app-spinner></app-spinner>
+                </span>
+                <span *ngIf="!loading">{{userData.length||0}}</span>
             </div>
         </div>
 
@@ -82,7 +85,10 @@
                     </th>
                 </tr>
             </thead>
-            <tbody>
+            <span *ngIf="loading">
+                <app-spinner></app-spinner>
+            </span>
+            <tbody *ngIf="!loading">
                 <tr *ngFor="let user of userData">
                     <td class="align-middle">{{user.userCode||''}}</td>
                     <td class="align-middle"><a href="javascript:void(0)">{{user.email||""}}</a></td>

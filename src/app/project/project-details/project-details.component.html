@@ -40,63 +40,66 @@
 				<div class="card-body">
 					<div class="table-responsive">
 						<table class="table table-striped table-bordered card-table">
-								<thead>
-										<tr>
-												<th class="text-nowrap cursor-pointer">
-														ID<i class="ion text-muted ml-2"></i>
-												</th>
-												<th class="text-nowrap cursor-pointer">
-													 Title<i class="ion text-muted ml-2"></i>
-												</th>
-												<th class="text-nowrap cursor-pointer">
-														Type<i class="ion text-muted ml-2"></i>
-												</th>
-												<th class="text-nowrap cursor-pointer">
-														created By<i class="ion text-muted ml-2"></i>
-												</th>
-												<th class="text-nowrap cursor-pointer">
-														Created On<i class="ion text-muted ml-2"></i>
-												</th>
-												<th class="text-nowrap cursor-pointer">
-														Status<i class="ion text-muted ml-2"></i>
-												</th>
-												<th class="text-center cursor-pointer">
-														Actions<i class="ion text-muted ml-2"></i>
-												</th>
-										</tr>
-								</thead>
-								<tbody>
-										<tr *ngFor="let task of taskData">
-												<td class="align-middle">{{task.taskCode||''}}</td>
-												<td class="align-middle">{{task.title||""}}</td>
-												<td class="align-middle">{{task.type||""}}</td>
-												<td class="align-middle">{{task.createdBy||""}}</td>
-												<td class="align-middle">{{task.toDate |date: 'dd/MM/yyyy'||""}}</td>
-												<td class="align-middle">
-														<span class="">{{task.status||""}}</span>
-												</td>
-												<td class="align-middle">
-														<span
-																*ngIf="(task.verification.emailConfirmation && task.verification.phoneConfirmation)=='Confirmed'"
-																class="text-success">Confirmed</span>
-														<span
-																*ngIf="(task.verification.emailConfirmation && task.verification.phoneConfirmation)=='Pending'"
-																class=" text-warning">Pending</span>
-												</td>
-		
-												<td class="align-middle">
-														<span *ngIf="task.status=='Active'" class="badge badge-outline-success">Active</span>
-														<span *ngIf="task.status=='Created'" class="badge badge-outline-default">Created</span>
-												</td>
-												<td class="text-center text-nowrap">
-														<a class="btn btn-danger btn-sm" (click)="onBlock(task._id||'')">Block</a>&nbsp;
-														<a class="btn btn-primary btn-sm" (click)="onView(task._id||'')">View</a>&nbsp;
-														<a (click)="onDelete(task._id||'')" class="btn btn-danger btn-sm">Remove</a>
-												</td>
-										</tr>
-								</tbody>
+							<thead>
+								<tr>
+									<th class="text-nowrap cursor-pointer">
+										ID<i class="ion text-muted ml-2"></i>
+									</th>
+									<th class="text-nowrap cursor-pointer">
+										Title<i class="ion text-muted ml-2"></i>
+									</th>
+									<th class="text-nowrap cursor-pointer">
+										Type<i class="ion text-muted ml-2"></i>
+									</th>
+									<th class="text-nowrap cursor-pointer">
+										created By<i class="ion text-muted ml-2"></i>
+									</th>
+									<th class="text-nowrap cursor-pointer">
+										Created On<i class="ion text-muted ml-2"></i>
+									</th>
+									<th class="text-nowrap cursor-pointer">
+										Status<i class="ion text-muted ml-2"></i>
+									</th>
+									<th class="text-center cursor-pointer">
+										Actions<i class="ion text-muted ml-2"></i>
+									</th>
+								</tr>
+							</thead>
+							<span *ngIf="loading">
+								<app-spinner></app-spinner>
+							</span>
+							<tbody *ngIf="!loading">
+								<tr *ngFor="let task of taskData">
+									<td class="align-middle">{{task.taskCode||''}}</td>
+									<td class="align-middle">{{task.title||""}}</td>
+									<td class="align-middle">{{task.type||""}}</td>
+									<td class="align-middle">{{task.createdBy||""}}</td>
+									<td class="align-middle">{{task.toDate |date: 'dd/MM/yyyy'||""}}</td>
+									<td class="align-middle">
+										<span class="">{{task.status||""}}</span>
+									</td>
+									<td class="align-middle">
+										<span
+											*ngIf="(task.verification.emailConfirmation && task.verification.phoneConfirmation)=='Confirmed'"
+											class="text-success">Confirmed</span>
+										<span
+											*ngIf="(task.verification.emailConfirmation && task.verification.phoneConfirmation)=='Pending'"
+											class=" text-warning">Pending</span>
+									</td>
+
+									<td class="align-middle">
+										<span *ngIf="task.status=='Active'" class="badge badge-outline-success">Active</span>
+										<span *ngIf="task.status=='Created'" class="badge badge-outline-default">Created</span>
+									</td>
+									<td class="text-center text-nowrap">
+										<a class="btn btn-danger btn-sm" (click)="onBlock(task._id||'')">Block</a>&nbsp;
+										<a class="btn btn-primary btn-sm" (click)="onView(task._id||'')">View</a>&nbsp;
+										<a (click)="onDelete(task._id||'')" class="btn btn-danger btn-sm">Remove</a>
+									</td>
+								</tr>
+							</tbody>
 						</table>
-				</div>
+					</div>
 				</div>
 				<!-- / Table -->
 			</div>
@@ -110,23 +113,39 @@
 			<ul class="list-group list-group-flush">
 				<li class="list-group-item d-flex justify-content-between align-items-center">
 					<div class="text-muted">ID</div>
-					<div>{{ userData.projectCode || "" }}</div>
+					<span *ngIf="loading">
+						<app-spinner></app-spinner>
+					</span>
+					<div *ngIf="!loading">
+						{{ userData.projectCode || "" }}</div>
 				</li>
 				<li class="list-group-item d-flex justify-content-between align-items-center">
 					<div class="text-muted">Created by</div>
-					<div>{{ userData.createdBy || "" }}</div>
+					<span *ngIf="loading">
+						<app-spinner></app-spinner>
+					</span>
+					<div *ngIf="!loading">{{ userData.createdBy || "" }}</div>
 				</li>
 				<li class="list-group-item d-flex justify-content-between align-items-center">
 					<div class="text-muted">Created at</div>
-					<div>{{ userData.createdOn | date: "dd/MM/yyyy" || "" }}</div>
+					<span *ngIf="loading">
+						<app-spinner></app-spinner>
+					</span>
+					<div *ngIf="!loading">{{ userData.createdOn | date: "dd/MM/yyyy" || "" }}</div>
 				</li>
 				<li class="list-group-item d-flex justify-content-between align-items-center">
 					<div class="text-muted">Started</div>
-					<div>{{ userData.startDate | date: "dd/MM/yyyy" || "" }}</div>
+					<span *ngIf="loading">
+						<app-spinner></app-spinner>
+					</span>
+					<div *ngIf="!loading">{{ userData.startDate | date: "dd/MM/yyyy" || "" }}</div>
 				</li>
 				<li class="list-group-item d-flex justify-content-between align-items-center">
 					<div class="text-muted">Deadline</div>
-					<div>{{ userData.endDate | date: "dd/MM/yyyy" || "" }}</div>
+					<span *ngIf="loading">
+						<app-spinner></app-spinner>
+					</span>
+					<div *ngIf="!loading">{{ userData.endDate | date: "dd/MM/yyyy" || "" }}</div>
 				</li>
 				<li class="list-group-item d-flex justify-content-between align-items-center">
 					<div class="text-muted">Priority</div>
@@ -156,7 +175,10 @@
 				<div class="list-group-item">
 					<div class="media align-items-center">
 						<div class="media-body px-2">
-							<a class="text-body">{{ userData.handledBy.fName }}&nbsp;{{
+							<span *ngIf="loading">
+								<app-spinner></app-spinner>
+							</span>
+							<a *ngIf="!loading"> class="text-body">{{ userData.handledBy.fName }}&nbsp;{{
 								userData.handledBy.lName
 								}}</a>
 						</div>
@@ -175,7 +197,10 @@
 				<div class="list-group-item" *ngFor="let member of userData.members">
 					<div class="media align-items-center">
 						<div class="media-body px-2">
-							<a class="text-body">{{ member.fName }}&nbsp;{{ member.lName }}</a>
+							<span *ngIf="loading">
+								<app-spinner></app-spinner>
+							</span>
+							<a *ngIf="!loading"> class="text-body">{{ member.fName }}&nbsp;{{ member.lName }}</a>
 						</div>
 					</div>
 				</div>
