@@ -17,6 +17,7 @@ import { loadavg } from "os";
 })
 export class AddTaskComponent implements OnChanges, OnInit {
   urlParams: any;
+  OFF = false;
   task: {
     data: any;
     loading: Boolean;

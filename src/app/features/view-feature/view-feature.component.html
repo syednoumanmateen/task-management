@@ -6,11 +6,11 @@
                 <span *ngIf="feature.loading">
                     <app-spinner></app-spinner>
                 </span>
-                <div *ngIf="!feature.loading"> class="text-xlarge">{{feature.data.featureName||""}}</div>
+                <div *ngIf="!feature.loading" class="text-xlarge">{{feature.data.featureName||""}}</div>
                 <span *ngIf="feature.loading">
                     <app-spinner></app-spinner>
                 </span>
-                <div *ngIf="!feature.loading"> class="text-xlarge">{{feature.data.featureCode||""}}</div>
+                <div *ngIf="!feature.loading" class="text-xlarge">{{feature.data.featureCode||""}}</div>
                 <a class="btn btn-primary btn-sm" (click)="onEdit(feature.data._id||'')">Edit</a>
             </div>
         </div>
