@@ -14,6 +14,7 @@ import { ToastrService } from "ngx-toastr";
 })
 export class LoginComponent implements OnInit {
   formGroup: FormGroup;
+  loading:Boolean;
   constructor(
     private appService: AppService,
     private user: UserService,
@@ -23,6 +24,7 @@ export class LoginComponent implements OnInit {
   ) {
     this.appService.pageTitle = "Login - Task Management";
     this.formGroup = this.getFormGroup();
+    this.loading = false;
   }
 
   ngOnInit(): void {}
@@ -71,14 +73,17 @@ export class LoginComponent implements OnInit {
       email: fg.userName || "",
       password: fg.password || "",
     };
+    this.loading = true;
     this.user.userLogin(p).subscribe(
       (res: any) => {
+        this.loading = false;
         this.toastr.success(res.status || "");
         this.storage.setToken("token", res.data.token);
         this.storage.setToken("userId", res.data.userId);
         this.router.navigate(["/dashboard"]);
       },
       (err: any) => {
+        this.loading = false;
         this.toastr.error(err.error.message || "");
       }
     );

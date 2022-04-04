@@ -11,6 +11,7 @@ import { UserService } from "src/app/providers/user.service";
 })
 export class ProjectComponent implements OnInit {
   userData: any;
+  loading:Boolean
   constructor(
     private router: Router,
     private appService: AppService,
@@ -19,6 +20,7 @@ export class ProjectComponent implements OnInit {
   ) {
     this.appService.pageTitle = "Project - Task Management";
     this.userData || {};
+    this.loading = false;
   }
 
   ngOnInit(): void {
@@ -38,22 +40,28 @@ export class ProjectComponent implements OnInit {
   }
 
   onRemove(id: any) {
+    this.loading = true;
     this.userService.removeProject(id).subscribe(
       (res: any) => {
+        this.loading = false;
         this.toastr.success(res.data.message || "");
       },
       (err: any) => {
+        this.loading = false;
         this.toastr.error(err.error.message || "");
       }
     );
   }
 
   getProject() {
+    this.loading = true;
     this.userService.projectList().subscribe(
       (res: any) => {
+        this.loading = false;
         this.userData = res || {};
       },
       (err: any) => {
+        this.loading = false;
         this.toastr.error(err.error.message || "");
       }
     );

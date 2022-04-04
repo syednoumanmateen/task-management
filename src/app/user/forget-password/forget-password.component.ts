@@ -18,6 +18,7 @@ export class ForgetPasswordComponent implements OnInit {
   closeResult: string;
   otpGroup: FormGroup;
   resetGroup: FormGroup;
+  loading:Boolean;
   constructor(
     private appService: AppService,
     private userService: UserService,
@@ -30,6 +31,7 @@ export class ForgetPasswordComponent implements OnInit {
     this.closeResult = "";
     this.otpGroup = this.getOTP();
     this.resetGroup = this.getresetPassword();
+    this.loading = false;
   }
 
   open(data: any) {
@@ -128,15 +130,17 @@ export class ForgetPasswordComponent implements OnInit {
     if (v.status == false) {
       this.toastr.error(v.msg);
     } else {
-      console.log("trig1");
       let p = {
         email: this.formGroup.value.email,
       };
+      this.loading = true;
       this.userService.forgetPassword(p).subscribe(
         (res: any) => {
+          this.loading = false;
           this.open(this.OTPModal);
         },
         (err: any) => {
+          this.loading = false;
           this.toastr.error(err.message);
         }
       );
@@ -151,12 +155,14 @@ export class ForgetPasswordComponent implements OnInit {
       let p = {
         code: this.otpGroup.value.otp||'',
       };
-
+      this.loading = true;
       this.userService.OTPValidation(p).subscribe(
         (res: any) => {
+          this.loading = false;
           this.open(this.restPassword);
         },
         (err: any) => {
+          this.loading = false;
           this.toastr.error(err.error.message||"");
         }
       );
@@ -176,12 +182,15 @@ export class ForgetPasswordComponent implements OnInit {
       let p = {
         password: f.newpsw||'',
       };
+      this.loading = true;
       this.userService.resetPassword(this.formGroup.value.email, p).subscribe(
         (res: any) => {
+          this.loading = false;
           this.modalService.dismissAll();
           this.router.navigate(["/login"]);
         },
         (err: any) => {
+          this.loading = false;
           this.toastr.error(err.error.message||"");
         }
       );

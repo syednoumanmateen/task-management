@@ -16,6 +16,7 @@ export class ViewRoleComponent implements OnInit {
   urlParams: any;
   userData: any;
   closeResult: any;
+loading:Boolean
   constructor(
     private appService: AppService,
     private activatedRoute: ActivatedRoute,
@@ -29,6 +30,7 @@ export class ViewRoleComponent implements OnInit {
     this.urlParams = "";
     this.userData = {};
     this.closeResult = "";
+    this.loading = false;
   }
 
   ngOnInit(): void {
@@ -39,11 +41,14 @@ export class ViewRoleComponent implements OnInit {
   }
 
   viewRole() {
+    this.loading = true;
     this.userService.viewRole(this.urlParams.id || "").subscribe(
       (res: any) => {
+        this.loading = false;
         this.userData = res || {};
       },
       (err: any) => {
+        this.loading = false;
         this.router.navigate(["**"]);
         this.toastr.error(err.error.message || "");
       }

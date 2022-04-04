@@ -1,12 +1,9 @@
-<h4 class="font-weight-bold py-3 mb-4" *ngIf="taskData">
-  Edit Task <span class="text-muted">#{{userData.userCode||""}</span>
-</h4>
-<h4 class="font-weight-bold py-3 mb-4" *ngIf="!taskData">
+<h4 class="font-weight-bold py-3 mb-4" >
   Add Task
 </h4>
 
-<div class="card mb-2">
-  <div class="card-body pb-2">
+<div class="card">
+  <div class="card-body">
     <form action="" [formGroup]="formGroup">
 
       <div class="form-row">
@@ -31,6 +28,21 @@
       </div>
       <div class="form-row">
         <div class="form-group col-md-6">
+          <label class="form-label">Member<span class="text-danger">*</span></label>
+          <ng-select [items]="userData" [closeOnSelect]="true" bindLabel="fName" bindValue="_id" formControlName="user">
+          </ng-select>
+        </div>
+        <div class="form-group col-md-6">
+          <label class="form-label">Priority</label>
+          <select formControlName="priority" class="custom-select">
+            <option value="high">High</option>
+            <option value="medium">Medium</option>
+            <option value="low">Low</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group col-md-6">
           <label class="form-label">Effort Type<span class="text-danger">*</span></label>
           <input type="mobile" formControlName="effortType" class="form-control">
         </div>
@@ -44,14 +56,6 @@
           <label class="form-label">Attachment<span class="text-danger">*</span></label>
           <input type="mobile" formControlName="attachment" class="form-control">
         </div>
-        <div class="form-group col-md-6">
-          <label class="form-label">Priority</label>
-          <select formControlName="priority" class="custom-select">
-            <option value="high">High</option>
-            <option value="medium">Medium</option>
-            <option value="low">Low</option>
-          </select>
-        </div>
       </div>
     </form>
     <div class="form-row">
@@ -60,11 +64,11 @@
         <custom-daterange-picker [(ngModel)]="date"></custom-daterange-picker>
       </div>
       <div class="form-group col-md-6 row">
-        <div class="col-md-4">
+        <div class="col-md-6">
           <label class="form-label">From<span class="text-danger">*</span></label>
           <ngb-timepicker [(ngModel)]="timeFrom"></ngb-timepicker>
         </div>
-        <div class="col-md-3">
+        <div class="col-md-6">
           <label class="form-label">To<span class="text-danger">*</span></label>
           <ngb-timepicker [(ngModel)]="timeTo"></ngb-timepicker>
         </div>
@@ -75,8 +79,8 @@
 
 <div class="text-right mt-3">
   <button type="button" class="btn btn-primary" (click)="onApiCall()">
-    <span *ngIf="!taskData">
-      Add</span><span *ngIf="taskData">Edit</span>
+    <span>
+      Add</span>
   </button>&nbsp;
   <button type="button" class="btn btn-default" (click)="onCancel()">Cancel</button>
 </div>

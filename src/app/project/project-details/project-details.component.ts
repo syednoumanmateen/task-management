@@ -13,6 +13,8 @@ export class ProjectDetailsComponent implements OnInit {
   curOpt = "high";
   urlParams: any;
   userData: any;
+  taskData: any;
+  loading: Boolean;
   constructor(
     private appService: AppService,
     private activatedRoute: ActivatedRoute,
@@ -23,6 +25,7 @@ export class ProjectDetailsComponent implements OnInit {
     this.appService.pageTitle = "projectDetails - Task Management";
     this.urlParams = {};
     this.userData = {};
+    this.loading = false;
   }
 
   ngOnInit(): void {
@@ -33,11 +36,15 @@ export class ProjectDetailsComponent implements OnInit {
   }
 
   viewProject() {
+    this.loading = true;
     this.userService.viewProject(this.urlParams.id).subscribe(
       (res: any) => {
+        this.loading = false;
         this.userData = res[0] || [];
+        this.getTask();
       },
       (err: any) => {
+        this.loading = false;
         this.toastr.error(err.error.message || "");
       }
     );
@@ -47,6 +54,41 @@ export class ProjectDetailsComponent implements OnInit {
     this.router.navigate(["/projects/add-project"], {
       queryParams: {
         id: id || "",
+      },
+    });
+  }
+
+  getTask() {
+    this.loading = true;
+    let p = this.userData._id;
+    this.userService.taskList(p).subscribe(
+      (res: any) => {
+        this.loading = false;
+        this.taskData = res || {};
+      },
+      (err: any) => {
+        this.loading = false;
+        this.toastr.error(err.error.message || "");
+      }
+    );
+  }
+
+  onView(id: any) {
+    this.router.navigate(["/tasks/view-task"], {
+      queryParams: {
+        id: id,
+      },
+    });
+  }
+
+  onBlock(id: any) {}
+
+  onDelete(id: any) {}
+
+  onAddTask() {
+    this.router.navigate(["/tasks/add-task"], {
+      queryParams: {
+        id: this.userData._id,
       },
     });
   }

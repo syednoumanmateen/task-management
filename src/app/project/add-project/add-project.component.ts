@@ -21,6 +21,7 @@ export class AddProjectComponent implements OnInit {
   roleData: any;
   projectData: any;
   date: Array<any>;
+  loading:Boolean
 
   disabled = false;
   constructor(
@@ -36,6 +37,7 @@ export class AddProjectComponent implements OnInit {
     this.urlParams = {};
     this.userData = {};
     this.roleData = {};
+    this.loading = false;
   }
 
   ngOnInit(): void {
@@ -50,22 +52,28 @@ export class AddProjectComponent implements OnInit {
   }
 
   userList() {
+    this.loading = true;
     this.userService.listUser().subscribe(
       (res: any) => {
+        this.loading = false;
         this.userData = res || {};
       },
       (err: any) => {
+        this.loading = false;
         this.toastr.error(err.error.message || "");
       }
     );
   }
 
   getRoles() {
+    this.loading = true;
     this.userService.roleList().subscribe(
       (res: any) => {
+        this.loading = false;
         this.roleData = res || {};
       },
       (err: any) => {
+        this.loading = false;
         this.toastr.error(err.error.message || "");
       }
     );
@@ -124,36 +132,45 @@ export class AddProjectComponent implements OnInit {
   }
 
   onAddProject(p: any) {
+    this.loading = true;
     this.userService.addProject(p).subscribe(
       (res: any) => {
+        this.loading = false;
         this.toastr.success(res.data.message || "");
         this.router.navigate(["/projects"]);
       },
       (err: any) => {
+        this.loading = false;
         this.toastr.error(err.error.message || "");
       }
     );
   }
 
   onEditProject(id: any, p: any) {
+    this.loading = true;
     this.userService.editProject(id, p).subscribe(
       (res: any) => {
+        this.loading = false;
         this.toastr.success(res.data.message || "");
         this.router.navigate(["/projects"]);
       },
       (err: any) => {
+        this.loading = false;
         this.toastr.error(err.error.message || "");
       }
     );
   }
 
   viewProject() {
+    this.loading = true;
     this.userService.viewProject(this.urlParams.id).subscribe(
       (res: any) => {
+        this.loading = false;
         this.projectData = res[0] || [];
         this.setValue();
       },
       (err: any) => {
+        this.loading = false;
         this.toastr.error(err.error.message || "");
       }
     );

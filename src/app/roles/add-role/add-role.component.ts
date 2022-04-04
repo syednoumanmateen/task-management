@@ -18,6 +18,7 @@ export class AddRoleComponent implements OnInit {
   roleData: any;
   selectedFeatures: any;
   featureList: any;
+  loading:Boolean
   constructor(
     private appService: AppService,
     private userService: UserService,
@@ -31,6 +32,7 @@ export class AddRoleComponent implements OnInit {
     this.features = {};
     this.selectedFeatures = {};
     this.featureList = {};
+    this.loading = false;
   }
 
   ngOnInit(): void {
@@ -54,7 +56,7 @@ export class AddRoleComponent implements OnInit {
   validateForm() {
     let fg = this.formGroup.value;
     let msg = "";
-    if (!fg.name) {
+    if (!fg.name.trim()) {
       msg = "Enter the Role";
     }
     return {
@@ -64,8 +66,10 @@ export class AddRoleComponent implements OnInit {
   }
 
   getFeatures() {
+    this.loading = true;
     this.userService.featureList().subscribe(
       (res: any) => {
+        this.loading = false;
         if (this.urlParams.id) {
           this.featureList = (res.slice(0) || []).map((e: any) => {
             e.isChecked = false;
@@ -86,14 +90,17 @@ export class AddRoleComponent implements OnInit {
         }
       },
       (err: any) => {
+        this.loading = false;
         this.toastr.error(err.error.message);
       }
     );
   }
 
   viewRole() {
+    this.loading = true;
     this.userService.viewRole(this.urlParams.id || "").subscribe(
       (res: any) => {
+        this.loading = false;
         this.roleData = res;
         this.setValue();
         this.selectedFeatures = (res.featureList.slice(0) || []).map(
@@ -104,6 +111,7 @@ export class AddRoleComponent implements OnInit {
         );
       },
       (err: any) => {
+        this.loading = false;
         this.router.navigate(["**"]);
         this.toastr.error(err.error.message);
       }
@@ -134,24 +142,30 @@ export class AddRoleComponent implements OnInit {
   }
 
   addRole(p: any) {
+    this.loading = true;
     this.userService.addRole(p).subscribe(
       (res: any) => {
+        this.loading = false;
         this.toastr.success(res.data || "");
         this.router.navigate(["/roles"]);
       },
       (err: any) => {
+        this.loading = false;
         this.toastr.error(err.error.message || "");
       }
     );
   }
 
   editRole(url: any, p: any) {
+    this.loading = true;
     this.userService.editRole(url, p).subscribe(
       (res: any) => {
+        this.loading = false;
         this.toastr.success(res.data || "");
         this.router.navigate(["/roles"]);
       },
       (err: any) => {
+        this.loading = false;
         this.toastr.error(err.error.message || "");
       }
     );

@@ -14,7 +14,8 @@ export class AddComponent implements OnInit {
   formGroup: FormGroup;
   urlParams: any;
   userData: any;
-  roleData: any;
+  roleData: any;;
+  loading:Boolean
   constructor(
     private appService: AppService,
     private userService: UserService,
@@ -25,6 +26,7 @@ export class AddComponent implements OnInit {
     this.appService.pageTitle = "addUser - Task Management";
     this.formGroup = this.getFormGroup();
     this.urlParams = {};
+    this.loading = false;
     this.activatedRoute.queryParams.subscribe((data) => {
       this.urlParams = data || "";
     });
@@ -118,23 +120,29 @@ export class AddComponent implements OnInit {
     }
   }
   addUser(p: any) {
+    this.loading = true;
     this.userService.addUser(p).subscribe(
       (res: any) => {
+        this.loading = false;
         this.toastr.success(res.data.message || "");
         this.router.navigate(["/users"]);
       },
       (err: any) => {
+        this.loading = false;
         this.toastr.error(err.error.message || "");
       }
     );
   }
   editUser(url: string, p: any) {
+    this.loading = true;
     this.userService.editUser(url, p).subscribe(
       (res: any) => {
+        this.loading = false;
         this.toastr.success(res.data.message || "");
         this.router.navigate(["/users"]);
       },
       (err: any) => {
+        this.loading = false;
         this.toastr.error(err.error.message || "");
       }
     );
@@ -146,24 +154,30 @@ export class AddComponent implements OnInit {
   }
 
   getRoles() {
+    this.loading = true;
     this.userService.roleList().subscribe(
       (res: any) => {
+        this.loading = false;
         this.roleData = res || "";
       },
       (err: any) => {
+        this.loading = false;
         this.toastr.error(err.error.message || "");
       }
     );
   }
 
   userView() {
+    this.loading = true;
     this.userService.viewUser(this.urlParams.id).subscribe(
       (res: any) => {
+        this.loading = false;
         this.userData = res.userData || {};
         this.toastr.success(res.data.message || "");
         this.setValue();
       },
       (err: any) => {
+        this.loading = false;
         this.toastr.error(err.error.message || "");
       }
     );

@@ -27,8 +27,14 @@ export class AjaxService {
     return this.http.delete<any>(this.baseUrl + url, params);
   }
 
-  getFilter(url: any, params?: any) {
+  getParamsObject(url: any, params?: any) {
     let queryParams = new HttpParams({ fromObject: params });
+    queryParams = queryParams.append("params", params);
+    return this.http.get<any>(this.baseUrl + url, { params: queryParams });
+  }
+
+  getParams(url: any, params?: any) {
+    let queryParams = new HttpParams();
     queryParams = queryParams.append("params", params);
     return this.http.get<any>(this.baseUrl + url, { params: queryParams });
   }

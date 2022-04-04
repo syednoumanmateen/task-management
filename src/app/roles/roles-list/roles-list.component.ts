@@ -1,3 +1,4 @@
+import { logging } from 'protractor';
 import { RoleFeaturesComponent } from "./../role-features/role-features.component";
 import { ModalDismissReasons } from "@ng-bootstrap/ng-bootstrap";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
@@ -16,6 +17,7 @@ import { UserService } from "src/app/providers/user.service";
 export class RolesListComponent implements OnInit {
   userData: any;
   closeResult: any;
+  loading:Boolean
   constructor(
     private router: Router,
     private userService: UserService,
@@ -27,6 +29,7 @@ export class RolesListComponent implements OnInit {
     this.appService.pageTitle = "list of role - Task Management";
     this.userData = {};
     this.closeResult = "";
+    this.loading = false;
   }
 
   ngOnInit(): void {
@@ -38,11 +41,14 @@ export class RolesListComponent implements OnInit {
   }
 
   getRoles() {
+    this.loading = true;
     this.userService.roleList().subscribe(
       (res: any) => {
+        this.loading = false;
         this.userData = res||"";
       },
       (err: any) => {
+        this.loading = false;
         this.toastr.error(err.error.message||"");
       }
     );
@@ -57,12 +63,15 @@ export class RolesListComponent implements OnInit {
   }
 
   onDelete(id: any) {
+    this.loading = true;
     this.userService.deletRole(id).subscribe(
       (res: any) => {
+        this.loading = false;
         this.toastr.success(res.data.message||"");
         this.ngOnInit();
       },
       (err: any) => {
+        this.loading = false;
         this.toastr.error(err.error.message||"");
       }
     );

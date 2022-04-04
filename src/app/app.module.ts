@@ -30,7 +30,6 @@ import { LoginComponent } from "./user/login/login.component";
 import { ForgetPasswordComponent } from "./user/forget-password/forget-password.component";
 import { ProjectComponent } from "./project/project/project.component";
 import { ProjectDetailsComponent } from "./project/project-details/project-details.component";
-import { TasksComponent } from "./project/tasks/tasks.component";
 import { TasksViewComponent } from "./project/tasks-view/tasks-view.component";
 import { ProfileComponent } from "./user/profile/profile.component";
 import { DashboardComponent } from "./dashboard/dashboard.component";
@@ -63,7 +62,6 @@ import { RoleFeaturesComponent } from './roles/role-features/role-features.compo
     ForgetPasswordComponent,
     ProjectComponent,
     ProjectDetailsComponent,
-    TasksComponent,
     TasksViewComponent,
     ProfileComponent,
     DashboardComponent,

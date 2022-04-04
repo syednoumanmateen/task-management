@@ -17,7 +17,6 @@ import { ProfileComponent } from "./user/profile/profile.component";
 import { ForgetPasswordComponent } from "./user/forget-password/forget-password.component";
 import { ProjectComponent } from "./project/project/project.component";
 import { ProjectDetailsComponent } from "./project/project-details/project-details.component";
-import { TasksComponent } from "./project/tasks/tasks.component";
 import { TasksViewComponent } from "./project/tasks-view/tasks-view.component";
 import { LayoutBlankComponent } from "./layout/layout-blank/layout-blank.component";
 import { AddComponent } from "./user/add/add.component";
@@ -81,29 +80,10 @@ const routes: Routes = [
       },
     ],
   },
-  // {
-  //   path: "project",
-  //   component: Layout1Component,
-  //   children: [{ path: "", component: ProjectComponent }],
-  // },
-  // {
-  //   path: "project-details",
-  //   component: Layout1Component,
-  //   children: [{ path: "", component: ProjectDetailsComponent }],
-  // },
-  // {
-  //   path: "add-project",
-  //   component: Layout1Component,
-  //   children: [{ path: "", component: AddProjectComponent }],
-  // },
   {
     path: "tasks",
     component: Layout1Component,
     children: [
-      {
-        path: "",
-        component: TasksComponent,
-      },
       {
         path: "add-task",
         component: AddTaskComponent,
@@ -114,26 +94,6 @@ const routes: Routes = [
       },
     ],
   },
-  // {
-  //   path: "tasks",
-  //   component: Layout1Component,
-  //   children: [{ path: "", component: TasksComponent }],
-  // },
-  // {
-  //   path: "tasks-view",
-  //   component: Layout1Component,
-  //   children: [{ path: "", component: TasksViewComponent }],
-  // },
-  // {
-  //   path: "add-user",
-  //   component: Layout1Component,
-  //   children: [{ path: "", component: AddComponent }],
-  // },
-  // {
-  //   path: "view-user",
-  //   component: Layout1Component,
-  //   children: [{ path: "", component: ViewComponent }],
-  // },
   {
     path: "users",
     component: Layout1Component,
@@ -170,36 +130,6 @@ const routes: Routes = [
       },
     ],
   },
-  // {
-  //   path: "add-feature",
-  //   component: Layout1Component,
-  //   children: [{ path: "", component: AddFeatureComponent }],
-  // },
-  // {
-  //   path: "view-feature",
-  //   component: Layout1Component,
-  //   children: [{ path: "", component: ViewFeatureComponent }],
-  // },
-  // {
-  //   path: "features-list",
-  //   component: Layout1Component,
-  //   children: [{ path: "", component: FeaturesListComponent }],
-  // },
-  // {
-  //   path: "add-role",
-  //   component: Layout1Component,
-  //   children: [{ path: "", component: AddRoleComponent }],
-  // },
-  // {
-  //   path: "view-role",
-  //   component: Layout1Component,
-  //   children: [{ path: "", component: ViewRoleComponent }],
-  // },
-  // {
-  //   path: "roles-list",
-  //   component: Layout1Component,
-  //   children: [{ path: "", component: RolesListComponent }],
-  // },
   {
     path: "roles",
     component: Layout1Component,

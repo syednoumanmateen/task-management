@@ -20,6 +20,7 @@ export class ListComponent implements OnInit {
   roleValue: string;
   statusValue: string;
   date: any;
+  loading:Boolean;
   constructor(
     private userService: UserService,
     private router: Router,
@@ -33,6 +34,7 @@ export class ListComponent implements OnInit {
     this.roleValue = "";
     this.statusValue = "";
     this.role = {};
+    this.loading = false;
   }
 
   ngOnInit(): void {
@@ -66,11 +68,14 @@ export class ListComponent implements OnInit {
   }
 
   userList() {
+    this.loading = true;
     this.userService.listUser().subscribe(
       (res: any) => {
+        this.loading = false;
         this.userData = res || {};
       },
       (err: any) => {
+        this.loading = false;
         this.toastr.error(err.error.message || "");
       }
     );
@@ -87,23 +92,29 @@ export class ListComponent implements OnInit {
   onBlock(id: any) {}
 
   onDelete(id: any) {
+    this.loading = true;
     this.userService.deleteUser(id).subscribe(
       (res: any) => {
+        this.loading = false;
         this.toastr.success(res.data.message || "");
         this.ngOnInit();
       },
       (err: any) => {
+        this.loading = false;
         this.toastr.error(err.error.message);
       }
     );
   }
 
   getRoles() {
+    this.loading = true;
     this.userService.roleList().subscribe(
       (res: any) => {
+        this.loading = false;
         this.role = res || "";
       },
       (err: any) => {
+        this.loading = false;
         this.toastr.error(err.error.message || "");
       }
     );
@@ -116,11 +127,14 @@ export class ListComponent implements OnInit {
       startDate: this.date[0] || {},
       endDate: this.date[1] || {},
     };
+    this.loading = true;
     this.userService.filterUser(p).subscribe(
       (res: any) => {
+        this.loading = false;
         this.userData = res || {};
       },
       (err: any) => {
+        this.loading = false;
         this.toastr.error(err.message.message || err.error.message || "");
       }
     );

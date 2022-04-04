@@ -12,6 +12,7 @@ import { UserService } from "src/app/providers/user.service";
 export class ViewFeatureComponent implements OnInit {
   urlParams: any;
   userData: any;
+  loading:Boolean
   constructor(
     private activatedRoute: ActivatedRoute,
     private userService: UserService,
@@ -22,6 +23,7 @@ export class ViewFeatureComponent implements OnInit {
     this.appService.pageTitle = "viewfeature - Task Management";
     this.urlParams = {};
     this.userData = {};
+    this.loading = false;
   }
 
   ngOnInit(): void {
@@ -32,11 +34,14 @@ export class ViewFeatureComponent implements OnInit {
   }
 
   getfeatures() {
+    this.loading = true;
     this.userService.viewFeature(this.urlParams.id).subscribe(
       (res: any) => {
+        this.loading = false;
         this.userData = res || {};
       },
       (err: any) => {
+        this.loading = false;
         this.router.navigate(["**"]);
         this.toastr.error(err.error.message || "");
       }

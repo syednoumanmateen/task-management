@@ -16,6 +16,7 @@ export class SettingsComponent implements OnInit {
   curTab = "password";
   formGroup: FormGroup;
   userId: any;
+  loading:Boolean;
 
   constructor(
     private userService: UserService,
@@ -26,6 +27,7 @@ export class SettingsComponent implements OnInit {
   ) {
     this.appService.pageTitle = "settings - Task Management";
     this.formGroup = this.getFormGroup();
+    this.loading = false;
   }
 
   ngOnInit(): void {
@@ -72,11 +74,14 @@ export class SettingsComponent implements OnInit {
         Password: this.formGroup.value.currentpsw || "",
         newPassword: this.formGroup.value.newpsw || "",
       };
+      this.loading = true;
       this.userService.changePassword(this.userId, p).subscribe(
         (res: any) => {
+          this.loading = false;
           this.toastr.success(res.message || "");
         },
         (err: any) => {
+          this.loading = false;
           this.toastr.error(err.error.message || "");
         }
       );

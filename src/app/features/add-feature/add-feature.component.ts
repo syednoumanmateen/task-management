@@ -14,6 +14,7 @@ export class AddFeatureComponent implements OnInit {
   formGroup: FormGroup;
   urlParams: any;
   userData: any;
+  loading: Boolean;
   constructor(
     private appService: AppService,
     private userService: UserService,
@@ -24,6 +25,7 @@ export class AddFeatureComponent implements OnInit {
     this.appService.pageTitle = "addfeature - Task Management";
     this.formGroup = this.getFormGroup();
     this.urlParams = {};
+    this.loading = false;
   }
 
   ngOnInit(): void {
@@ -50,7 +52,7 @@ export class AddFeatureComponent implements OnInit {
       msg = "Enter The Feature Name";
     } else if (!fg.module) {
       msg = "Select The Module Name";
-    } else if (!fg.description) {
+    } else if (!fg.description.trim()) {
       msg = "Enter The Description";
     } else {
       msg = "";
@@ -81,24 +83,30 @@ export class AddFeatureComponent implements OnInit {
   }
 
   addFeature(p: any) {
+    this.loading = true;
     this.userService.addFeature(p).subscribe(
       (res: any) => {
+        this.loading = false;
         this.toastr.success(res.data || "");
         this.router.navigate(["/features"]);
       },
       (err: any) => {
+        this.loading = false;
         this.toastr.error(err.error.message || "");
       }
     );
   }
 
   editFeature(url: any, p: any) {
+    this.loading = true;
     this.userService.editFeature(url, p).subscribe(
       (res: any) => {
+        this.loading = false;
         this.toastr.success(res.data || "");
         this.router.navigate(["/features"]);
       },
       (err: any) => {
+        this.loading = false;
         this.toastr.error(err.error.message || "");
       }
     );
@@ -110,12 +118,15 @@ export class AddFeatureComponent implements OnInit {
   }
 
   onViewFeature() {
+    this.loading = true;
     this.userService.viewFeature(this.urlParams.id).subscribe(
       (res: any) => {
+        this.loading = false;
         this.userData = res || {};
         this.setValue();
       },
       (err: any) => {
+        this.loading = false;
         this.toastr.error(err.error.message || "");
       }
     );

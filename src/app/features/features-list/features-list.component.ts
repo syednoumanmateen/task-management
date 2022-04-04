@@ -12,6 +12,7 @@ import { Router } from "@angular/router";
 export class FeaturesListComponent implements OnInit {
   userId: any;
   userData: any;
+  loading:Boolean
   constructor(
     private userService: UserService,
     private toastr: ToastrService,
@@ -21,6 +22,7 @@ export class FeaturesListComponent implements OnInit {
     this.appService.pageTitle = "list of features - Task Management";
     this.userId = "";
     this.userData = {};
+    this.loading = false;
   }
 
   ngOnInit(): void {
@@ -32,11 +34,14 @@ export class FeaturesListComponent implements OnInit {
   }
 
   getFeatures() {
+    this.loading = true;
     this.userService.featureList().subscribe(
       (res: any) => {
+        this.loading = false;
         this.userData = res || {};
       },
       (err: any) => {
+        this.loading = false;
         this.toastr.error(err.error.message || "");
       }
     );
@@ -51,12 +56,15 @@ export class FeaturesListComponent implements OnInit {
   }
 
   onDelete(id: any) {
+    this.loading = true;
     this.userService.deletFeature(id).subscribe(
       (res: any) => {
+        this.loading = false;
         this.toastr.success(res.message || "");
         this.ngOnInit();
       },
       (err: any) => {
+        this.loading = false;
         this.toastr.error(err.error.message || "");
       }
     );

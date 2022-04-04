@@ -13,6 +13,7 @@ export class ViewComponent implements OnInit {
   urlParams: any;
   userData: any;
   resetPassword: any;
+  loading: Boolean;
 
   constructor(
     private router: Router,
@@ -24,6 +25,7 @@ export class ViewComponent implements OnInit {
     this.appService.pageTitle = "addUser - Task Management";
     this.urlParams = {};
     this.userData = {};
+    this.loading = false;
   }
 
   ngOnInit(): void {
@@ -34,11 +36,14 @@ export class ViewComponent implements OnInit {
   }
 
   userView() {
+    this.loading = true;
     this.userService.viewUser(this.urlParams.id).subscribe(
       (res: any) => {
+        this.loading = false;
         this.userData = res.userData || {};
       },
       (err: any) => {
+        this.loading = false;
         this.router.navigate(["**"]);
         this.toastr.error(err.error.message || "");
       }
@@ -47,9 +52,16 @@ export class ViewComponent implements OnInit {
 
   onResetpsw() {
     let p = this.resetPassword;
+    this.loading = true;
     this.userService.resetPassword(this.userData.email, p).subscribe(
-      (res: any) => {},
-      (err: any) => {}
+      (res: any) => {
+        this.loading = false;
+        this.toastr.success(res.message);
+      },
+      (err: any) => {
+        this.loading = false;
+        this.toastr.error(err.error.message);
+      }
     );
   }
 

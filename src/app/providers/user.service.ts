@@ -6,7 +6,7 @@ import { Injectable } from "@angular/core";
 })
 export class UserService {
   constructor(private ajax: AjaxService) {}
-// user
+  // user
   userLogin(params: any) {
     return this.ajax.post("/user/login", params);
   }
@@ -39,9 +39,9 @@ export class UserService {
     return this.ajax.post("/user/change-password/" + id, params);
   }
 
-  forgetPassword(params: any) { 
+  forgetPassword(params: any) {
     console.log("triger");
-    
+
     return this.ajax.post("/user/forget-password", params);
   }
 
@@ -54,9 +54,9 @@ export class UserService {
   }
 
   filterUser(params?: any) {
-    return this.ajax.getFilter("/user/filtered-list", params);
+    return this.ajax.getParamsObject("/user/filtered-list", params);
   }
-// feature
+  // feature
   addFeature(params: any) {
     return this.ajax.post("/feature/add/", params);
   }
@@ -76,7 +76,7 @@ export class UserService {
   deletFeature(id: any) {
     return this.ajax.delete("/feature/remove/" + id);
   }
-// role
+  // role
   addRole(params: any) {
     return this.ajax.post("/role/add", params);
   }
@@ -96,7 +96,7 @@ export class UserService {
   deletRole(id: any) {
     return this.ajax.delete("/role/remove/" + id);
   }
-// project
+  // project
   addProject(params: any) {
     return this.ajax.post("/project/add/", params);
   }
@@ -122,15 +122,15 @@ export class UserService {
   }
 
   filterProject() {
-    return this.ajax.getFilter("/project/filtered-list");
+    return this.ajax.getParamsObject("/project/filtered-list");
   }
-// task
+  // task
   addTask(params: any) {
     return this.ajax.post("/project/add-tasklist/", params);
   }
 
-  taskList() {
-    return this.ajax.get("/project/tasklist/");
+  taskList(id: any) {
+    return this.ajax.get("/project/tasklist/" + id);
   }
 
   viewTask(id: any) {
@@ -146,9 +146,9 @@ export class UserService {
   }
 
   filterTask(params?: any) {
-    return this.ajax.getFilter("/user/filtered-list", params);
+    return this.ajax.getParamsObject("/user/filtered-list", params);
   }
-// comment
+  // comment
   addTaskComment(params: any) {
     return this.ajax.post("/project/add-taskComment/", params);
   }
@@ -170,6 +170,6 @@ export class UserService {
   }
 
   filterTaskComment(params?: any) {
-    return this.ajax.getFilter("/user/filtered-list", params);
+    return this.ajax.getParamsObject("/user/filtered-list", params);
   }
 }
