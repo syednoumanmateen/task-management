@@ -28,7 +28,7 @@ import { LayoutModule } from "./layout/layout.module";
 import { NotFoundComponent } from "./not-found/not-found.component";
 import { LoginComponent } from "./user/login/login.component";
 import { ForgetPasswordComponent } from "./user/forget-password/forget-password.component";
-import { ProjectComponent } from "./project/add-task/project/project.component";
+import { ProjectComponent } from "./project/project/project.component";
 import { ProjectDetailsComponent } from "./project/project-details/project-details.component";
 import { TasksViewComponent } from "./project/tasks-view/tasks-view.component";
 import { ProfileComponent } from "./user/profile/profile.component";

@@ -1,13 +1,13 @@
 <div class="media align-items-center py-3 mb-3">
     <img src="assets/profile.png" alt="" class="d-block ui-w-100 rounded-circle">
     <div class="media-body ml-4">
-        <!-- <span *ngIf="loading">
+        <span *ngIf="user.loading">
             <app-spinner></app-spinner>
-        </span> -->
-        <h4 class="font-weight-bold mb-0">{{userData.fName||""}}&nbsp;{{userData.lName||""}}<div
-                class="text-muted font-weight-normal">{{userData.email||""}}</div>
+        </span>
+        <h4 class="font-weight-bold mb-0" *ngIf="!user.loading">{{user.data.fName||""}}&nbsp;{{user.data.lName||""}}<div
+                class="text-muted font-weight-normal">{{user.data.email||""}}</div>
         </h4>
-        <div class="text-muted mb-2">Emp ID: {{userData.userCode||""}}</div>
+        <div class="text-muted mb-2">Emp ID: {{user.data.userCode||""}}</div>
         <a class="btn btn-primary btn-sm" (click)="onEdit()">Edit</a>
     </div>
 </div>
@@ -15,12 +15,12 @@
 <div class="card">
     <div class="row no-gutters row-bordered">
         <div class="d-flex col-md align-items-center">
-            <!-- <span *ngIf="loading">
+            <span *ngIf="user.loading">
                 <app-spinner></app-spinner>
-            </span> -->
-            <div class="card-body d-block text-body">
+            </span>
+            <div class="card-body d-block text-body" *ngIf="!user.loading">
                 <div class="text-muted small line-height-1">Posts</div>
-                <div class="text-xlarge">{{userData.role||""}}</div>
+                <div class="text-xlarge">{{user.data.role||""}}</div>
             </div>
         </div>
 
@@ -31,31 +31,31 @@
             <tbody>
                 <tr>
                     <td class="col-sm-4">Username:</td>
-                    <!-- <span *ngIf="loading">
+                    <span *ngIf="user.loading">
                         <app-spinner></app-spinner>
-                    </span> -->
-                    <td>{{userData.email||""}}</td>
+                    </span>
+                    <td *ngIf="!user.loading">{{user.data.email||""}}</td>
                 </tr>
                 <tr>
                     <td class="col-sm-4">Name:</td>
-                    <!-- <span *ngIf="loading">
+                    <span *ngIf="user.loading">
                         <app-spinner></app-spinner>
-                    </span> -->
-                    <td>{{userData.fName||""}}&nbsp;{{userData.lName||""}}</td>
+                    </span>
+                    <td *ngIf="!user.loading">{{user.data.fName||""}}&nbsp;{{user.data.lName||""}}</td>
                 </tr>
                 <tr>
                     <td class="col-sm-4">E-mail:</td>
-                    <!-- <span *ngIf="loading">
+                    <span *ngIf="user.loading">
                         <app-spinner></app-spinner>
-                    </span> -->
-                    <td>{{userData.email||""}}</td>
+                    </span>
+                    <td *ngIf="!user.loading">{{user.data.email||""}}</td>
                 </tr>
                 <tr>
                     <td class="col-sm-4">Company:</td>
-                    <!-- <span *ngIf="loading">
+                    <span *ngIf="user.loading">
                         <app-spinner></app-spinner>
-                    </span> -->
-                    <td>StoreKing</td>
+                    </span>
+                    <td *ngIf="!user.loading">StoreKing</td>
                 </tr>
             </tbody>
         </table>
@@ -66,18 +66,18 @@
             <tbody>
                 <tr>
                     <td>Birthday:</td>
-                    <!-- <span *ngIf="loading">
+                    <span *ngIf="user.loading">
                         <app-spinner></app-spinner>
-                    </span> -->
-                    <td></td>
+                    </span>
+                    <td *ngIf="!user.loading"></td>
                 </tr>
                 <tr>
                     <td class="col-sm-4">Address:</td>
-                    <!-- <span *ngIf="loading">
+                    <span *ngIf="user.loading">
                         <app-spinner></app-spinner>
-                    </span> -->
-                    <td>
-                        {{userData.address.doorNumber||""}},{{userData.address.street||""}},{{userData.address.area||""}},{{userData.address.landmark||""}},{{userData.address.city||""}},{{userData.address.state||""}}-{{userData.address.postalCode||0}}
+                    </span>
+                    <td *ngIf="!user.loading">
+                        {{user.data.address.doorNumber||""}},{{user.data.address.street||""}},{{user.data.address.area||""}},{{user.data.address.landmark||""}},{{user.data.address.city||""}},{{user.data.address.state||""}}-{{user.data.address.postalCode||0}}
                     </td>
                 </tr>
             </tbody>
@@ -89,10 +89,10 @@
             <tbody>
                 <tr>
                     <td class="col-sm-4">Phone:</td>
-                    <!-- <span *ngIf="loading">
+                    <span *ngIf="user.loading">
                         <app-spinner></app-spinner>
-                    </span> -->
-                    <td>{{userData.phone||0}}</td>
+                    </span>
+                    <td *ngIf="!user.loading">{{user.data.phone||0}}</td>
                 </tr>
         </table>
     </div>
@@ -104,15 +104,15 @@
             <tbody>
                 <tr>
                     <td class="col-sm-4">verify user:</td>
-                    <!-- <span *ngIf="loading">
+                    <span *ngIf="user.loading">
                         <app-spinner></app-spinner>
-                    </span> -->
-                    <td>
+                    </span>
+                    <td *ngIf="!user.loading">
                         <!-- <a class="btn btn-primary btn-sm" (click)="onAccept(Active)">accept</a>&nbsp;
                         <a class="btn btn-danger btn-sm" (click)="onReject(Inactive)">Reject</a>&nbsp; -->
                     </td>
                 </tr>
-                <tr *ngIf="userData.role=='Admin'">
+                <tr *ngIf="user.data.role=='Admin'">
                     <td class="col-sm-4">Reset Password:</td>
                     <td>
                         <div class="form-row">
@@ -127,19 +127,19 @@
                 </tr>
                 <tr>
                     <td class="col-sm-4">Role:</td>
-                    <!-- <span *ngIf="loading">
+                    <span *ngIf="user.loading">
                         <app-spinner></app-spinner>
-                    </span> -->
-                    <td>
-                        <span>{{userData.role||""}}</span>
+                    </span>
+                    <td *ngIf="!user.loading">
+                        <span>{{user.data.role||""}}</span>
                     </td>
                 </tr>
                 <tr>
                     <td class="col-sm-4">Status:</td>
                     <td>
-                        <span class="badge badge-outline-success" *ngIf="userData.status=='Active'">Active</span>
-                        <span class="badge badge-outline-default" *ngIf="userData.status=='Created'">Created</span>
-                        <span class="badge badge-outline-danger" *ngIf="userData.status=='Blocked'">Blocked</span>
+                        <span class="badge badge-outline-success" *ngIf="user.data.status=='Active'">Active</span>
+                        <span class="badge badge-outline-default" *ngIf="user.data.status=='Created'">Created</span>
+                        <span class="badge badge-outline-danger" *ngIf="user.data.status=='Blocked'">Blocked</span>
                     </td>
                 </tr>
             </tbody>

@@ -25,10 +25,7 @@
           </th>
         </tr>
       </thead>
-      <!-- <span *ngIf="loading">
-        <app-spinner></app-spinner>
-      </span> -->
-      <tbody >
+      <tbody>
         <tr *ngFor="let user of userData">
           <td class="align-middle">{{user.featureCode||""}}</td>
           <td class="align-middle">{{user.featureName||""}}</td>

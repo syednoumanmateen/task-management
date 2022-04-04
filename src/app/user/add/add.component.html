@@ -1,7 +1,7 @@
-<h4 class="font-weight-bold py-3 mb-4" *ngIf="userData">
-    Edit User <span class="text-muted">#{{userData.userCode||""}}</span>
+<h4 class="font-weight-bold py-3 mb-4" *ngIf="user.exists">
+    Edit User <span class="text-muted">#{{user.data.userCode||""}}</span>
 </h4>
-<h4 class="font-weight-bold py-3 mb-4" *ngIf="!userData">
+<h4 class="font-weight-bold py-3 mb-4" *ngIf="!user.exists">
     Add User
 </h4>
 
@@ -91,7 +91,7 @@
                 <div class="form-group col-md-6">
                     <label class="form-label">Role<span class="text-danger">*</span></label>
                     <select class="custom-select" formControlName="role">
-                        <option *ngFor="let i of roleData" [value]="i.roleName">
+                        <option *ngFor="let i of role.data" [value]="i.roleName">
                             {{i.roleName}}
                         </option>
                     </select>
@@ -114,8 +114,8 @@
 
 <div class="text-right mt-3">
     <button type="button" class="btn btn-primary" (click)="onApiCall()">
-        <span *ngIf="!userData">
-            Add</span><span *ngIf="userData">Edit</span>
+        <span *ngIf="!user.exists">
+            Add</span><span *ngIf="user.exists">Edit</span>
     </button>&nbsp;
     <button type="button" class="btn btn-default" (click)="onCancel()">Cancel</button>
 </div>

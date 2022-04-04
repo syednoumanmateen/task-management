@@ -15,10 +15,25 @@ export class AddRoleComponent implements OnInit {
   curTab = "all";
   urlParams: any;
   features: any;
-  roleData: any;
+  role: {
+    data: any;
+    loading: Boolean;
+  };
+  view: {
+    data: any;
+    loading: Boolean;
+    exists: Boolean;
+  };
+  add: {
+    data: any;
+    loading: Boolean;
+  };
+  edit: {
+    data: any;
+    loading: Boolean;
+  };
   selectedFeatures: any;
   featureList: any;
-  loading:Boolean
   constructor(
     private appService: AppService,
     private userService: UserService,
@@ -32,7 +47,23 @@ export class AddRoleComponent implements OnInit {
     this.features = {};
     this.selectedFeatures = {};
     this.featureList = {};
-    this.loading = false;
+    this.role = {
+      data: {},
+      loading: false,
+    };
+    this.view = {
+      data: {},
+      loading: false,
+      exists: false,
+    };
+    this.add = {
+      data: {},
+      loading: false,
+    };
+    this.edit = {
+      data: {},
+      loading: false,
+    };
   }
 
   ngOnInit(): void {
@@ -56,7 +87,7 @@ export class AddRoleComponent implements OnInit {
   validateForm() {
     let fg = this.formGroup.value;
     let msg = "";
-    if (!fg.name.trim()) {
+    if (!fg.name) {
       msg = "Enter the Role";
     }
     return {
@@ -66,10 +97,10 @@ export class AddRoleComponent implements OnInit {
   }
 
   getFeatures() {
-    this.loading = true;
+    this.role.loading = true;
     this.userService.featureList().subscribe(
       (res: any) => {
-        this.loading = false;
+        this.role.loading = false;
         if (this.urlParams.id) {
           this.featureList = (res.slice(0) || []).map((e: any) => {
             e.isChecked = false;
@@ -90,19 +121,20 @@ export class AddRoleComponent implements OnInit {
         }
       },
       (err: any) => {
-        this.loading = false;
+        this.role.loading = false;
         this.toastr.error(err.error.message);
       }
     );
   }
 
   viewRole() {
-    this.loading = true;
+    this.view.loading = true;
     this.userService.viewRole(this.urlParams.id || "").subscribe(
       (res: any) => {
-        this.loading = false;
-        this.roleData = res;
+        this.view.loading = false;
+        this.view.data = res;
         this.setValue();
+        this.view.exists = true;
         this.selectedFeatures = (res.featureList.slice(0) || []).map(
           (e: any) => {
             e.isChecked = true;
@@ -111,7 +143,7 @@ export class AddRoleComponent implements OnInit {
         );
       },
       (err: any) => {
-        this.loading = false;
+        this.view.loading = false;
         this.router.navigate(["**"]);
         this.toastr.error(err.error.message);
       }
@@ -142,37 +174,37 @@ export class AddRoleComponent implements OnInit {
   }
 
   addRole(p: any) {
-    this.loading = true;
+    this.add.loading = true;
     this.userService.addRole(p).subscribe(
       (res: any) => {
-        this.loading = false;
+        this.add.loading = false;
         this.toastr.success(res.data || "");
         this.router.navigate(["/roles"]);
       },
       (err: any) => {
-        this.loading = false;
+        this.add.loading = false;
         this.toastr.error(err.error.message || "");
       }
     );
   }
 
   editRole(url: any, p: any) {
-    this.loading = true;
+    this.edit.loading = true;
     this.userService.editRole(url, p).subscribe(
       (res: any) => {
-        this.loading = false;
+        this.edit.loading = false;
         this.toastr.success(res.data || "");
         this.router.navigate(["/roles"]);
       },
       (err: any) => {
-        this.loading = false;
+        this.edit.loading = false;
         this.toastr.error(err.error.message || "");
       }
     );
   }
 
   setValue() {
-    this.formGroup.controls.name.setValue(this.roleData.roleName || "");
+    this.formGroup.controls.name.setValue(this.view.data.roleName || "");
   }
 
   onCancel() {

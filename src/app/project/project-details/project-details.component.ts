@@ -12,9 +12,17 @@ import { Component, OnInit } from "@angular/core";
 export class ProjectDetailsComponent implements OnInit {
   curOpt = "high";
   urlParams: any;
-  userData: any;
-  taskData: any;
-  loading: Boolean;
+  project: {
+    data: any;
+    loading: Boolean;
+  };
+  task: {
+    data: any;
+    loading: Boolean;
+  };
+  delete: {
+    loading: Boolean;
+  };
   constructor(
     private appService: AppService,
     private activatedRoute: ActivatedRoute,
@@ -24,8 +32,17 @@ export class ProjectDetailsComponent implements OnInit {
   ) {
     this.appService.pageTitle = "projectDetails - Task Management";
     this.urlParams = {};
-    this.userData = {};
-    this.loading = false;
+    this.project = {
+      data: {},
+      loading: false,
+    };
+    this.task = {
+      data: {},
+      loading: false,
+    };
+    this.delete = {
+      loading: false,
+    };
   }
 
   ngOnInit(): void {
@@ -36,15 +53,15 @@ export class ProjectDetailsComponent implements OnInit {
   }
 
   viewProject() {
-    this.loading = true;
+    this.project.loading = true;
     this.userService.viewProject(this.urlParams.id).subscribe(
       (res: any) => {
-        this.loading = false;
-        this.userData = res[0] || [];
+        this.project.loading = false;
+        this.project.data = res[0] || [];
         this.getTask();
       },
       (err: any) => {
-        this.loading = false;
+        this.project.loading = false;
         this.toastr.error(err.error.message || "");
       }
     );
@@ -59,15 +76,15 @@ export class ProjectDetailsComponent implements OnInit {
   }
 
   getTask() {
-    this.loading = true;
-    let p = this.userData._id;
+    this.task.loading = true;
+    let p = this.project.data._id;
     this.userService.taskList(p).subscribe(
       (res: any) => {
-        this.loading = false;
-        this.taskData = res || {};
+        this.task.loading = false;
+        this.task.data = res || {};
       },
       (err: any) => {
-        this.loading = false;
+        this.task.loading = false;
         this.toastr.error(err.error.message || "");
       }
     );
@@ -84,20 +101,20 @@ export class ProjectDetailsComponent implements OnInit {
   onAddTask() {
     this.router.navigate(["/tasks/add-task"], {
       queryParams: {
-        id: this.userData._id,
+        id: this.project.data._id,
       },
     });
   }
 
   onDelete(id: any) {
-    this.loading = true;
+    this.delete.loading = true;
     this.userService.deleteTask(id).subscribe(
       (res: any) => {
-        this.loading = false;
+        this.delete.loading = false;
         this.toastr.success(res.data.message);
       },
       (err: any) => {
-        this.loading = false;
+        this.delete.loading = false;
         this.toastr.error(err.error.message);
       }
     );

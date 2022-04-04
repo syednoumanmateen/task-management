@@ -5,7 +5,6 @@
 <div class="card">
   <div class="card-body">
     <form action="" [formGroup]="formGroup">
-
       <div class="form-row">
         <div class="form-group col-md-6">
           <label class="form-label">Parent ID<span class="text-danger">*</span></label>
@@ -29,7 +28,7 @@
       <div class="form-row">
         <div class="form-group col-md-6">
           <label class="form-label">Member<span class="text-danger">*</span></label>
-          <ng-select [items]="userData" [closeOnSelect]="true" bindLabel="fName" bindValue="_id" formControlName="user">
+          <ng-select [items]="user.data" [closeOnSelect]="true" bindLabel="fName" bindValue="_id" formControlName="user">
           </ng-select>
         </div>
         <div class="form-group col-md-6">
@@ -66,11 +65,11 @@
       <div class="form-group col-md-6 row">
         <div class="col-md-6">
           <label class="form-label">From<span class="text-danger">*</span></label>
-          <ngb-timepicker [(ngModel)]="timeFrom"></ngb-timepicker>
+          <ngb-timepicker [(ngModel)]="time.from"></ngb-timepicker>
         </div>
         <div class="col-md-6">
           <label class="form-label">To<span class="text-danger">*</span></label>
-          <ngb-timepicker [(ngModel)]="timeTo"></ngb-timepicker>
+          <ngb-timepicker [(ngModel)]="time.to"></ngb-timepicker>
         </div>
       </div>
     </div>

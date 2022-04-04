@@ -2,13 +2,13 @@
 <div class="container-m-nx container-m-ny bg-white mb-4">
   <div class="media col-md-10 col-lg-8 col-xl-7 py-5 mx-auto">
     <img src="assets/profile.png" alt class="d-block ui-w-100 rounded-circle">
-    <!-- <span *ngIf="loading">
+    <span *ngIf="user.loading">
       <app-spinner></app-spinner>
-    </span> -->
-    <div class="media-body ml-5">
-      <h4 class="font-weight-bold mt-2">{{userData.fName}}&nbsp;{{userData.lName}}</h4>
+    </span>
+    <div class="media-body ml-5" *ngIf="!user.loading">
+      <h4 class="font-weight-bold mt-2">{{user.data.fName}}&nbsp;{{user.data.lName}}</h4>
       <div class="text-muted mb-4">
-        Emp ID: {{userData.userCode}}
+        Emp ID: {{user.data.userCode}}
       </div>
     </div>
   </div>
@@ -25,11 +25,11 @@
 
         <div class="row mb-2">
           <div class="col-md-3 text-muted">Date Of Joining:</div>
-          <!-- <span *ngIf="loading">
+          <span *ngIf="user.loading">
             <app-spinner></app-spinner>
-          </span> -->
-          <div class="col-md-9">
-            {{userData.date|date:"dd/MM/yyyy"}}
+          </span>
+          <div class="col-md-9" *ngIf="!user.loading">
+            {{user.data.date|date:"dd/MM/yyyy"}}
           </div>
         </div>
 
@@ -42,11 +42,11 @@
 
         <div class="row mb-2">
           <div class="col-md-3 text-muted">Address:</div>
-          <!-- <span *ngIf="loading">
+          <span *ngIf="user.loading">
             <app-spinner></app-spinner>
-          </span> -->
-          <div class="col-md-9">
-            {{userData.address.doorNumber}},{{userData.address.street}},{{userData.address.landmark}},{{userData.address.area}},{{userData.address.city}},{{userData.address.state}}-{{userData.address.postalCode}}
+          </span>
+          <div class="col-md-9" *ngIf="!user.loading">
+            {{user.data.address.doorNumber}},{{user.data.address.street}},{{user.data.address.landmark}},{{user.data.address.area}},{{user.data.address.city}},{{user.data.address.state}}-{{user.data.address.postalCode}}
           </div>
         </div>
 
@@ -54,21 +54,21 @@
 
         <div class="row mb-2">
           <div class="col-md-3 text-muted">Phone:</div>
-          <!-- <span *ngIf="loading">
+          <span *ngIf="user.loading">
             <app-spinner></app-spinner>
-          </span> -->
-          <div class="col-md-9">
-            {{userData.phone}}
+          </span>
+          <div class="col-md-9" *ngIf="!user.loading">
+            {{user.data.phone}}
           </div>
         </div>
 
         <div class="row mb-2">
           <div class="col-md-3 text-muted">Email:</div>
-          <!-- <span *ngIf="loading">
+          <span *ngIf="user.loading">
             <app-spinner></app-spinner>
-          </span> -->
-          <div class="col-md-9">
-            {{userData.email}}
+          </span>
+          <div class="col-md-9" If="!user.loading">
+            {{user.data.email}}
           </div>
         </div>
 
@@ -88,7 +88,7 @@
         </p>
         <p class="mb-2">
           <i class="ion ion-ios-navigate ui-w-30 text-center text-lighter"></i>
-          {{userData.address.city}},{{userData.address.state}},India
+          {{user.data.address.city}},{{user.data.address.state}},India
         </p>
       </div>
       <hr class="border-light m-0">

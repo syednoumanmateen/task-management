@@ -12,7 +12,9 @@ import { Component, OnInit } from "@angular/core";
 })
 export class RoleFeaturesComponent implements OnInit {
   userData: any;
-  loading: Boolean;
+  delete: {
+    loading: Boolean;
+  };
   constructor(
     private userService: UserService,
     private storage: DataStorageService,
@@ -22,7 +24,9 @@ export class RoleFeaturesComponent implements OnInit {
   ) {
     this.appService.pageTitle = "list of features - Task Management";
     this.userData = {};
-    this.loading = false;
+    this.delete = {
+      loading: false,
+    };
   }
 
   ngOnInit(): void {
@@ -38,15 +42,15 @@ export class RoleFeaturesComponent implements OnInit {
   }
 
   onDelete(id: any) {
-    this.loading = true;
+    this.delete.loading = true;
     this.userService.deletFeature(id).subscribe(
       (res: any) => {
-        this.loading = false;
+        this.delete.loading = false;
         this.toastr.success(res.data.message || "");
         this.ngOnInit();
       },
       (err: any) => {
-        this.loading = false;
+        this.delete.loading = false;
         this.toastr.error(err.error.message || "");
       }
     );

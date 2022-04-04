@@ -14,7 +14,17 @@ export class AddFeatureComponent implements OnInit {
   formGroup: FormGroup;
   urlParams: any;
   userData: any;
-  loading: Boolean;
+  edit: {
+    loading: Boolean;
+  };
+  add: {
+    loading: Boolean;
+  };
+  view: {
+    loading: boolean;
+    data: any;
+    exists: boolean;
+  };
   constructor(
     private appService: AppService,
     private userService: UserService,
@@ -25,7 +35,17 @@ export class AddFeatureComponent implements OnInit {
     this.appService.pageTitle = "addfeature - Task Management";
     this.formGroup = this.getFormGroup();
     this.urlParams = {};
-    this.loading = false;
+    this.edit = {
+      loading: false,
+    };
+    this.add = {
+      loading: false,
+    };
+    this.view = {
+      loading: false,
+      data: {},
+      exists: false,
+    };
   }
 
   ngOnInit(): void {
@@ -83,30 +103,30 @@ export class AddFeatureComponent implements OnInit {
   }
 
   addFeature(p: any) {
-    this.loading = true;
+    this.add.loading = true;
     this.userService.addFeature(p).subscribe(
       (res: any) => {
-        this.loading = false;
+        this.add.loading = false;
         this.toastr.success(res.data || "");
         this.router.navigate(["/features"]);
       },
       (err: any) => {
-        this.loading = false;
+        this.add.loading = false;
         this.toastr.error(err.error.message || "");
       }
     );
   }
 
   editFeature(url: any, p: any) {
-    this.loading = true;
+    this.edit.loading = true;
     this.userService.editFeature(url, p).subscribe(
       (res: any) => {
-        this.loading = false;
+        this.edit.loading = false;
         this.toastr.success(res.data || "");
         this.router.navigate(["/features"]);
       },
       (err: any) => {
-        this.loading = false;
+        this.edit.loading = false;
         this.toastr.error(err.error.message || "");
       }
     );
@@ -118,15 +138,16 @@ export class AddFeatureComponent implements OnInit {
   }
 
   onViewFeature() {
-    this.loading = true;
+    this.view.loading = true;
     this.userService.viewFeature(this.urlParams.id).subscribe(
       (res: any) => {
-        this.loading = false;
-        this.userData = res || {};
+        this.view.exists = true;
+        this.view.loading = false;
+        this.view.data = res || {};
         this.setValue();
       },
       (err: any) => {
-        this.loading = false;
+        this.view.loading = false;
         this.toastr.error(err.error.message || "");
       }
     );
@@ -134,7 +155,7 @@ export class AddFeatureComponent implements OnInit {
 
   setValue() {
     let fg = this.formGroup;
-    let u = this.userData;
+    let u = this.view.data;
     fg.controls.name.setValue(u.featureName || "");
     fg.controls.module.setValue(u.moduleName || "");
     fg.controls.description.setValue(u.decription || "");

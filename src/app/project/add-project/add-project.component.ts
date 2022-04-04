@@ -17,11 +17,24 @@ import { Component, OnInit } from "@angular/core";
 export class AddProjectComponent implements OnInit {
   formGroup: FormGroup;
   urlParams: any;
-  userData: any;
-  roleData: any;
-  projectData: any;
+  user: {
+    data: any;
+    loading: Boolean;
+  };
+  addProject: {
+    data: any;
+    loading: Boolean;
+  };
+  editProject: {
+    data: any;
+    loading: Boolean;
+  };
+  viewProject: {
+    data: any;
+    loading: Boolean;
+    exists: Boolean;
+  };
   date: Array<any>;
-  loading:Boolean
 
   disabled = false;
   constructor(
@@ -35,9 +48,23 @@ export class AddProjectComponent implements OnInit {
     this.formGroup = this.getFormGroup();
     this.date = [];
     this.urlParams = {};
-    this.userData = {};
-    this.roleData = {};
-    this.loading = false;
+    (this.user = {
+      data: {},
+      loading: false,
+    }),
+      (this.addProject = {
+        data: {},
+        loading: false,
+      });
+    this.editProject = {
+      data: {},
+      loading: false,
+    };
+    this.viewProject = {
+      data: {},
+      loading: false,
+      exists: false,
+    };
   }
 
   ngOnInit(): void {
@@ -45,39 +72,39 @@ export class AddProjectComponent implements OnInit {
       this.urlParams = data || "";
     });
     this.userList();
-    this.getRoles();
+    // this.getRoles();
     if (this.urlParams.id) {
-      this.viewProject();
+      this.getViewProject();
     }
   }
 
   userList() {
-    this.loading = true;
+    this.user.loading = true;
     this.userService.listUser().subscribe(
       (res: any) => {
-        this.loading = false;
-        this.userData = res || {};
+        this.user.loading = false;
+        this.user.data = res || {};
       },
       (err: any) => {
-        this.loading = false;
+        this.user.loading = false;
         this.toastr.error(err.error.message || "");
       }
     );
   }
 
-  getRoles() {
-    this.loading = true;
-    this.userService.roleList().subscribe(
-      (res: any) => {
-        this.loading = false;
-        this.roleData = res || {};
-      },
-      (err: any) => {
-        this.loading = false;
-        this.toastr.error(err.error.message || "");
-      }
-    );
-  }
+  // getRoles() {
+  //   this.role.loading = true;
+  //   this.userService.roleList().subscribe(
+  //     (res: any) => {
+  //       this.role.loading = false;
+  //       this.role.data = res || {};
+  //     },
+  //     (err: any) => {
+  //       this.role.loading = false;
+  //       this.toastr.error(err.error.message || "");
+  //     }
+  //   );
+  // }
 
   getFormGroup() {
     let fg = new FormGroup({
@@ -132,45 +159,46 @@ export class AddProjectComponent implements OnInit {
   }
 
   onAddProject(p: any) {
-    this.loading = true;
+    this.addProject.loading = true;
     this.userService.addProject(p).subscribe(
       (res: any) => {
-        this.loading = false;
+        this.addProject.loading = false;
         this.toastr.success(res.data.message || "");
         this.router.navigate(["/projects"]);
       },
       (err: any) => {
-        this.loading = false;
+        this.addProject.loading = false;
         this.toastr.error(err.error.message || "");
       }
     );
   }
 
   onEditProject(id: any, p: any) {
-    this.loading = true;
+    this.editProject.loading = true;
     this.userService.editProject(id, p).subscribe(
       (res: any) => {
-        this.loading = false;
+        this.editProject.loading = false;
         this.toastr.success(res.data.message || "");
         this.router.navigate(["/projects"]);
       },
       (err: any) => {
-        this.loading = false;
+        this.editProject.loading = false;
         this.toastr.error(err.error.message || "");
       }
     );
   }
 
-  viewProject() {
-    this.loading = true;
+  getViewProject() {
+    this.viewProject.loading = true;
     this.userService.viewProject(this.urlParams.id).subscribe(
       (res: any) => {
-        this.loading = false;
-        this.projectData = res[0] || [];
+        this.viewProject.exists = true;
+        this.viewProject.loading = false;
+        this.viewProject.data = res[0] || [];
         this.setValue();
       },
       (err: any) => {
-        this.loading = false;
+        this.viewProject.loading = false;
         this.toastr.error(err.error.message || "");
       }
     );
@@ -183,12 +211,15 @@ export class AddProjectComponent implements OnInit {
 
   setValue() {
     let fg = this.formGroup;
-    let p = this.projectData;
+    let p = this.viewProject.data;
     fg.controls.name.setValue(p.nameOfProject || "");
     fg.controls.lead.setValue(p.handledBy || "");
     fg.controls.user.setValue(p.members || "");
     fg.controls.description.setValue(p.projectDescription || "");
-    this.date = [this.projectData.startDate, this.projectData.endDate];
+    this.date = [
+      this.viewProject.data.startDate,
+      this.viewProject.data.endDate,
+    ];
   }
 
   // private formatDate(date: any) {

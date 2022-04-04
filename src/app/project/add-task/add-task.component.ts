@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from "@angular/router";
 import { UserService } from "src/app/providers/user.service";
 import { Component, OnChanges, OnInit } from "@angular/core";
 import { ToastrService } from "ngx-toastr";
+import { loadavg } from "os";
 
 @Component({
   selector: "app-add-task",
@@ -16,16 +17,29 @@ import { ToastrService } from "ngx-toastr";
 })
 export class AddTaskComponent implements OnChanges, OnInit {
   urlParams: any;
-  abc: any;
-  taskData: any;
+  task: {
+    data: any;
+    loading: Boolean;
+  };
+  user: {
+    data: any;
+    loading: Boolean;
+  };
+  time: {
+    from: any;
+    to: any;
+  };
+  detailed: {
+    user: any;
+    loading: Boolean;
+  };
+  add: {
+    data: {};
+    loading: Boolean;
+  };
   date: any;
-  userData: any;
-  timeFrom: any;
-  timeTo: any;
   curOpt = "high";
-  loading: Boolean;
   formGroup: FormGroup;
-  userDetails: any;
   constructor(
     private userService: UserService,
     private toastr: ToastrService,
@@ -35,9 +49,26 @@ export class AddTaskComponent implements OnChanges, OnInit {
   ) {
     this.appService.pageTitle = "addTask - Task Management";
     this.formGroup = this.getFormGroup();
-    this.timeFrom = "";
-    this.timeTo = "";
-    this.loading = false;
+    this.task = {
+      data: {},
+      loading: false,
+    };
+    this.user = {
+      data: {},
+      loading: false,
+    };
+    this.time = {
+      from: {},
+      to: {},
+    };
+    this.detailed = {
+      user: {},
+      loading: false,
+    };
+    this.add = {
+      data: {},
+      loading: false,
+    };
   }
 
   ngOnInit(): void {
@@ -115,43 +146,43 @@ export class AddTaskComponent implements OnChanges, OnInit {
 
   viewTask(url: any) {
     let p = url;
-    this.loading = true;
+    this.task.loading = true;
     this.userService.viewTask(p).subscribe(
       (res: any) => {
-        this.loading = false;
-        this.taskData = res[0] || {};
+        this.task.loading = false;
+        this.task.data = res[0] || {};
       },
       (err: any) => {
-        this.loading = false;
+        this.task.loading = false;
         this.toastr.error(err.error.message);
       }
     );
   }
 
   userList() {
-    this.loading = true;
+    this.user.loading = true;
     this.userService.listUser().subscribe(
       (res: any) => {
-        this.loading = false;
-        this.userData = res || {};
+        this.user.loading = false;
+        this.user.data = res || {};
       },
       (err: any) => {
-        this.loading = false;
+        this.user.loading = false;
         this.toastr.error(err.error.message || "");
       }
     );
   }
 
   userView() {
-    this.loading = true;
+    this.detailed.loading = true;
     this.userService.viewUser(this.formGroup.value.user).subscribe(
       (res: any) => {
-        this.loading = false;
-        this.userDetails = res.userData || {};
+        this.detailed.loading = false;
+        this.detailed.user = res.userData || {};
         this.addTask();
       },
       (err: any) => {
-        this.loading = false;
+        this.detailed.loading = false;
         this.router.navigate(["**"]);
         this.toastr.error(err.error.message || "");
       }
@@ -168,22 +199,22 @@ export class AddTaskComponent implements OnChanges, OnInit {
       attachment: fg.attachment,
       member: {
         id: fg.user,
-        name: this.userDetails.fName,
+        name: this.detailed.user.fName,
       },
       fromDate: this.date[0],
       toDate: this.date[1],
-      fromTime: this.timeFrom.hour + ":" + this.timeFrom.minute,
-      toTime: this.timeTo.hour + ":" + this.timeTo.minute,
+      fromTime: this.time.from.hour + ":" + this.time.from.minute,
+      toTime: this.time.to.hour + ":" + this.time.to.minute,
       effort: {
         type: fg.effortType,
         value: fg.effortValue,
       },
       priority: fg.priority,
     };
-    this.loading = true;
+    this.add.loading = true;
     this.userService.addTask(this.urlParams.id, p).subscribe(
       (res: any) => {
-        this.loading = false;
+        this.add.loading = false;
         this.toastr.success(res.data.message);
         this.router.navigate(["/projects/view-project"], {
           queryParams: {
@@ -192,7 +223,7 @@ export class AddTaskComponent implements OnChanges, OnInit {
         });
       },
       (err: any) => {
-        this.loading = false;
+        this.add.loading = false;
         this.toastr.error(err.error.message);
       }
     );

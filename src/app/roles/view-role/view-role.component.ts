@@ -14,9 +14,11 @@ import { ActivatedRoute, Router } from "@angular/router";
 })
 export class ViewRoleComponent implements OnInit {
   urlParams: any;
-  userData: any;
+  view: {
+    data: any;
+    loading: Boolean;
+  };
   closeResult: any;
-loading:Boolean
   constructor(
     private appService: AppService,
     private activatedRoute: ActivatedRoute,
@@ -28,9 +30,11 @@ loading:Boolean
   ) {
     this.appService.pageTitle = "viewrole - Task Management";
     this.urlParams = "";
-    this.userData = {};
+    this.view = {
+      data: {},
+      loading: false,
+    };
     this.closeResult = "";
-    this.loading = false;
   }
 
   ngOnInit(): void {
@@ -41,14 +45,14 @@ loading:Boolean
   }
 
   viewRole() {
-    this.loading = true;
+    this.view.loading = true;
     this.userService.viewRole(this.urlParams.id || "").subscribe(
       (res: any) => {
-        this.loading = false;
-        this.userData = res || {};
+        this.view.loading = false;
+        this.view.data = res || {};
       },
       (err: any) => {
-        this.loading = false;
+        this.view.loading = false;
         this.router.navigate(["**"]);
         this.toastr.error(err.error.message || "");
       }

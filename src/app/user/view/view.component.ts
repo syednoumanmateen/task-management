@@ -11,9 +11,14 @@ import { UserService } from "src/app/providers/user.service";
 })
 export class ViewComponent implements OnInit {
   urlParams: any;
-  userData: any;
+  user: {
+    data: any;
+    loading: Boolean;
+  };
+  psw: {
+    loading: Boolean;
+  };
   resetPassword: any;
-  loading: Boolean;
 
   constructor(
     private router: Router,
@@ -24,8 +29,13 @@ export class ViewComponent implements OnInit {
   ) {
     this.appService.pageTitle = "addUser - Task Management";
     this.urlParams = {};
-    this.userData = {};
-    this.loading = false;
+    this.user = {
+      data: {},
+      loading: false,
+    };
+    this.psw = {
+      loading: false,
+    };
   }
 
   ngOnInit(): void {
@@ -36,14 +46,14 @@ export class ViewComponent implements OnInit {
   }
 
   userView() {
-    this.loading = true;
+    this.user.loading = true;
     this.userService.viewUser(this.urlParams.id).subscribe(
       (res: any) => {
-        this.loading = false;
-        this.userData = res.userData || {};
+        this.user.loading = false;
+        this.user.data = res.userData || {};
       },
       (err: any) => {
-        this.loading = false;
+        this.user.loading = false;
         this.router.navigate(["**"]);
         this.toastr.error(err.error.message || "");
       }
@@ -52,14 +62,14 @@ export class ViewComponent implements OnInit {
 
   onResetpsw() {
     let p = this.resetPassword;
-    this.loading = true;
-    this.userService.resetPassword(this.userData.email, p).subscribe(
+    this.psw.loading = true;
+    this.userService.resetPassword(this.user.data.email, p).subscribe(
       (res: any) => {
-        this.loading = false;
+        this.psw.loading = false;
         this.toastr.success(res.message);
       },
       (err: any) => {
-        this.loading = false;
+        this.psw.loading = false;
         this.toastr.error(err.error.message);
       }
     );

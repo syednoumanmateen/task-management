@@ -10,15 +10,20 @@ import { Component, OnInit } from "@angular/core";
 })
 export class TasksViewComponent implements OnInit {
   urlParams: any;
-  taskData: any;
-  loading: Boolean;
+  task: {
+    data: any;
+    loading: Boolean;
+  };
   constructor(
     private appService: AppService,
     private activatedRouete: ActivatedRoute,
     private userService: UserService
   ) {
     this.appService.pageTitle = "TaskView - Task Management";
-    this.loading = false;
+    this.task = {
+      data: {},
+      loading: false,
+    };
   }
 
   ngOnInit(): void {
@@ -29,14 +34,14 @@ export class TasksViewComponent implements OnInit {
   }
 
   viewTaskList() {
-    this.loading = true;
+    this.task.loading = true;
     this.userService.viewTask(this.urlParams.id).subscribe(
       (res: any) => {
-        this.loading = false;
-        this.taskData = res[0] || {};
+        this.task.loading = false;
+        this.task.data = res[0] || {};
       },
       (err: any) => {
-        this.loading = false;
+        this.task.loading = false;
       }
     );
   }

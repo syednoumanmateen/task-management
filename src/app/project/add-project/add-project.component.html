@@ -1,13 +1,19 @@
-<h4 class="font-weight-bold py-3 mb-4" *ngIf="projectData">
-	Edit Project <span class="text-muted">#{{projectData.projectCode||""}}</span>
+<h4 class="font-weight-bold py-3 mb-4" *ngIf="viewProject.exists">
+	Edit Project
+	<span *ngIf="viewProject.loading">
+		<app-spinner></app-spinner>
+	</span> <span *ngIf="!viewProject.loading" class="text-muted">#{{viewProject.data.projectCode||""}}</span>
 </h4>
-<h4 class="font-weight-bold py-3 mb-4" *ngIf="!projectData">
+<h4 class="font-weight-bold py-3 mb-4" *ngIf="!viewProject.exists">
 	Add Project
 </h4>
 
 <div class="card">
 	<div class="card-body">
-		<form action="" [formGroup]="formGroup">
+		<span *ngIf="viewProject.loading">
+			<app-spinner></app-spinner>
+		</span>
+		<form action="" [formGroup]="formGroup" *ngIf="!viewProject.loading">
 			<div class="form-row">
 				<div class="form-group col-md-6">
 					<label class="form-label">Project Name<span class="text-danger">*</span></label>
@@ -15,7 +21,7 @@
 				</div>
 				<div class="form-group col-md-6">
 					<label class="form-label">Handled By<span class="text-danger">*</span></label>
-					<ng-select [items]="userData" [closeOnSelect]="true" bindLabel="fName" [hideSelected]="true"
+					<ng-select [items]="user.data" [closeOnSelect]="true" bindLabel="fName" [hideSelected]="true"
 						formControlName="lead">
 					</ng-select>
 				</div>
@@ -23,7 +29,7 @@
 			<div class="form-row">
 				<div class="form-group col-md-6">
 					<label class="form-label">Members<span class="text-danger">*</span></label>
-					<ng-select [items]="userData" [closeOnSelect]="false" [multiple]="true" bindLabel="fName"
+					<ng-select [items]="user.data" [closeOnSelect]="false" [multiple]="true" bindLabel="fName"
 						[hideSelected]="true" formControlName="user">
 					</ng-select>
 				</div>
@@ -49,8 +55,8 @@
 
 <div class="text-right mt-3">
 	<button type="button" class="btn btn-primary" (click)="onApiCall()">
-		<span *ngIf="!projectData">
-			Add</span><span *ngIf="projectData">Edit</span>
+		<span *ngIf="!viewProject.exists">
+			Add</span><span *ngIf="viewProject.exists">Edit</span>
 	</button>&nbsp;
 	<button type="button" class="btn btn-default" (click)="onCancel()">Cancel</button>
 </div>

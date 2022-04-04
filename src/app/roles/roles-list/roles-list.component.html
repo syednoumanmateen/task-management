@@ -40,10 +40,10 @@
         <div class="row">
             <div class="col">
                 Total Number Of Roles: &nbsp;
-                <!-- <span *ngIf="loading">
+                <span *ngIf="role.loading">
                     <app-spinner></app-spinner>
-                </span> -->
-                <span>{{userData.length||0}}</span>
+                </span>
+                <span *ngIf="role.loading">{{role.data.length||0}}</span>
             </div>
         </div>
 
@@ -76,24 +76,24 @@
                     </th>
                 </tr>
             </thead>
-            <!-- <span *ngIf="loading">
+            <span *ngIf="role.loading">
                 <app-spinner></app-spinner>
-            </span> -->
-            <tbody>
-                <tr *ngFor="let user of userData">
-                    <td class="align-middle">{{user.roleCode||""}}</td>
-                    <td class="align-middle">{{user.roleName||""}}</td>
+            </span>
+            <tbody *ngIf="!role.loading">
+                <tr *ngFor="let role of role.data">
+                    <td class="align-middle">{{role.roleCode||""}}</td>
+                    <td class="align-middle">{{role.roleName||""}}</td>
                     <td class="align-middle">
                         <button type="button" class="btn btn-primary d-block"
-                            (click)="viewFeatures(user.featureList||'')">View
+                            (click)="viewFeatures(role.featureList||'')">View
                             Features</button>
                     </td>
-                    <td class="align-middle">{{user.createdBy ||""}}</td>
-                    <td class="align-middle">{{user.createdOn |date:'dd/MM/yyyy'||""}}</td>
+                    <td class="align-middle">{{role.createdBy ||""}}</td>
+                    <td class="align-middle">{{role.createdOn |date:'dd/MM/yyyy'||""}}</td>
                     <td class="text-center text-nowrap align-middle">
                         <a class="btn btn-danger btn-sm">Block</a>&nbsp;
-                        <a class="btn btn-primary btn-sm" (click)="onView(user._id||'')">View</a>&nbsp;
-                        <a (click)="onDelete(user._id||'')" class="btn btn-danger btn-sm">Remove</a>
+                        <a class="btn btn-primary btn-sm" (click)="onView(role._id||'')">View</a>&nbsp;
+                        <a (click)="onDelete(role._id||'')" class="btn btn-danger btn-sm">Remove</a>
                     </td>
                 </tr>
             </tbody>
@@ -109,7 +109,7 @@
                 <span class="text-muted"> Total Pages:10</span>
             </div>
             <div class="col-sm pt-3">
-                <ngb-pagination size="sm" [collectionSize]="userData.length" [pageSize]="10" [page]="10"
+                <ngb-pagination size="sm" [collectionSize]="role.data.length" [pageSize]="10" [page]="10"
                     class="d-flex justify-content-center justify-content-sm-end m-0">
                 </ngb-pagination>
             </div>

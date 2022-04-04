@@ -1,8 +1,8 @@
-import { ToastrService } from "ngx-toastr";
+import { UserService } from "src/app/providers/user.service";
 import { AppService } from "src/app/providers/app.service";
+import { ToastrService } from "ngx-toastr";
 import { Router } from "@angular/router";
 import { Component, OnInit } from "@angular/core";
-import { UserService } from "src/app/providers/user.service";
 
 @Component({
   selector: "app-project",
@@ -10,8 +10,13 @@ import { UserService } from "src/app/providers/user.service";
   styleUrls: ["./project.component.css"],
 })
 export class ProjectComponent implements OnInit {
-  userData: any;
-  loading:Boolean
+  project: {
+    data: any;
+    loading: Boolean;
+  };
+  delete: {
+    loading: Boolean;
+  };
   constructor(
     private router: Router,
     private appService: AppService,
@@ -19,8 +24,13 @@ export class ProjectComponent implements OnInit {
     private toastr: ToastrService
   ) {
     this.appService.pageTitle = "Project - Task Management";
-    this.userData || {};
-    this.loading = false;
+    this.project = {
+      data: {},
+      loading: false,
+    };
+    this.delete = {
+      loading: false,
+    };
   }
 
   ngOnInit(): void {
@@ -40,28 +50,28 @@ export class ProjectComponent implements OnInit {
   }
 
   onRemove(id: any) {
-    this.loading = true;
+    this.delete.loading = true;
     this.userService.removeProject(id).subscribe(
       (res: any) => {
-        this.loading = false;
+        this.delete.loading = false;
         this.toastr.success(res.data.message || "");
       },
       (err: any) => {
-        this.loading = false;
+        this.delete.loading = false;
         this.toastr.error(err.error.message || "");
       }
     );
   }
 
   getProject() {
-    this.loading = true;
+    this.project.loading = true;
     this.userService.projectList().subscribe(
       (res: any) => {
-        this.loading = false;
-        this.userData = res || {};
+        this.project.loading = false;
+        this.project.data = res || {};
       },
       (err: any) => {
-        this.loading = false;
+        this.project.loading = false;
         this.toastr.error(err.error.message || "");
       }
     );

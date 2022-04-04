@@ -13,9 +13,21 @@ import { ToastrService } from "ngx-toastr";
 export class AddComponent implements OnInit {
   formGroup: FormGroup;
   urlParams: any;
-  userData: any;
-  roleData: any;;
-  loading:Boolean
+  user: {
+    data: any;
+    loading: Boolean;
+    exists:Boolean
+  };
+  role: {
+    data: any;
+    loading: Boolean;
+  };
+  add: {
+    loading: Boolean;
+  };
+  edit: {
+    loading: Boolean;
+  };
   constructor(
     private appService: AppService,
     private userService: UserService,
@@ -26,7 +38,21 @@ export class AddComponent implements OnInit {
     this.appService.pageTitle = "addUser - Task Management";
     this.formGroup = this.getFormGroup();
     this.urlParams = {};
-    this.loading = false;
+    this.user = {
+      data: {},
+      loading: false,
+      exists:false
+    };
+    this.role = {
+      data: {},
+      loading: false,
+    };
+    this.add = {
+      loading: false,
+    };
+    this.edit = {
+      loading: false,
+    };
     this.activatedRoute.queryParams.subscribe((data) => {
       this.urlParams = data || "";
     });
@@ -120,29 +146,29 @@ export class AddComponent implements OnInit {
     }
   }
   addUser(p: any) {
-    this.loading = true;
+    this.add.loading = true;
     this.userService.addUser(p).subscribe(
       (res: any) => {
-        this.loading = false;
+        this.add.loading = false;
         this.toastr.success(res.data.message || "");
         this.router.navigate(["/users"]);
       },
       (err: any) => {
-        this.loading = false;
+        this.add.loading = false;
         this.toastr.error(err.error.message || "");
       }
     );
   }
   editUser(url: string, p: any) {
-    this.loading = true;
+    this.edit.loading = true;
     this.userService.editUser(url, p).subscribe(
       (res: any) => {
-        this.loading = false;
+        this.edit.loading = false;
         this.toastr.success(res.data.message || "");
         this.router.navigate(["/users"]);
       },
       (err: any) => {
-        this.loading = false;
+        this.edit.loading = false;
         this.toastr.error(err.error.message || "");
       }
     );
@@ -154,30 +180,31 @@ export class AddComponent implements OnInit {
   }
 
   getRoles() {
-    this.loading = true;
+    this.role.loading = true;
     this.userService.roleList().subscribe(
       (res: any) => {
-        this.loading = false;
-        this.roleData = res || "";
+        this.role.loading = false;
+        this.role.data = res || "";
       },
       (err: any) => {
-        this.loading = false;
+        this.role.loading = false;
         this.toastr.error(err.error.message || "");
       }
     );
   }
 
   userView() {
-    this.loading = true;
+    this.user.loading = true;
     this.userService.viewUser(this.urlParams.id).subscribe(
       (res: any) => {
-        this.loading = false;
-        this.userData = res.userData || {};
+        this.user.loading = false;
+        this.user.data = res.userData || {};
+        this.user.exists=true
         this.toastr.success(res.data.message || "");
         this.setValue();
       },
       (err: any) => {
-        this.loading = false;
+        this.user.loading = false;
         this.toastr.error(err.error.message || "");
       }
     );
@@ -185,7 +212,7 @@ export class AddComponent implements OnInit {
 
   setValue() {
     let fg = this.formGroup;
-    let u = this.userData;
+    let u = this.user.data;
     fg.controls.fname.setValue(u.fName || "");
     fg.controls.lname.setValue(u.lName || "");
     fg.controls.dno.setValue(u.address.doorNumber || "");

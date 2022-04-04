@@ -12,8 +12,10 @@ import { Router } from "@angular/router";
 })
 export class ProfileComponent implements OnInit {
   userId: any;
-  loading: Boolean;
-  userData: any;
+  user: {
+    data: any;
+    loading: Boolean;
+  };
   constructor(
     private appService: AppService,
     private storage: DataStorageService,
@@ -22,7 +24,10 @@ export class ProfileComponent implements OnInit {
     private toastr: ToastrService
   ) {
     this.appService.pageTitle = "profile - Task Management";
-    this.loading = false;
+    this.user = {
+      data: {},
+      loading: false,
+    };
   }
 
   ngOnInit(): void {
@@ -31,14 +36,14 @@ export class ProfileComponent implements OnInit {
   }
 
   userView() {
-    this.loading = true;
+    this.user.loading = true;
     this.userService.viewUser(this.userId).subscribe(
       (res: any) => {
-        this.loading = false;
-        this.userData = res.userData || {};
+        this.user.loading = false;
+        this.user.data = res.userData || {};
       },
       (err: any) => {
-        this.loading = false;
+        this.user.loading = false;
         this.router.navigate(["**"]);
         this.toastr.error(err.error.message || "");
       }

@@ -1,11 +1,14 @@
-<h4 class="font-weight-bold py-3 mb-4" *ngIf="userData">
-    Edit Feture <span class="text-muted">#{{userData.featureCode||""}}</span>
+<h4 class="font-weight-bold py-3 mb-4" *ngIf="view.exists">
+    Edit Feture <span class="text-muted">#{{view.data.featureCode||""}}</span>
 </h4>
-<h4 class="font-weight-bold py-3 mb-4" *ngIf="!userData">
+<h4 class="font-weight-bold py-3 mb-4" *ngIf="!view.exists">
     Add Feature
 </h4>
 
-<form action="" [formGroup]="formGroup">
+<span *ngIf="view.loading">
+    <app-spinner></app-spinner>
+</span>
+<form action="" [formGroup]="formGroup" *ngIf="!view.loading">
     <div class="card mb-2">
         <div class="card-body pb-2">
 
@@ -37,8 +40,8 @@
 
 <div class="text-right mt-3">
     <button type="button" class="btn btn-primary" (click)="onApiCall()">
-        <span *ngIf="!userData">
-            Add</span><span *ngIf="userData">Edit</span>
+        <span *ngIf="!view.exists">
+            Add</span><span *ngIf="view.exists">Edit</span>
     </button>&nbsp;
     <button type="button" class="btn btn-default" (click)="onCancel()">Cancel</button>
 </div>

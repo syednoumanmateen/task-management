@@ -14,14 +14,14 @@
     <div class="col-md mb-4">
         <label class="form-label">Role</label>
         <select class="custom-select" [(ngModel)]="roleValue">
-            <option *ngFor="let item of role" [value]="item.roleName">{{item.roleName}}
+            <option *ngFor="let r of role.data" [value]="r.roleName">{{r.roleName}}
             </option>
         </select>
     </div>
     <div class="col-md mb-4">
         <label class="form-label">Status</label>
         <select class="custom-select" [(ngModel)]="statusValue">
-            <option *ngFor="let item of status" [value]="item.value||0">{{item.title||""}}</option>
+            <option *ngFor="let r of status" [value]="r.value||0">{{r.title||""}}</option>
         </select>
     </div>
 
@@ -40,10 +40,10 @@
         <div class="row">
             <div class="col">
                 Total Number Of Users: &nbsp;
-                <!-- <span *ngIf="loading">
+                <span *ngIf="user.loading">
                     <app-spinner></app-spinner>
-                </span> -->
-                <span>{{userData.length||0}}</span>
+                </span>
+                <span *ngIf="!user.loading">{{user.data.length||0}}</span>
             </div>
         </div>
 
@@ -85,11 +85,11 @@
                     </th>
                 </tr>
             </thead>
-            <!-- <span *ngIf="loading">
+            <span *ngIf="user.loading">
                 <app-spinner></app-spinner>
-            </span> -->
-            <tbody>
-                <tr *ngFor="let user of userData">
+            </span>
+            <tbody *ngIf="!user.loading">
+                <tr *ngFor="let user of user.data">
                     <td class="align-middle">{{user.userCode||''}}</td>
                     <td class="align-middle"><a href="javascript:void(0)">{{user.email||""}}</a></td>
                     <td class="align-middle">{{user.email||""}}</td>
@@ -130,7 +130,7 @@
                 <span class="text-muted"> Total Pages:10</span>
             </div>
             <div class="col-sm pt-3">
-                <ngb-pagination size="sm" [collectionSize]="userData.length" [pageSize]="10" [page]="10"
+                <ngb-pagination size="sm" [collectionSize]="user.data.length" [pageSize]="10" [page]="10"
                     class="d-flex justify-content-center justify-content-sm-end m-0">
                 </ngb-pagination>
             </div>

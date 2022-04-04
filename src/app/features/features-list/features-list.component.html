@@ -40,10 +40,10 @@
         <div class="row">
             <div class="col">
                 Total Of Number Fetures: &nbsp;
-                <span *ngIf="loading">
+                <span *ngIf="feature.loading">
                     <app-spinner></app-spinner>
                 </span>
-                <span *ngIf="!loading">{{userData.length||0}}</span>
+                <span *ngIf="!feature.loading">{{feature.data.length||0}}</span>
             </div>
         </div>
 
@@ -79,21 +79,21 @@
                     </th>
                 </tr>
             </thead>
-            <span *ngIf="loading">
+            <span *ngIf="feature.loading">
                 <app-spinner></app-spinner>
             </span>
-            <tbody *ngIf="!loading">
-                <tr *ngFor="let user of userData">
-                    <td class="align-middle">{{user.featureCode||""}}</td>
-                    <td class="align-middle">{{user.featureName||""}}</td>
-                    <td class="align-middle">{{user.moduleName||""}}</td>
-                    <td class="align-middle">{{user.decription||""}}</td>
-                    <td class="align-middle">{{user.createdBy||""}}</td>
-                    <td class="align-middle">{{user.createdOn|date:'dd/MM/yyyy'||""}}</td>
+            <tbody *ngIf="!feature.loading">
+                <tr *ngFor="let feature of feature.data">
+                    <td class="align-middle">{{feature.featureCode||""}}</td>
+                    <td class="align-middle">{{feature.featureName||""}}</td>
+                    <td class="align-middle">{{feature.moduleName||""}}</td>
+                    <td class="align-middle">{{feature.decription||""}}</td>
+                    <td class="align-middle">{{feature.createdBy||""}}</td>
+                    <td class="align-middle">{{feature.createdOn|date:'dd/MM/yyyy'||""}}</td>
                     <td class="text-center text-nowrap align-middle">
                         <a class="btn btn-danger btn-sm">Block</a>&nbsp;
-                        <a class="btn btn-primary btn-sm" (click)="onView(user._id||'')">View</a>&nbsp;
-                        <a (click)="onDelete(user._id||'')" class="btn btn-danger btn-sm">Remove</a>
+                        <a class="btn btn-primary btn-sm" (click)="onView(feature._id||'')">View</a>&nbsp;
+                        <a (click)="onDelete(feature._id||'')" class="btn btn-danger btn-sm">Remove</a>
                     </td>
                 </tr>
             </tbody>
@@ -109,7 +109,7 @@
                 <span class="text-muted"> Total Pages:10</span>
             </div>
             <div class="col-sm pt-3">
-                <ngb-pagination size="sm" [collectionSize]="userData.length" [pageSize]="10" [page]="10"
+                <ngb-pagination size="sm" [collectionSize]="feature.data.length" [pageSize]="10" [page]="10"
                     class="d-flex justify-content-center justify-content-sm-end m-0">
                 </ngb-pagination>
             </div>

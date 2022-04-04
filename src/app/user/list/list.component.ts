@@ -14,13 +14,21 @@ import * as moment from "moment";
 })
 export class ListComponent implements OnInit {
   @ViewChild("BlockMsg") BlockMsg!: ElementRef;
-  userData: any;
-  role: any;
+  user: {
+    data: any;
+    loading: Boolean;
+  };
+  role: {
+    data: any;
+    loading: Boolean;
+  };
+  delete:{
+    loading:Boolean
+  }
   status: Array<any>;
   roleValue: string;
   statusValue: string;
   date: any;
-  loading:Boolean;
   constructor(
     private userService: UserService,
     private router: Router,
@@ -29,12 +37,20 @@ export class ListComponent implements OnInit {
     private modelService: NgbModal
   ) {
     this.appService.pageTitle = "userList - Task Management";
-    this.userData = {};
+    this.user = {
+      data: {},
+      loading: false,
+    };
+    this.role = {
+      data: {},
+      loading: false,
+    };
+    this.delete={
+      loading:false
+    }
     this.status = this.getStatus();
     this.roleValue = "";
     this.statusValue = "";
-    this.role = {};
-    this.loading = false;
   }
 
   ngOnInit(): void {
@@ -68,14 +84,14 @@ export class ListComponent implements OnInit {
   }
 
   userList() {
-    this.loading = true;
+    this.user.loading = true;
     this.userService.listUser().subscribe(
       (res: any) => {
-        this.loading = false;
-        this.userData = res || {};
+        this.user.loading = false;
+        this.user.data = res || {};
       },
       (err: any) => {
-        this.loading = false;
+        this.user.loading = false;
         this.toastr.error(err.error.message || "");
       }
     );
@@ -92,29 +108,29 @@ export class ListComponent implements OnInit {
   onBlock(id: any) {}
 
   onDelete(id: any) {
-    this.loading = true;
+    this.delete.loading = true;
     this.userService.deleteUser(id).subscribe(
       (res: any) => {
-        this.loading = false;
+        this.delete.loading = false;
         this.toastr.success(res.data.message || "");
         this.ngOnInit();
       },
       (err: any) => {
-        this.loading = false;
+        this.delete.loading = false;
         this.toastr.error(err.error.message);
       }
     );
   }
 
   getRoles() {
-    this.loading = true;
+    this.role.loading = true;
     this.userService.roleList().subscribe(
       (res: any) => {
-        this.loading = false;
+        this.role.loading = false;
         this.role = res || "";
       },
       (err: any) => {
-        this.loading = false;
+        this.role.loading = false;
         this.toastr.error(err.error.message || "");
       }
     );
@@ -127,14 +143,14 @@ export class ListComponent implements OnInit {
       startDate: this.date[0] || {},
       endDate: this.date[1] || {},
     };
-    this.loading = true;
+    this.user.loading = true;
     this.userService.filterUser(p).subscribe(
       (res: any) => {
-        this.loading = false;
-        this.userData = res || {};
+        this.user.loading = false;
+        this.user.data = res || {};
       },
       (err: any) => {
-        this.loading = false;
+        this.user.loading = false;
         this.toastr.error(err.message.message || err.error.message || "");
       }
     );

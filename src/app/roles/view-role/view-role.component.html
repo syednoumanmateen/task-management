@@ -1,46 +1,46 @@
 <div class="card">
     <div class="row no-gutters row-bordered">
         <div class="d-flex col-md align-items-center">
-            <!-- <span *ngIf="loading">
+            <span *ngIf="view.loading">
                 <app-spinner></app-spinner>
-            </span> -->
-            <div class="card-body d-block text-body">
+            </span>
+            <div class="card-body d-block text-body" *ngIf="!view.loading">
                 <div class="text-muted small line-height-1">Role</div>
-                <div class="text-xlarge">{{userData.roleName||""}}</div>
-                <div class="text-xlarge">{{userData.roleCode||""}}</div>
-                <a class="btn btn-primary btn-sm" (click)="onEdit(userData._id||'')">Edit</a>
+                <div class="text-xlarge">{{view.data.roleName||""}}</div>
+                <div class="text-xlarge">{{view.data.roleCode||""}}</div>
+                <a class="btn btn-primary btn-sm" (click)="onEdit(view.data._id||'')">Edit</a>
             </div>
         </div>
     </div>
     <div class="card-body">
 
-        <table class="table user-view-table m-0">
+        <table class="table view-view-table m-0">
             <tbody>
                 <tr>
                     <td>Name:</td>
-                    <!-- <span *ngIf="loading">
+                    <span *ngIf="view.loading">
                         <app-spinner></app-spinner>
-                    </span> -->
-                    <td>{{userData.createdBy||""}}</td>
+                    </span>
+                    <td *ngIf="!view.loading">{{view.data.createdBy||""}}</td>
                 </tr>
                 <tr>
                     <td>Role Code:</td>
-                    <!-- <span *ngIf="loading">
+                    <span *ngIf="view.loading">
                         <app-spinner></app-spinner>
-                    </span> -->
-                    <td>{{userData.roleCode||""}}</td>
+                    </span>
+                    <td *ngIf="!view.loading">{{view.data.roleCode||""}}</td>
                 </tr>
                 <tr>
                     <td>Role Name:</td>
-                    <!-- <span *ngIf="loading">
+                    <span *ngIf="view.loading">
                         <app-spinner></app-spinner>
-                    </span> -->
-                    <td>{{userData.roleName||""}}</td>
+                    </span>
+                    <td *ngIf="!view.loading">{{view.data.roleName||""}}</td>
                 </tr>
                 <tr>
                     <td>Feature List:</td>
                     <td><button type="button" class="btn btn-primary d-block"
-                            (click)="viewFeatures(userData.featureList||'')">View
+                            (click)="viewFeatures(view.data.featureList||'')">View
                             Features</button></td>
                 </tr>
             </tbody>
