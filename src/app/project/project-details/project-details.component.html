@@ -10,92 +10,207 @@
 	</h4>
 </h4>
 
+<!-- Filters -->
+<div class="ui-bordered mb-4 pl-2 row">
+	<div class="form-group">
+		<label class="form-label">Created On</label>
+		<custom-daterange-picker [(ngModel)]="date"></custom-daterange-picker>
+	</div>
+	<div class="col-md mb-4">
+		<label class="form-label">Summary</label>
+		<select class="custom-select text-capitalize" [(ngModel)]="summary">
+			<option class="text-capitalize" *ngFor="let task of task.data" value="task.title">{{task.title}}
+			</option>
+		</select>
+	</div>
+	<div class="col-md mb-4">
+		<label class="form-label">Assignee</label>
+		<select class="custom-select text-capitalize" [(ngModel)]="assignee">
+			<option class="text-capitalize" *ngFor="let user of user.data" value="user.fName">
+				{{user.fName}}</option>
+		</select>
+	</div>
+	<div class="col-md mb-4">
+		<label class="form-label">Reporter</label>
+		<select class="custom-select text-capitalize" [(ngModel)]="reporter">
+			<option class="text-capitalize" *ngFor="let user of user.data" value="user.fName">
+				{{user.fName}}</option>
+		</select>
+	</div>
+	<div class="col-md mb-4">
+		<label class="form-label">Status</label>
+		<select class="custom-select text-capitalize " [(ngModel)]="status">
+			<option class="text-capitalize" *ngFor="let status of ['created','pending', 'progress', 'complete', 'rejected']"
+				value="status">
+				{{status}}</option>
+		</select>
+	</div>
 
-<div class="row">
-	<div class="col">
+	<div class="col-md col-xl-2 mb-4">
+		<label class="form-label d-none d-md-block">&nbsp;</label>
+		<button type="button" class="btn btn-secondary btn-block">Filter</button>
+	</div>
+</div>
+<!-- / Filters -->
 
-		<div class="nav-tabs-top mb-4 text-center">
 
-			<div class="card">
-				<div class="card-body">
-					<div class="table-responsive">
-						<table class="table table-striped table-bordered card-table">
-							<thead>
-								<tr>
-									<th class="text-nowrap cursor-pointer">
-										Sl.No<i class="ion text-muted ml-2"></i>
-									</th>
-									<th class="text-nowrap cursor-pointer">
-										ID<i class="ion text-muted ml-2"></i>
-									</th>
-									<th class="text-nowrap cursor-pointer">
-										Summary<i class="ion text-muted ml-2"></i>
-									</th>
-									<th class="text-nowrap cursor-pointer">
-										Description<i class="ion text-muted ml-2"></i>
-									</th>
-									<th class="text-nowrap cursor-pointer">
-										Type<i class="ion text-muted ml-2"></i>
-									</th>
-									<th class="text-nowrap cursor-pointer">
-										Assignee<i class="ion text-muted ml-2"></i>
-									</th>
-									<th class="text-nowrap cursor-pointer">
-										Reporter<i class="ion text-muted ml-2"></i>
-									</th>
-									<th class="text-nowrap cursor-pointer">
-										Status<i class="ion text-muted ml-2"></i>
-									</th>
-									<th class="text-nowrap cursor-pointer">
-										Created<i class="ion text-muted ml-2"></i>
-									</th>
-									<th class="text-nowrap cursor-pointer">
-										Updated<i class="ion text-muted ml-2"></i>
-									</th>
-									<th class="text-nowrap cursor-pointer">
-										Due<i class="ion text-muted ml-2"></i>
-									</th>
-									<th class="text-center cursor-pointer">
-										Actions<i class="ion text-muted ml-2"></i>
-									</th>
-								</tr>
-							</thead>
-							<span *ngIf="task.loading">
-								<app-spinner></app-spinner>
-							</span>
-							<tbody *ngIf="!task.loading">
-								<tr *ngFor="let task of task.data;index as i">
-									<td class="align-middle">{{i+1}}</td>
-									<td class="align-middle">{{task.taskCode||''}}</td>
-									<td class="align-middle"><a href="javascript:void(0)" (click)="onView(task._id||'')">{{task.title||""}}</a></td>
-									<td class="align-middle">{{task.description||""}}</td>
-									<td class="align-middle">{{task.type||""}}</td>
-									<td class="align-middle">{{task.member.name||""}}</td>
-									<td class="align-middle">{{task.createdBy||""}}</td>
-									<td class="align-middle">
-										<span *ngIf="task.status=='Created'"
-											[ngClass]="(task.status=='Created')?'badge badge-default':''">{{task.status||""}}</span>
-										<span *ngIf="task.status=='Pending'"
-											[ngClass]="(task.status=='Pending')?'badge badge-warning':''">{{task.status||""}}</span>
-										<span *ngIf="task.status=='Progress'"
-											[ngClass]="(task.status=='Progress')?'badge badge-primary':''">{{task.status||""}}</span>
-										<span *ngIf="task.status=='Complete'"
-											[ngClass]="(task.status=='Complete')?'badge badge-success':''">{{task.status||""}}</span>
-										<span *ngIf="task.status=='Rejected'"
-											[ngClass]="(task.status=='Rejected')?'badge badge-danger':''">{{task.status||""}}</span>
-									</td>
-									<td class="align-middle">{{task.createdAt |date: 'dd/MM/yyyy'||""}}</td>
-									<td class="align-middle">{{task.updatedAt |date: 'dd/MM/yyyy'||""}}</td>
-									<td class="align-middle">{{task.toDate |date: 'dd/MM/yyyy'||""}}</td>
-									<td class="text-center text-nowrap">
-										<a class="btn btn-primary btn-sm" (click)="onView(task._id||'')">View</a>
-									</td>
-								</tr>
-							</tbody>
-						</table>
+<div class="card">
+	<!-- Table controls -->
+	<div class="card-body">
+
+		<div class="row mb-2">
+			<div class="col">
+				Total Of Number Tasks: &nbsp;
+				<span *ngIf="project.loading">
+					<app-spinner></app-spinner>
+				</span>
+				<span *ngIf="!project.loading">{{task.data.length||0}}</span>
+			</div>
+		</div>
+
+		<!-- </div> -->
+		<!-- / Table controls -->
+
+		<!-- <div class="card-body"> -->
+		<div class="row d-flex">
+			<ul class="list-group col-md-2">
+				<li class="list-group-item p-3" *ngFor="let task of task.data;index as i"
+					[ngClass]="{active: curTab._id === task._id}" (click)="getTaskTab(task)">
+					<div class="row">
+						<div class="col-md-2">
+							{{i+1}}.
+						</div>
+						<div class="col-md-8">
+							<div class="text-capitalize font-weight-bold">{{task.title || "" }}</div>
+							<div>
+								<span>{{task.taskCode}}</span>
+							</div>
+						</div>
+						<div class="col-md-2">
+							<img src="assets/profile.png" class="ui-w-30 rounded-circle float-md-right"
+								[ngbTooltip]="task.member.name" alt>
+						</div>
+					</div>
+				</li>
+			</ul>
+			<div class="col-sm-9 card">
+				<div class="card-body mb-4">
+					<h4 class="text-capitalize font-weight-bold">{{curTab.title || "" }}</h4>
+					<div class="card-body p-3">
+						<h5>Description</h5>
+						<div class="row no-gutters">
+							<div class="col-md-12 col-lg-12 col-xl-12">
+								<input *ngIf="!quillShow" type="text" readOnly class="form-control text-capitalize"
+									placeholder="Add Description" (click)="onInputClick()">
+								<div [innerHTML]="curTab.description"></div>
+								<quill-editor placeholder="Add Description" [(ngModel)]="quillData" *ngIf="quillShow">
+									<div quill-editor-toolbar>
+										<span class="ql-formats">
+											<button class="ql-link"></button>
+											<button class="ql-image"></button>
+											<button class="ql-video"></button>
+										</span>
+									</div>
+								</quill-editor>
+								<div class="mt-3" *ngIf="quillShow">
+									<a class="btn btn-primary" (click)="save()">Save</a>&nbsp;<a class="btn btn-default"
+										(click)="Cancel()">Cancel</a>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<!-- Attached files -->
+					<div class="card-body p-3">
+						<h5>Attached files</h5>
+						<div class="row no-gutters">
+							<div class="col-md-6 col-lg-12 col-xl-6">
+								<div class="media-body">
+									<span *ngIf="task.loading">
+										<app-spinner></app-spinner>
+									</span>
+									<div class="project-attachment-filename" *ngIf="!task.loading">
+										<div [innerHTML]="curTab.attachment[0]"></div>
+									</div>
+									<div class="mt-3">
+										<span><a class="btn btn-primary btn-sm">View</a>
+											&nbsp;</span>
+										<a class="btn btn-primary btn-sm">Download</a>
+									</div>
+
+								</div>
+							</div>
+						</div>
+						<!-- / Attached files -->
+					</div>
+
+					<div class="nav-tabs-top mb-4 ">
+						<div class="card-body p-3">
+							<h5>Comments</h5>
+							<div class="row no-gutters">
+								<div class="col-md-12 col-lg-12 col-xl-12 d-flex">
+									<span class="col-sm-0">
+										<img src="assets/profile.png" class="ui-w-40 rounded-circle" alt>
+									</span>
+									<span class="col-sm-12 mr-5">
+										<input *ngIf="!quillcommentShow" type="text" readOnly class="form-control w-98"
+											placeholder="Add Description" (click)="onInputClickComment()">
+										<quill-editor placeholder="Add Description" [(ngModel)]="comment" *ngIf="quillcommentShow">
+											<div quill-editor-toolbar>
+												<span class="ql-formats">
+													<button class="ql-link"></button>
+													<button class="ql-image"></button>
+													<button class="ql-video"></button>
+												</span>
+											</div>
+										</quill-editor>
+
+										<div class="mt-3" *ngIf="quillcommentShow">
+											<a class="btn btn-primary" (click)="postComment()">Send</a>&nbsp;<a class="btn btn-default"
+												(click)="Cancel()">Cancel</a>
+										</div>
+									</span>
+								</div>
+							</div>
+						</div>
+
+						<!-- Attached files -->
+						<div class="card-body p-3">
+							<div class="row no-gutters">
+								<div class="col-md-12 col-lg-12 col-xl-12">
+									<div class="media-body">
+										<span *ngIf="viewComment.loading">
+											<app-spinner></app-spinner>
+										</span>
+										<div class="project-attachment-filename" *ngIf="!viewComment.loading">
+											<div *ngFor="let view of viewComment.data">
+												<div class="bg-lighter mb-2  p-2 rounded">
+													<span>
+														<img src="assets/profile.png" class="ui-w-40 rounded-circle" alt>
+														<span class="text-secondry small text-nowrap pl-1 mt-2">{{view.createdBy}}&nbsp;
+															&nbsp;{{view.createdAt}}</span>
+													</span>
+													<span class="btn-group" ngbDropdown>
+														<button type="button"
+															class="btn btn-default btn-xs rounded-pill icon-btn borderless lg-btn-vertical hide-arrow"
+															ngbDropdownToggle><i class="ion ion-ios-more"></i></button>
+														<div ngbDropdownMenu>
+															<a class="dropdown-item">Edit</a>
+															<a class="dropdown-item" (click)="removeComment(view._id)">Remove</a>
+														</div>
+													</span>
+													<div class="p-3" [innerHTML]="view.attachments[0]"></div>
+												</div>
+											</div>
+										</div>
+
+									</div>
+								</div>
+							</div>
+							<!-- / Attached files -->
+						</div>
 					</div>
 				</div>
-				<!-- / Table -->
 			</div>
 		</div>
 	</div>

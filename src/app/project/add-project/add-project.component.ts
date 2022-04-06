@@ -37,15 +37,6 @@ export class AddProjectComponent implements OnInit {
     data: any;
     loading: Boolean;
   };
-  editProject: {
-    data: any;
-    loading: Boolean;
-  };
-  viewProject: {
-    data: any;
-    loading: Boolean;
-    exists: Boolean;
-  };
   date: {
     start: any;
     end: any;
@@ -60,13 +51,13 @@ export class AddProjectComponent implements OnInit {
     private router: Router,
     private modalService: NgbModal
   ) {
-    this.appService.pageTitle = "addProject - Task Management";
+    this.appService.pageTitle = "Add Project - Task Management";
     this.formGroup = this.getFormGroup();
+    this.quillShow = false;
     this.date = {
       start: {},
       end: {},
     };
-    this.quillShow = false;
     this.urlParams = {};
     (this.user = {
       data: {},
@@ -76,26 +67,10 @@ export class AddProjectComponent implements OnInit {
         data: {},
         loading: false,
       });
-    this.editProject = {
-      data: {},
-      loading: false,
-    };
-    this.viewProject = {
-      data: {},
-      loading: false,
-      exists: false,
-    };
   }
 
   ngOnInit(): void {
-    this.activatedRoute.queryParams.subscribe((data) => {
-      this.urlParams = data || "";
-    });
     this.userList();
-    // this.getRoles();
-    if (this.urlParams.id) {
-      this.getViewProject();
-    }
   }
 
   userList() {
@@ -112,26 +87,15 @@ export class AddProjectComponent implements OnInit {
     );
   }
 
-  // getRoles() {
-  //   this.role.loading = true;
-  //   this.userService.roleList().subscribe(
-  //     (res: any) => {
-  //       this.role.loading = false;
-  //       this.role.data = res || {};
-  //     },
-  //     (err: any) => {
-  //       this.role.loading = false;
-  //       this.toastr.error(err.error.message || "");
-  //     }
-  //   );
-  // }
-
   getFormGroup() {
     let fg = new FormGroup({
       name: new FormControl(""),
       lead: new FormControl(""),
       user: new FormControl(""),
       description: new FormControl(""),
+      attachment: new FormControl(""),
+      startDate: new FormControl(""),
+      endDate: new FormControl(""),
     });
     return fg;
   }
@@ -145,8 +109,10 @@ export class AddProjectComponent implements OnInit {
       msg = "Select  The Team Leader";
     } else if (!fg.user) {
       msg = "Select the Team Members";
-    } else if (!fg.description.trim()) {
-      msg = "Enter The Description";
+    } else if (!fg.startDate.day) {
+      msg = "Choose The Start Date";
+    } else if (!fg.endDate.day) {
+      msg = "Choose The End Date";
     } else {
       msg = "";
     }
@@ -157,6 +123,8 @@ export class AddProjectComponent implements OnInit {
   }
 
   onApiCall() {
+    console.log(this.formGroup.value.startDate);
+
     let v = this.validateForm();
     if (v.status == false) {
       this.toastr.error(v.msg);
@@ -167,14 +135,10 @@ export class AddProjectComponent implements OnInit {
         handledBy: fg.lead || "",
         members: fg.user || "",
         projectDescription: fg.description || "",
-        startDate: [],
-        endDate: [],
+        startDate: fg.startDate,
+        endDate: fg.endDate,
       };
-      if (this.urlParams.id) {
-        this.onEditProject(this.urlParams.id, p);
-      } else {
-        this.onAddProject(p);
-      }
+      this.onAddProject(p);
     }
   }
 
@@ -193,37 +157,6 @@ export class AddProjectComponent implements OnInit {
     );
   }
 
-  onEditProject(id: any, p: any) {
-    this.editProject.loading = true;
-    this.userService.editProject(id, p).subscribe(
-      (res: any) => {
-        this.editProject.loading = false;
-        this.toastr.success(res.data.message || "");
-        this.router.navigate(["/projects"]);
-      },
-      (err: any) => {
-        this.editProject.loading = false;
-        this.toastr.error(err.error.message || "");
-      }
-    );
-  }
-
-  getViewProject() {
-    this.viewProject.loading = true;
-    this.userService.viewProject(this.urlParams.id).subscribe(
-      (res: any) => {
-        this.viewProject.exists = true;
-        this.viewProject.loading = false;
-        this.viewProject.data = res[0] || [];
-        this.setValue();
-      },
-      (err: any) => {
-        this.viewProject.loading = false;
-        this.toastr.error(err.error.message || "");
-      }
-    );
-  }
-
   onCancel() {
     this.formGroup.reset();
     this.modalService.dismissAll();
@@ -236,23 +169,4 @@ export class AddProjectComponent implements OnInit {
   Cancel() {
     this.quillShow = false;
   }
-
-  setValue() {
-    let fg = this.formGroup;
-    let p = this.viewProject.data;
-    fg.controls.name.setValue(p.nameOfProject || "");
-    fg.controls.lead.setValue(p.handledBy || "");
-    fg.controls.user.setValue(p.members || "");
-    fg.controls.description.setValue(p.projectDescription || "");
-  }
-
-  // private formatDate(date: any) {
-  //   const d = new Date(date);
-  //   let month = "" + (d.getMonth() + 1);
-  //   let day = "" + d.getDate();
-  //   const year = d.getFullYear();
-  //   if (month.length < 2) month = "0" + month;
-  //   if (day.length < 2) day = "0" + day;
-  //   return [month, day, year].join("/");
-  // }
 }

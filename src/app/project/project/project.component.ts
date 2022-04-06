@@ -14,6 +14,9 @@ import { Component, OnInit } from "@angular/core";
 })
 export class ProjectComponent implements OnInit {
   closeResult: any;
+  date: any;
+  projectName: any;
+  status: any;
   project: {
     data: any;
     loading: Boolean;
@@ -29,6 +32,9 @@ export class ProjectComponent implements OnInit {
     private modalService: NgbModal
   ) {
     this.appService.pageTitle = "Project - Task Management";
+    this.date = "";
+    this.projectName = "";
+    this.status = "";
     this.project = {
       data: {},
       loading: false,

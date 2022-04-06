@@ -7,6 +7,7 @@ import { UserService } from "src/app/providers/user.service";
 import { Component, OnChanges, OnInit } from "@angular/core";
 import { ToastrService } from "ngx-toastr";
 import { loadavg } from "os";
+import { log } from "console";
 
 @Component({
   selector: "app-add-task",
@@ -20,7 +21,7 @@ import { loadavg } from "os";
     "../../../vendor/libs/quill/editor.scss",
   ],
 })
-export class AddTaskComponent implements OnChanges, OnInit {
+export class AddTaskComponent implements OnInit {
   urlParams: any;
   OFF = false;
   quillShow: any;
@@ -119,10 +120,9 @@ export class AddTaskComponent implements OnChanges, OnInit {
     this.getProject();
   }
 
-  ngOnChanges() {}
-
   getFormGroup() {
     let fg = new FormGroup({
+      project: new FormControl(""),
       id: new FormControl(""),
       type: new FormControl(""),
       title: new FormControl(""),
@@ -132,6 +132,10 @@ export class AddTaskComponent implements OnChanges, OnInit {
       user: new FormControl(""),
       attachment: new FormControl(""),
       priority: new FormControl(""),
+      startDate: new FormControl(""),
+      endDate: new FormControl(""),
+      timeFrom: new FormControl(""),
+      timeTo: new FormControl(""),
     });
     return fg;
   }
@@ -139,26 +143,30 @@ export class AddTaskComponent implements OnChanges, OnInit {
   valiadateForm() {
     let fg = this.formGroup.value;
     let msg = "";
-    if (!fg.id.trim()) {
+    if (!fg.project) {
+      msg = "Select The Project";
+    } else if (!fg.id.trim()) {
       msg = "Enter The Parent Id";
     } else if (!fg.type.trim()) {
       msg = "Enter The Type";
-    } else if (!fg.description.trim()) {
-      msg = "Enter The Description";
     } else if (!fg.effortType.trim()) {
       msg = "Enter The Effort Type";
     } else if (!fg.effortValue.trim()) {
       msg = "Enter The Effort Value";
-    } else if (!fg.attachment.trim()) {
-      msg = "Add The Attachment";
     } else if (!fg.priority) {
       msg = "Select The Priority";
     } else if (!fg.user) {
       msg = "Select The Member";
-      // } else if (!this.date[0]) {
-      //   msg = "Select The Start Date";
-      // } else if (!this.date[1]) {
-      //   msg = "Select The End Date";
+    } else if (!fg.startDate.day) {
+      msg = "Select The Start Date";
+    } else if (!fg.endDate.day) {
+      msg = "Select The End Date";
+    } else if (fg.endDate.day < fg.startDate) {
+      msg = "The Start Date Should Be Less Than End Date";
+    } else if (!fg.timeForm.hour && !fg.timeForm.minute) {
+      msg = "Select The From Time";
+    } else if (!fg.timeTo.hour && !fg.timeTo.minute) {
+      msg = "Select The To Time";
     } else {
       msg = "";
     }
@@ -169,6 +177,7 @@ export class AddTaskComponent implements OnChanges, OnInit {
   }
 
   onApiCall() {
+    console.log(this.formGroup.value.timeFrom);
     let v = this.valiadateForm();
     if (v.status == false) {
       this.toastr.error(v.msg);
