@@ -127,7 +127,7 @@ export class ListComponent implements OnInit {
     this.userService.roleList().subscribe(
       (res: any) => {
         this.role.loading = false;
-        this.role = res || "";
+        this.role.data = res || "";
       },
       (err: any) => {
         this.role.loading = false;

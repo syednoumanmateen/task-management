@@ -38,6 +38,10 @@ export class LayoutNavbarComponent {
     this.layoutService.toggleCollapsed();
   }
 
+  isActive(url: string): boolean {
+    return this.router.isActive(url, true);
+  }
+
   OnLogOut() {
     this.userService.userLogout().subscribe(
       (res: any) => {

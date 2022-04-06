@@ -23,6 +23,7 @@ export class RolesListComponent implements OnInit {
     loading: Boolean;
   };
   closeResult: any;
+  roleFilter: string;
   constructor(
     private router: Router,
     private userService: UserService,
@@ -40,6 +41,7 @@ export class RolesListComponent implements OnInit {
       loading: false,
     };
     this.closeResult = "";
+    this.roleFilter = "";
   }
 
   ngOnInit(): void {

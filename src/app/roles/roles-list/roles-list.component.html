@@ -7,21 +7,15 @@
 
 <!-- Filters -->
 <div class="ui-bordered px-4 pt-4 mb-4 row">
-    <div class="form-group">
+    <div class="form-group col-md-4">
         <label class="form-label">Created On</label>
         <custom-daterange-picker></custom-daterange-picker>
     </div>
-    <div class="col-md mb-4">
+    <div class="col-md-6 mb-4">
         <label class="form-label">Role</label>
-        <select class="custom-select">
-            <option value="">
-            </option>
-        </select>
-    </div>
-    <div class="col-md mb-4">
-        <label class="form-label">Status</label>
-        <select class="custom-select">
-            <option value=""></option>
+        <select class="custom-select" [(ngModel)]="roleFilter">
+            <option *ngFor="let feature of ['user','project','role','feature']" value="feature">
+                {{feature}}</option>
         </select>
     </div>
 
@@ -60,7 +54,7 @@
                         ID<i class="ion text-muted ml-2"></i>
                     </th>
                     <th class="text-nowrap cursor-pointer">
-                        Name<i class="ion text-muted ml-2"></i>
+                        Role Name<i class="ion text-muted ml-2"></i>
                     </th>
                     <th class="text-nowrap cursor-pointer">
                         Features<i class="ion text-muted ml-2"></i>

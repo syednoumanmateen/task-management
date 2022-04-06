@@ -1,3 +1,5 @@
+import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
+import { DropzoneConfigInterface } from "ngx-dropzone-wrapper";
 import { AppService } from "src/app/providers/app.service";
 import { FormControl, FormGroup } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
@@ -13,11 +15,20 @@ import { loadavg } from "os";
     "./add-task.component.css",
     "../../../vendor/libs/angular-2-dropdown-multiselect/angular-2-dropdown-multiselect.scss",
     "../../../vendor/libs/ng-select/ng-select.scss",
+    "../../../vendor/libs/ngx-markdown-editor/ngx-markdown-editor.scss",
+    "../../../vendor/libs/quill/typography.scss",
+    "../../../vendor/libs/quill/editor.scss",
   ],
 })
 export class AddTaskComponent implements OnChanges, OnInit {
   urlParams: any;
   OFF = false;
+  quillShow: any;
+  public config: DropzoneConfigInterface = {
+    clickable: true,
+    maxFiles: 1,
+  };
+
   task: {
     data: any;
     loading: Boolean;
@@ -38,7 +49,18 @@ export class AddTaskComponent implements OnChanges, OnInit {
     data: {};
     loading: Boolean;
   };
-  date: any;
+  edit: {
+    data: {};
+    loading: Boolean;
+  };
+  project: {
+    data: any;
+    loading: Boolean;
+  };
+  date: {
+    start: any;
+    end: any;
+  };
   curOpt = "high";
   formGroup: FormGroup;
   constructor(
@@ -46,10 +68,12 @@ export class AddTaskComponent implements OnChanges, OnInit {
     private toastr: ToastrService,
     private activtedRoute: ActivatedRoute,
     private appService: AppService,
-    private router: Router
+    private router: Router,
+    private modalService: NgbModal
   ) {
     this.appService.pageTitle = "addTask - Task Management";
     this.formGroup = this.getFormGroup();
+    this.quillShow = false;
     this.task = {
       data: {},
       loading: false,
@@ -70,16 +94,29 @@ export class AddTaskComponent implements OnChanges, OnInit {
       data: {},
       loading: false,
     };
+    this.edit = {
+      data: {},
+      loading: false,
+    };
+    this.project = {
+      data: {},
+      loading: false,
+    };
+    this.date = {
+      start: {},
+      end: {},
+    };
   }
 
   ngOnInit(): void {
-    this.activtedRoute.queryParams.subscribe((data) => {
-      this.urlParams = data;
-    });
-    if (this.urlParams.id) {
-      this.viewTask(this.urlParams.id);
-    }
+    // this.activtedRoute.queryParams.subscribe((data) => {
+    //   this.urlParams = data;
+    // });
+    // if (this.urlParams.type) {
+    //   this.viewTask(this.urlParams.id);
+    // }
     this.userList();
+    this.getProject();
   }
 
   ngOnChanges() {}
@@ -118,10 +155,10 @@ export class AddTaskComponent implements OnChanges, OnInit {
       msg = "Select The Priority";
     } else if (!fg.user) {
       msg = "Select The Member";
-    } else if (!this.date[0]) {
-      msg = "Select The Start Date";
-    } else if (!this.date[1]) {
-      msg = "Select The End Date";
+      // } else if (!this.date[0]) {
+      //   msg = "Select The Start Date";
+      // } else if (!this.date[1]) {
+      //   msg = "Select The End Date";
     } else {
       msg = "";
     }
@@ -142,7 +179,7 @@ export class AddTaskComponent implements OnChanges, OnInit {
 
   onCancel() {
     this.formGroup.reset();
-    this.router.navigate(["/projects/view-project"]);
+    this.modalService.dismissAll();
   }
 
   viewTask(url: any) {
@@ -152,10 +189,25 @@ export class AddTaskComponent implements OnChanges, OnInit {
       (res: any) => {
         this.task.loading = false;
         this.task.data = res[0] || {};
+        this.setValue();
       },
       (err: any) => {
         this.task.loading = false;
         this.toastr.error(err.error.message);
+      }
+    );
+  }
+
+  getProject() {
+    this.project.loading = true;
+    this.userService.projectList().subscribe(
+      (res: any) => {
+        this.project.loading = false;
+        this.project.data = res || {};
+      },
+      (err: any) => {
+        this.project.loading = false;
+        this.toastr.error(err.error.message || "");
       }
     );
   }
@@ -180,7 +232,7 @@ export class AddTaskComponent implements OnChanges, OnInit {
       (res: any) => {
         this.detailed.loading = false;
         this.detailed.user = res.userData || {};
-        this.addTask();
+        this.taskAddEdit();
       },
       (err: any) => {
         this.detailed.loading = false;
@@ -190,7 +242,7 @@ export class AddTaskComponent implements OnChanges, OnInit {
     );
   }
 
-  addTask() {
+  taskAddEdit() {
     let fg = this.formGroup.value;
     let p = {
       parentId: fg.id,
@@ -202,8 +254,8 @@ export class AddTaskComponent implements OnChanges, OnInit {
         id: fg.user,
         name: this.detailed.user.fName,
       },
-      fromDate: this.date[0],
-      toDate: this.date[1],
+      fromDate: [],
+      toDate: [],
       fromTime: this.time.from.hour + ":" + this.time.from.minute,
       toTime: this.time.to.hour + ":" + this.time.to.minute,
       effort: {
@@ -212,6 +264,14 @@ export class AddTaskComponent implements OnChanges, OnInit {
       },
       priority: fg.priority,
     };
+    if (this.urlParams.type) {
+      this.editTask(p);
+    } else {
+      this.addTask(p);
+    }
+  }
+
+  addTask(p: any) {
     this.add.loading = true;
     this.userService.addTask(this.urlParams.id, p).subscribe(
       (res: any) => {
@@ -228,5 +288,45 @@ export class AddTaskComponent implements OnChanges, OnInit {
         this.toastr.error(err.error.message);
       }
     );
+  }
+
+  editTask(p: any) {
+    this.edit.loading = true;
+    this.userService.editTask(this.urlParams.id, p).subscribe(
+      (res: any) => {
+        this.edit.loading = false;
+        this.toastr.success(res.data.message);
+        this.router.navigate(["/projects/view-project"], {
+          queryParams: {
+            id: this.urlParams.id,
+          },
+        });
+      },
+      (err: any) => {
+        this.edit.loading = false;
+        this.toastr.error(err.error.message);
+      }
+    );
+  }
+
+  onInputClick() {
+    this.quillShow = this.quillShow == false ? true : false;
+  }
+
+  Cancel() {
+    this.quillShow = false;
+  }
+
+  setValue() {
+    let fg = this.formGroup;
+    fg.controls.id.setValue("");
+    fg.controls.type.setValue("");
+    fg.controls.description.setValue("");
+    fg.controls.effortType.setValue("");
+    fg.controls.effortValue.setValue("");
+    fg.controls.attachment.setValue("");
+    fg.controls.priority.setValue("");
+    fg.controls.id.setValue("");
+    fg.controls.id.setValue("");
   }
 }

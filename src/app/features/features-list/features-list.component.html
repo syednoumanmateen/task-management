@@ -12,16 +12,17 @@
         <custom-daterange-picker></custom-daterange-picker>
     </div>
     <div class="col-md mb-4">
-        <label class="form-label">Role</label>
-        <select class="custom-select">
-            <option value="">
+        <label class="form-label">Feature Name</label>
+        <select class="custom-select" [(ngModel)]="featureFilter">
+            <option *ngFor="let feature of feature.data" value="feature.featureName">{{feature.featureName}}
             </option>
         </select>
     </div>
     <div class="col-md mb-4">
-        <label class="form-label">Status</label>
-        <select class="custom-select">
-            <option value=""></option>
+        <label class="form-label">Module Name</label>
+        <select class="custom-select" [(ngModel)]="moduleFilter">
+            <option *ngFor="let feature of ['user','project','role','feature']" value="feature">
+                {{feature}}</option>
         </select>
     </div>
 
@@ -57,10 +58,13 @@
             <thead>
                 <tr>
                     <th class="text-nowrap cursor-pointer">
+                        Sl.No<i class="ion text-muted ml-2"></i>
+                    </th>
+                    <th class="text-nowrap cursor-pointer">
                         ID<i class="ion text-muted ml-2"></i>
                     </th>
                     <th class="text-nowrap cursor-pointer">
-                        Name<i class="ion text-muted ml-2"></i>
+                        Feature Name<i class="ion text-muted ml-2"></i>
                     </th>
                     <th class="text-nowrap cursor-pointer">
                         Module Name<i class="ion text-muted ml-2"></i>
@@ -83,7 +87,8 @@
                 <app-spinner></app-spinner>
             </span>
             <tbody *ngIf="!feature.loading">
-                <tr *ngFor="let feature of feature.data">
+                <tr *ngFor="let feature of feature.data;index as i">
+                    <td class="align-middle">{{i+1}}</td>
                     <td class="align-middle">{{feature.featureCode||""}}</td>
                     <td class="align-middle">{{feature.featureName||""}}</td>
                     <td class="align-middle">{{feature.moduleName||""}}</td>

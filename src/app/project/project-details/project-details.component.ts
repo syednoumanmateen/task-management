@@ -1,8 +1,11 @@
+import { ModalDismissReasons } from "@ng-bootstrap/ng-bootstrap";
+import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { ToastrService } from "ngx-toastr";
 import { UserService } from "src/app/providers/user.service";
 import { ActivatedRoute, Router } from "@angular/router";
 import { AppService } from "src/app/providers/app.service";
 import { Component, OnInit } from "@angular/core";
+import { AddTaskComponent } from "../add-task/add-task.component";
 
 @Component({
   selector: "app-project-details",
@@ -12,6 +15,7 @@ import { Component, OnInit } from "@angular/core";
 export class ProjectDetailsComponent implements OnInit {
   curOpt = "high";
   urlParams: any;
+  closeResult: any;
   project: {
     data: any;
     loading: Boolean;
@@ -28,7 +32,8 @@ export class ProjectDetailsComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private userService: UserService,
     private toastr: ToastrService,
-    private router: Router
+    private router: Router,
+    private modalService: NgbModal
   ) {
     this.appService.pageTitle = "projectDetails - Task Management";
     this.urlParams = {};
@@ -99,11 +104,7 @@ export class ProjectDetailsComponent implements OnInit {
   }
 
   onAddTask() {
-    this.router.navigate(["/tasks/add-task"], {
-      queryParams: {
-        id: this.project.data._id,
-      },
-    });
+    this.open();
   }
 
   onDelete(id: any) {
@@ -118,5 +119,30 @@ export class ProjectDetailsComponent implements OnInit {
         this.toastr.error(err.error.message);
       }
     );
+  }
+
+  open() {
+    this.modalService
+      .open(AddTaskComponent, {
+        windowClass: "modal-top modal-lg",
+      })
+      .result.then(
+        (result) => {
+          this.closeResult = `Closed with: ${result}`;
+        },
+        (reason) => {
+          this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+        }
+      );
+  }
+
+  private getDismissReason(reason: any): string {
+    if (reason === ModalDismissReasons.ESC) {
+      return "by pressing ESC";
+    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
+      return "by clicking on a backdrop";
+    } else {
+      return `with: ${reason}`;
+    }
   }
 }

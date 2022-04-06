@@ -1,4 +1,5 @@
 import { Component, AfterViewInit, OnDestroy } from '@angular/core';
+import { Router } from '@angular/router';
 import { LayoutService } from '../layout.service';
 
 @Component({
@@ -10,7 +11,7 @@ export class LayoutWithoutSidenavComponent implements AfterViewInit, OnDestroy {
   // Prevent "blink" effect
   public initialized = false;
 
-  constructor(private layoutService: LayoutService) {}
+  constructor(private layoutService: LayoutService,private router:Router) {}
 
   ngAfterViewInit(): void {
     setTimeout(() => {

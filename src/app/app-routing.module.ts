@@ -28,6 +28,7 @@ import { ViewFeatureComponent } from "./features/view-feature/view-feature.compo
 import { FeaturesListComponent } from "./features/features-list/features-list.component";
 import { AddRoleComponent } from "./roles/add-role/add-role.component";
 import { RolesListComponent } from "./roles/roles-list/roles-list.component";
+import { LayoutWithoutSidenavComponent } from "./layout/layout-without-sidenav/layout-without-sidenav.component";
 
 // *******************************************************************************
 // Pages
@@ -39,7 +40,7 @@ const routes: Routes = [
   { path: "", redirectTo: "/dashboard", pathMatch: "full" },
   {
     path: "dashboard",
-    component: Layout1Component,
+    component: LayoutWithoutSidenavComponent,
     children: [{ path: "", component: DashboardComponent }],
   },
   {
@@ -49,12 +50,12 @@ const routes: Routes = [
   },
   {
     path: "profile",
-    component: Layout1Component,
+    component: LayoutWithoutSidenavComponent,
     children: [{ path: "", component: ProfileComponent }],
   },
   {
     path: "change-password",
-    component: Layout1Component,
+    component: LayoutWithoutSidenavComponent,
     children: [{ path: "", component: SettingsComponent }],
   },
   {
@@ -64,7 +65,7 @@ const routes: Routes = [
   },
   {
     path: "projects",
-    component: Layout1Component,
+    component: LayoutWithoutSidenavComponent,
     children: [
       {
         path: "",
@@ -82,7 +83,7 @@ const routes: Routes = [
   },
   {
     path: "tasks",
-    component: Layout1Component,
+    component: LayoutWithoutSidenavComponent,
     children: [
       {
         path: "add-task",
@@ -96,7 +97,7 @@ const routes: Routes = [
   },
   {
     path: "users",
-    component: Layout1Component,
+    component: LayoutWithoutSidenavComponent,
     children: [
       {
         path: "",
@@ -114,7 +115,7 @@ const routes: Routes = [
   },
   {
     path: "features",
-    component: Layout1Component,
+    component: LayoutWithoutSidenavComponent,
     children: [
       {
         path: "",
@@ -132,7 +133,7 @@ const routes: Routes = [
   },
   {
     path: "roles",
-    component: Layout1Component,
+    component: LayoutWithoutSidenavComponent,
     children: [
       {
         path: "",

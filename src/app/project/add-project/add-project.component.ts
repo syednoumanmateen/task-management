@@ -1,9 +1,11 @@
+import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { ToastrService } from "ngx-toastr";
 import { UserService } from "src/app/providers/user.service";
 import { ActivatedRoute, Router } from "@angular/router";
 import { FormControl, FormGroup } from "@angular/forms";
 import { AppService } from "src/app/providers/app.service";
 import { Component, OnInit } from "@angular/core";
+import { DropzoneConfigInterface } from "ngx-dropzone-wrapper";
 
 @Component({
   selector: "app-add-project",
@@ -12,11 +14,21 @@ import { Component, OnInit } from "@angular/core";
     "./add-project.component.css",
     "../../../vendor/libs/angular-2-dropdown-multiselect/angular-2-dropdown-multiselect.scss",
     "../../../vendor/libs/ng-select/ng-select.scss",
+    "../../../vendor/libs/ngx-markdown-editor/ngx-markdown-editor.scss",
+    "../../../vendor/libs/quill/typography.scss",
+    "../../../vendor/libs/quill/editor.scss",
   ],
 })
 export class AddProjectComponent implements OnInit {
   formGroup: FormGroup;
   urlParams: any;
+  quillShow: Boolean;
+  comment: any;
+  public config: DropzoneConfigInterface = {
+    clickable: true,
+    maxFiles: 1,
+  };
+
   user: {
     data: any;
     loading: Boolean;
@@ -34,7 +46,10 @@ export class AddProjectComponent implements OnInit {
     loading: Boolean;
     exists: Boolean;
   };
-  date: Array<any>;
+  date: {
+    start: any;
+    end: any;
+  };
 
   disabled = false;
   constructor(
@@ -42,11 +57,16 @@ export class AddProjectComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private userService: UserService,
     private toastr: ToastrService,
-    private router: Router
+    private router: Router,
+    private modalService: NgbModal
   ) {
     this.appService.pageTitle = "addProject - Task Management";
     this.formGroup = this.getFormGroup();
-    this.date = [];
+    this.date = {
+      start: {},
+      end: {},
+    };
+    this.quillShow = false;
     this.urlParams = {};
     (this.user = {
       data: {},
@@ -147,8 +167,8 @@ export class AddProjectComponent implements OnInit {
         handledBy: fg.lead || "",
         members: fg.user || "",
         projectDescription: fg.description || "",
-        startDate: this.date[0] || [],
-        endDate: this.date[1] || [],
+        startDate: [],
+        endDate: [],
       };
       if (this.urlParams.id) {
         this.onEditProject(this.urlParams.id, p);
@@ -206,7 +226,15 @@ export class AddProjectComponent implements OnInit {
 
   onCancel() {
     this.formGroup.reset();
-    this.router.navigate(["/projects"]);
+    this.modalService.dismissAll();
+  }
+
+  onInputClick() {
+    this.quillShow = this.quillShow == false ? true : false;
+  }
+
+  Cancel() {
+    this.quillShow = false;
   }
 
   setValue() {
@@ -216,10 +244,6 @@ export class AddProjectComponent implements OnInit {
     fg.controls.lead.setValue(p.handledBy || "");
     fg.controls.user.setValue(p.members || "");
     fg.controls.description.setValue(p.projectDescription || "");
-    this.date = [
-      this.viewProject.data.startDate,
-      this.viewProject.data.endDate,
-    ];
   }
 
   // private formatDate(date: any) {

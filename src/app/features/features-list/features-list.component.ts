@@ -18,6 +18,9 @@ export class FeaturesListComponent implements OnInit {
   delete: {
     loading: Boolean;
   };
+  featureFilter: string;
+  moduleFilter: string;
+
   constructor(
     private userService: UserService,
     private toastr: ToastrService,
@@ -33,6 +36,8 @@ export class FeaturesListComponent implements OnInit {
     this.delete = {
       loading: false,
     };
+    this.featureFilter = "";
+    this.moduleFilter = "";
   }
 
   ngOnInit(): void {

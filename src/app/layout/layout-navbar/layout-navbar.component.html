@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg align-items-lg-center container-p-x" [ngClass]="currentBg()">
+<nav class="navbar navbar-expand-lg align-items-lg-center container-p-x fixed-top" [ngClass]="currentBg()">
   <!-- Brand -->
   <a routerLink="/" class="navbar-brand">Task Management</a>
 
@@ -15,48 +15,24 @@
   </button>
 
   <div class="navbar-collapse collapse" [ngbCollapse]="!isExpanded">
-    <div class="navbar-nav align-items-lg-center">
-
-      <!-- Search -->
-      <label class="nav-item navbar-search-box active ml-4">
-        <i class="ion ion-ios-search navbar-icon align-middle"></i>
-        <span class="navbar-search-input pl-2">
-          <input type="text" class="form-control navbar-text mx-2" placeholder="Search..." style="width:200px">
-        </span>
-      </label>
-    </div>
-
+    <ul class="navbar-nav">
+      <li class="nav-item">
+        <a routerLink="/dashboard" class="nav-link">Dashboard</a>
+      </li>
+      <li class="nav-item">
+        <a routerLink="/projects" class="nav-link">Project</a>
+      </li>
+      <li class="nav-item">
+        <a routerLink="/users" class="nav-link">User</a>
+      </li>
+      <li class="nav-item">
+        <a routerLink="/features" class="nav-link">Feature</a>
+      </li>
+      <li class="nav-item">
+        <a routerLink="/roles" class="nav-link">Role</a>
+      </li>
+    </ul>
     <div class="navbar-nav align-items-center ml-auto">
-      <div ngbDropdown class="demo-navbar-notifications nav-item mr-lg-3">
-        <a ngbDropdownToggle class="nav-link hide-arrow" href="javascript:void(0)">
-          <i class="ion ion-md-notifications-outline navbar-icon align-middle"></i>
-          <span class="badge badge-primary badge-dot indicator"></span>
-        </a>
-        <div ngbDropdownMenu [class.dropdown-menu-right]="!isRTL">
-          <div class="bg-primary text-center text-white font-weight-bold p-3">
-            0 New Notifications
-          </div>
-          <div class="list-group list-group-flush">
-
-          </div>
-        </div>
-      </div>
-
-      <div ngbDropdown class="demo-navbar-messages nav-item mr-lg-3">
-        <a ngbDropdownToggle class="nav-link hide-arrow" href="javascript:void(0)">
-          <i class="ion ion-ios-mail navbar-icon align-middle"></i>
-          <span class="badge badge-primary badge-dot indicator"></span>
-        </a>
-        <div ngbDropdownMenu>
-          <div class="bg-primary text-center text-white font-weight-bold p-3">
-            0 New Messages
-          </div>
-          <div class="list-group list-group-flush">
-          </div>
-        </div>
-      </div>
-
-      <!-- Divider -->
       <div class="nav-item mr-3 ml-1">|</div>
 
       <div ngbDropdown class="demo-navbar-user nav-item">
@@ -69,7 +45,8 @@
         <div ngbDropdownMenu>
           <a routerLink="/profile" class="dropdown-item"><i class="ion ion-ios-person text-lightest"></i> &nbsp;
             My profile</a>
-          <a routerLink="/change-password" class="dropdown-item"><i class="ion ion-md-settings text-lightest"></i> &nbsp;
+          <a routerLink="/change-password" class="dropdown-item"><i class="ion ion-md-settings text-lightest"></i>
+            &nbsp;
             Account settings</a>
           <div class="dropdown-divider"></div>
           <a class="dropdown-item" (click)="OnLogOut()"><i class="ion ion-ios-log-out text-danger"></i> &nbsp;

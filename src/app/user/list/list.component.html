@@ -57,6 +57,9 @@
             <thead>
                 <tr>
                     <th class="text-nowrap cursor-pointer">
+                        Sl.No<i class="ion text-muted ml-2"></i>
+                    </th>
+                    <th class="text-nowrap cursor-pointer">
                         ID<i class="ion text-muted ml-2"></i>
                     </th>
                     <th class="text-nowrap cursor-pointer">
@@ -89,7 +92,8 @@
                 <app-spinner></app-spinner>
             </span>
             <tbody *ngIf="!user.loading">
-                <tr *ngFor="let user of user.data">
+                <tr *ngFor="let user of user.data;index as i">
+                    <td class="align-middle">{{i+1}}</td>
                     <td class="align-middle">{{user.userCode||''}}</td>
                     <td class="align-middle"><a href="javascript:void(0)">{{user.email||""}}</a></td>
                     <td class="align-middle">{{user.email||""}}</td>

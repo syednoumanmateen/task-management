@@ -1,3 +1,4 @@
+import { QuillModule } from "./../vendor/libs/quill/quill.module";
 import { CustomDaterangePickerComponent } from "./custom-daterange-picker/custom-daterange-picker.component";
 import { AuthInterceptorService } from "./providers/auth-interceptor.service";
 import { UserService } from "./providers/user.service";
@@ -13,7 +14,11 @@ import { ToastrModule } from "ngx-toastr";
 
 import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
 import { NgSelectModule } from "@ng-select/ng-select";
-
+import {
+  DropzoneConfigInterface,
+  DropzoneModule,
+  DROPZONE_CONFIG,
+} from "ngx-dropzone-wrapper";
 // *******************************************************************************
 // App
 
@@ -46,11 +51,18 @@ import { ViewRoleComponent } from "./roles/view-role/view-role.component";
 import { RolesListComponent } from "./roles/roles-list/roles-list.component";
 import { AddTaskComponent } from "./project/add-task/add-task.component";
 import { CommonModule } from "@angular/common";
-import { MyFilterPipe } from './directive/my-filter.pipe';
-import { RoleFeaturesComponent } from './roles/role-features/role-features.component';
-import { SpinnerComponent } from './spinner/spinner.component';
+import { MyFilterPipe } from "./directive/my-filter.pipe";
+import { RoleFeaturesComponent } from "./roles/role-features/role-features.component";
+import { SpinnerComponent } from "./spinner/spinner.component";
+import { ThemeSettingsModule } from "src/vendor/libs/theme-settings/theme-settings.module";
 
 // *******************************************************************************
+const DEFAULT_DROPZONE_CONFIG: DropzoneConfigInterface = {
+  // Change this to your upload POST address:
+  url: "http://localhost:4200/project/add/",
+  acceptedFiles: "image/*",
+  createImageThumbnails: true,
+};
 //
 
 @NgModule({
@@ -92,6 +104,9 @@ import { SpinnerComponent } from './spinner/spinner.component';
     NgbModule,
     NgSelectModule,
     CommonModule,
+    ThemeSettingsModule,
+    QuillModule,
+    DropzoneModule,
     // App
     AppRoutingModule,
     LayoutModule,
@@ -112,6 +127,10 @@ import { SpinnerComponent } from './spinner/spinner.component';
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptorService,
       multi: true,
+    },
+    {
+      provide: DROPZONE_CONFIG,
+      useValue: DEFAULT_DROPZONE_CONFIG,
     },
   ],
 
