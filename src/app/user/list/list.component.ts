@@ -1,3 +1,4 @@
+import { AddComponent } from './../add/add.component';
 import { ModalDismissReasons, NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { FormControl, FormGroup } from "@angular/forms";
 import { ToastrService } from "ngx-toastr";
@@ -22,19 +23,20 @@ export class ListComponent implements OnInit {
     data: any;
     loading: Boolean;
   };
-  delete:{
-    loading:Boolean
-  }
+  delete: {
+    loading: Boolean;
+  };
   status: Array<any>;
   roleValue: string;
   statusValue: string;
+  closeResult: any;
   date: any;
   constructor(
     private userService: UserService,
     private router: Router,
     private appService: AppService,
     private toastr: ToastrService,
-    private modelService: NgbModal
+    private modalService: NgbModal
   ) {
     this.appService.pageTitle = "userList - Task Management";
     this.user = {
@@ -45,9 +47,9 @@ export class ListComponent implements OnInit {
       data: {},
       loading: false,
     };
-    this.delete={
-      loading:false
-    }
+    this.delete = {
+      loading: false,
+    };
     this.status = this.getStatus();
     this.roleValue = "";
     this.statusValue = "";
@@ -80,7 +82,7 @@ export class ListComponent implements OnInit {
   }
 
   onAddUser() {
-    this.router.navigate(["/users/add-user"]);
+    this.open(AddComponent)
   }
 
   userList() {
@@ -154,5 +156,30 @@ export class ListComponent implements OnInit {
         this.toastr.error(err.message.message || err.error.message || "");
       }
     );
+  }
+
+  open(data: any) {
+    this.modalService
+      .open(data, {
+        windowClass: "modal-top modal-lg",
+      })
+      .result.then(
+        (result) => {
+          this.closeResult = `Closed with: ${result}`;
+        },
+        (reason) => {
+          this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+        }
+      );
+  }
+
+  private getDismissReason(reason: any): string {
+    if (reason === ModalDismissReasons.ESC) {
+      return "by pressing ESC";
+    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
+      return "by clicking on a backdrop";
+    } else {
+      return `with: ${reason}`;
+    }
   }
 }

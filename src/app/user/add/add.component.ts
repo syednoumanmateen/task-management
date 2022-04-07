@@ -1,3 +1,4 @@
+import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { AppService } from "src/app/providers/app.service";
 import { FormControl, FormGroup } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
@@ -16,7 +17,7 @@ export class AddComponent implements OnInit {
   user: {
     data: any;
     loading: Boolean;
-    exists:Boolean
+    exists: Boolean;
   };
   role: {
     data: any;
@@ -33,7 +34,8 @@ export class AddComponent implements OnInit {
     private userService: UserService,
     private router: Router,
     private activatedRoute: ActivatedRoute,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private modalService: NgbModal
   ) {
     this.appService.pageTitle = "addUser - Task Management";
     this.formGroup = this.getFormGroup();
@@ -41,7 +43,7 @@ export class AddComponent implements OnInit {
     this.user = {
       data: {},
       loading: false,
-      exists:false
+      exists: false,
     };
     this.role = {
       data: {},
@@ -176,7 +178,7 @@ export class AddComponent implements OnInit {
 
   onCancel() {
     this.formGroup.reset();
-    this.router.navigate(["/users"]);
+    this.modalService.dismissAll();
   }
 
   getRoles() {
@@ -199,7 +201,7 @@ export class AddComponent implements OnInit {
       (res: any) => {
         this.user.loading = false;
         this.user.data = res.userData || {};
-        this.user.exists=true
+        this.user.exists = true;
         this.toastr.success(res.data.message || "");
         this.setValue();
       },

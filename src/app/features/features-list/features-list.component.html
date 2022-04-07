@@ -54,7 +54,7 @@
     <!-- Table -->
     <hr class="border-light m-0">
     <div class="table-responsive">
-        <table class="table table-striped table-bordered card-table">
+        <table class="table table-striped table-bordered card-table text-center text-capitalize">
             <thead>
                 <tr>
                     <th class="text-nowrap cursor-pointer">
@@ -90,13 +90,13 @@
                 <tr *ngFor="let feature of feature.data;index as i">
                     <td class="align-middle">{{i+1}}</td>
                     <td class="align-middle">{{feature.featureCode||""}}</td>
-                    <td class="align-middle">{{feature.featureName||""}}</td>
+                    <td class="align-middle" (click)="onView(feature._id||'')"><a
+                            href="javascript(0)">{{feature.featureName||""}}</a></td>
                     <td class="align-middle">{{feature.moduleName||""}}</td>
                     <td class="align-middle">{{feature.decription||""}}</td>
                     <td class="align-middle">{{feature.createdBy||""}}</td>
                     <td class="align-middle">{{feature.createdOn|date:'dd/MM/yyyy'||""}}</td>
                     <td class="text-center text-nowrap align-middle">
-                        <a class="btn btn-danger btn-sm">Block</a>&nbsp;
                         <a class="btn btn-primary btn-sm" (click)="onView(feature._id||'')">View</a>&nbsp;
                         <a (click)="onDelete(feature._id||'')" class="btn btn-danger btn-sm">Remove</a>
                     </td>

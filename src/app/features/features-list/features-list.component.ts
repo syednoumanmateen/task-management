@@ -1,3 +1,6 @@
+import { AddFeatureComponent } from "./../add-feature/add-feature.component";
+import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
+import { ModalDismissReasons } from "@ng-bootstrap/ng-bootstrap";
 import { AppService } from "src/app/providers/app.service";
 import { ToastrService } from "ngx-toastr";
 import { Component, OnInit } from "@angular/core";
@@ -11,6 +14,7 @@ import { Router } from "@angular/router";
 })
 export class FeaturesListComponent implements OnInit {
   userId: any;
+  closeResult: any;
   feature: {
     loading: Boolean;
     data: any;
@@ -25,7 +29,8 @@ export class FeaturesListComponent implements OnInit {
     private userService: UserService,
     private toastr: ToastrService,
     private router: Router,
-    private appService: AppService
+    private appService: AppService,
+    private modalService: NgbModal
   ) {
     this.appService.pageTitle = "list of features - Task Management";
     this.userId = "";
@@ -45,7 +50,7 @@ export class FeaturesListComponent implements OnInit {
   }
 
   addFeature() {
-    this.router.navigate(["/features/add-feature"]);
+    this.open(AddFeatureComponent);
   }
 
   getFeatures() {
@@ -83,5 +88,30 @@ export class FeaturesListComponent implements OnInit {
         this.toastr.error(err.error.message || "");
       }
     );
+  }
+
+  open(data: any) {
+    this.modalService
+      .open(data, {
+        windowClass: "modal-top modal-lg",
+      })
+      .result.then(
+        (result) => {
+          this.closeResult = `Closed with: ${result}`;
+        },
+        (reason) => {
+          this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+        }
+      );
+  }
+
+  private getDismissReason(reason: any): string {
+    if (reason === ModalDismissReasons.ESC) {
+      return "by pressing ESC";
+    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
+      return "by clicking on a backdrop";
+    } else {
+      return `with: ${reason}`;
+    }
   }
 }

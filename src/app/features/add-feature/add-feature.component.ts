@@ -1,3 +1,4 @@
+import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { ActivatedRoute, Router } from "@angular/router";
 import { ToastrService } from "ngx-toastr";
 import { UserService } from "./../../providers/user.service";
@@ -30,7 +31,8 @@ export class AddFeatureComponent implements OnInit {
     private userService: UserService,
     private toastr: ToastrService,
     private activatedroute: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private modalService: NgbModal
   ) {
     this.appService.pageTitle = "addfeature - Task Management";
     this.formGroup = this.getFormGroup();
@@ -134,7 +136,7 @@ export class AddFeatureComponent implements OnInit {
 
   onCancel() {
     this.formGroup.reset();
-    this.router.navigate(["/features"]);
+    this.modalService.dismissAll();
   }
 
   onViewFeature() {

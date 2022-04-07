@@ -1,3 +1,4 @@
+import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { ActivatedRoute, Router } from "@angular/router";
 import { ToastrService } from "ngx-toastr";
 import { FormControl, FormGroup } from "@angular/forms";
@@ -39,7 +40,8 @@ export class AddRoleComponent implements OnInit {
     private userService: UserService,
     private toastr: ToastrService,
     private activatedRoute: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private modalService: NgbModal
   ) {
     this.appService.pageTitle = "addrole - Task Management";
     this.formGroup = this.getFormGroup();
@@ -209,6 +211,6 @@ export class AddRoleComponent implements OnInit {
 
   onCancel() {
     this.formGroup.reset();
-    this.router.navigate(["/roles"]);
+    this.modalService.dismissAll();
   }
 }

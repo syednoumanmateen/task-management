@@ -1,3 +1,4 @@
+import { AddRoleComponent } from "./../add-role/add-role.component";
 import { logging } from "protractor";
 import { RoleFeaturesComponent } from "./../role-features/role-features.component";
 import { ModalDismissReasons } from "@ng-bootstrap/ng-bootstrap";
@@ -49,7 +50,7 @@ export class RolesListComponent implements OnInit {
   }
 
   addRole() {
-    this.router.navigate(["/roles/add-role"]);
+    this.open(AddRoleComponent);
   }
 
   getRoles() {
@@ -91,13 +92,13 @@ export class RolesListComponent implements OnInit {
 
   viewFeatures(data: any) {
     this.storage.setData("featureList", data || {});
-    this.open();
+    this.open(RoleFeaturesComponent);
   }
 
-  open() {
+  open(data: any) {
     this.modalService
-      .open(RoleFeaturesComponent, {
-        ariaLabelledBy: "modal-basic-title",
+      .open(data, {
+        windowClass: "modal-top modal-lg",
       })
       .result.then(
         (result) => {

@@ -3,6 +3,33 @@
 		<li class="breadcrumb-item"><a href="javascript:void(0)">Projects</a></li>
 		<li class="breadcrumb-item">{{project.data.nameOfProject || "" }}</li>
 	</ol>
+
+	<div class=" mb-4 pl-2 row">
+		<div class="pt-2 col-md-4">
+			Project Status
+		</div>
+		<div class="col-md-8">
+			<div type="button" class="btn btn-default ml-2">Total Tasks:
+				<span class="badge">{{task.data.length||0}}</span>
+			</div>
+			<div type="button" class="btn btn-default ml-2">Tasks Created:
+				<span class="badge">4</span>
+			</div>
+			<div type="button" class="btn btn-warning ml-2">Tasks Pending:
+				<span class="badge">4</span>
+			</div>
+			<div type="button" class="btn btn-primary ml-2">Tasks In Progress:
+				<span class="badge">4</span>
+			</div>
+			<div type="button" class="btn btn-success ml-2">Tasks Completed:
+				<span class="badge">4</span>
+			</div>
+			<div type="button" class="btn btn-danger ml-2">Tasks Rejected:
+				<span class="badge">4</span>
+			</div>
+		</div>
+	</div>
+
 	<h4 class="d-flex justify-content-between align-items-center w-100 font-weight-bold">Tasks
 		<button type="button" class="btn btn-primary rounded-pill d-block" (click)="onAddTask()"><span
 				class="ion ion-md-add"></span>&nbsp; Create
@@ -11,28 +38,28 @@
 </h4>
 
 <!-- Filters -->
-<div class="ui-bordered mb-4 pl-2 row">
-	<div class="form-group">
+<div class="ui-bordered mb-4 pl-2 row text-center text-capitalize">
+	<div class=" form-group">
 		<label class="form-label">Created On</label>
 		<custom-daterange-picker [(ngModel)]="date"></custom-daterange-picker>
 	</div>
 	<div class="col-md mb-4">
 		<label class="form-label">Summary</label>
-		<select class="custom-select text-capitalize" [(ngModel)]="summary">
+		<select class="custom-select" [(ngModel)]="summary">
 			<option class="text-capitalize" *ngFor="let task of task.data" value="task.title">{{task.title}}
 			</option>
 		</select>
 	</div>
 	<div class="col-md mb-4">
 		<label class="form-label">Assignee</label>
-		<select class="custom-select text-capitalize" [(ngModel)]="assignee">
+		<select class="custom-select" [(ngModel)]="assignee">
 			<option class="text-capitalize" *ngFor="let user of user.data" value="user.fName">
 				{{user.fName}}</option>
 		</select>
 	</div>
 	<div class="col-md mb-4">
 		<label class="form-label">Reporter</label>
-		<select class="custom-select text-capitalize" [(ngModel)]="reporter">
+		<select class="custom-select" [(ngModel)]="reporter">
 			<option class="text-capitalize" *ngFor="let user of user.data" value="user.fName">
 				{{user.fName}}</option>
 		</select>
@@ -50,9 +77,8 @@
 		<label class="form-label d-none d-md-block">&nbsp;</label>
 		<button type="button" class="btn btn-secondary btn-block">Filter</button>
 	</div>
+	<!-- / Filters -->
 </div>
-<!-- / Filters -->
-
 
 <div class="card">
 	<!-- Table controls -->
@@ -94,48 +120,115 @@
 				</li>
 			</ul>
 			<div class="col-sm-9 card">
-				<div class="card-body mb-4">
+				<div class="card-body">
 					<h4 class="text-capitalize font-weight-bold">{{curTab.title || "" }}</h4>
-					<div class="card-body p-3">
-						<h5>Description</h5>
-						<div class="row no-gutters">
-							<div class="col-md-12 col-lg-12 col-xl-12">
-								<input *ngIf="!quillShow" type="text" readOnly class="form-control text-capitalize"
-									placeholder="Add Description" (click)="onInputClick()">
-								<div [innerHTML]="curTab.description"></div>
-								<quill-editor placeholder="Add Description" [(ngModel)]="quillData" *ngIf="quillShow">
-									<div quill-editor-toolbar>
-										<span class="ql-formats">
-											<button class="ql-link"></button>
-											<button class="ql-image"></button>
-											<button class="ql-video"></button>
-										</span>
-									</div>
-								</quill-editor>
-								<div class="mt-3" *ngIf="quillShow">
-									<a class="btn btn-primary" (click)="save()">Save</a>&nbsp;<a class="btn btn-default"
-										(click)="Cancel()">Cancel</a>
+				</div>
+				<div class="card-body px-3">
+					<h5>Description</h5>
+					<div class="row no-gutters">
+						<div class="col-md-12 col-lg-12 col-xl-12">
+							<input *ngIf="!quillShow" type="text" readOnly class="form-control text-capitalize"
+								placeholder="Add Description" (click)="onInputClick()">
+							<div class="p-2" [innerHtml]="curTab.description"></div>
+							<quill-editor placeholder="Add Description" [(ngModel)]="quillData" *ngIf="quillShow">
+								<div quill-editor-toolbar>
+									<span class="ql-formats">
+										<button class="ql-link"></button>
+										<button class="ql-image"></button>
+										<button class="ql-video"></button>
+									</span>
 								</div>
+							</quill-editor>
+							<div class="mt-3" *ngIf="quillShow">
+								<a class="btn btn-primary" (click)="save()">Save</a>&nbsp;<a class="btn btn-default"
+									(click)="Cancel()">Cancel</a>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<!-- Attached files -->
+				<div class="card-body p-3">
+					<h5>Attached files</h5>
+					<div class="row no-gutters">
+						<div class="col-md-6 col-lg-12 col-xl-6">
+							<div class="media-body">
+								<span *ngIf="task.loading">
+									<app-spinner></app-spinner>
+								</span>
+								<div class="project-attachment-filename" *ngIf="!task.loading">
+									<div [innerHTML]="curTab.attachment[0]"></div>
+								</div>
+								<div class="mt-3">
+									<span><a class="btn btn-primary btn-sm">View</a>
+										&nbsp;</span>
+									<a class="btn btn-primary btn-sm">Download</a>
+								</div>
+
+							</div>
+						</div>
+					</div>
+					<!-- / Attached files -->
+				</div>
+
+				<div class="nav-tabs-top mb-4 ">
+					<div class="card-body p-3">
+						<h5>Comments</h5>
+						<div class="row no-gutters">
+							<div class="col-md-12 col-lg-12 col-xl-12 d-flex">
+								<span class="col-sm-0">
+									<img src="assets/profile.png" class="ui-w-40 rounded-circle" alt>
+								</span>
+								<span class="col-sm-12 mr-5">
+									<input *ngIf="!quillcommentShow" type="text" readOnly class="form-control w-98"
+										placeholder="Add Description" (click)="onInputClickComment()">
+									<quill-editor placeholder="Add Description" [(ngModel)]="comment" *ngIf="quillcommentShow">
+										<div quill-editor-toolbar>
+											<span class="ql-formats">
+												<button class="ql-link"></button>
+												<button class="ql-image"></button>
+												<button class="ql-video"></button>
+											</span>
+										</div>
+									</quill-editor>
+
+									<div class="mt-3" *ngIf="quillcommentShow">
+										<a class="btn btn-primary" (click)="postComment()">Send</a>&nbsp;<a class="btn btn-default"
+											(click)="Cancel()">Cancel</a>
+									</div>
+								</span>
 							</div>
 						</div>
 					</div>
 
 					<!-- Attached files -->
 					<div class="card-body p-3">
-						<h5>Attached files</h5>
 						<div class="row no-gutters">
-							<div class="col-md-6 col-lg-12 col-xl-6">
+							<div class="col-md-12 col-lg-12 col-xl-12">
 								<div class="media-body">
-									<span *ngIf="task.loading">
+									<span *ngIf="viewComment.loading">
 										<app-spinner></app-spinner>
 									</span>
-									<div class="project-attachment-filename" *ngIf="!task.loading">
-										<div [innerHTML]="curTab.attachment[0]"></div>
-									</div>
-									<div class="mt-3">
-										<span><a class="btn btn-primary btn-sm">View</a>
-											&nbsp;</span>
-										<a class="btn btn-primary btn-sm">Download</a>
+									<div class="project-attachment-filename" *ngIf="!viewComment.loading">
+										<div *ngFor="let view of viewComment.data">
+											<div class="bg-lighter mb-2  p-2 rounded">
+												<span>
+													<img src="assets/profile.png" class="ui-w-40 rounded-circle" alt>
+													<span class="text-secondry small text-nowrap pl-1 mt-2">{{view.createdBy}}&nbsp;
+														&nbsp;{{view.createdAt}}</span>
+												</span>
+												<span class="btn-group" ngbDropdown>
+													<button type="button"
+														class="btn btn-default btn-xs rounded-pill icon-btn borderless lg-btn-vertical hide-arrow"
+														ngbDropdownToggle><i class="ion ion-ios-more"></i></button>
+													<div ngbDropdownMenu>
+														<a class="dropdown-item">Edit</a>
+														<a class="dropdown-item" (click)="removeComment(view._id)">Remove</a>
+													</div>
+												</span>
+												<div class="p-3" [innerHTML]="view.attachments[0]"></div>
+											</div>
+										</div>
 									</div>
 
 								</div>
@@ -143,74 +236,8 @@
 						</div>
 						<!-- / Attached files -->
 					</div>
-
-					<div class="nav-tabs-top mb-4 ">
-						<div class="card-body p-3">
-							<h5>Comments</h5>
-							<div class="row no-gutters">
-								<div class="col-md-12 col-lg-12 col-xl-12 d-flex">
-									<span class="col-sm-0">
-										<img src="assets/profile.png" class="ui-w-40 rounded-circle" alt>
-									</span>
-									<span class="col-sm-12 mr-5">
-										<input *ngIf="!quillcommentShow" type="text" readOnly class="form-control w-98"
-											placeholder="Add Description" (click)="onInputClickComment()">
-										<quill-editor placeholder="Add Description" [(ngModel)]="comment" *ngIf="quillcommentShow">
-											<div quill-editor-toolbar>
-												<span class="ql-formats">
-													<button class="ql-link"></button>
-													<button class="ql-image"></button>
-													<button class="ql-video"></button>
-												</span>
-											</div>
-										</quill-editor>
-
-										<div class="mt-3" *ngIf="quillcommentShow">
-											<a class="btn btn-primary" (click)="postComment()">Send</a>&nbsp;<a class="btn btn-default"
-												(click)="Cancel()">Cancel</a>
-										</div>
-									</span>
-								</div>
-							</div>
-						</div>
-
-						<!-- Attached files -->
-						<div class="card-body p-3">
-							<div class="row no-gutters">
-								<div class="col-md-12 col-lg-12 col-xl-12">
-									<div class="media-body">
-										<span *ngIf="viewComment.loading">
-											<app-spinner></app-spinner>
-										</span>
-										<div class="project-attachment-filename" *ngIf="!viewComment.loading">
-											<div *ngFor="let view of viewComment.data">
-												<div class="bg-lighter mb-2  p-2 rounded">
-													<span>
-														<img src="assets/profile.png" class="ui-w-40 rounded-circle" alt>
-														<span class="text-secondry small text-nowrap pl-1 mt-2">{{view.createdBy}}&nbsp;
-															&nbsp;{{view.createdAt}}</span>
-													</span>
-													<span class="btn-group" ngbDropdown>
-														<button type="button"
-															class="btn btn-default btn-xs rounded-pill icon-btn borderless lg-btn-vertical hide-arrow"
-															ngbDropdownToggle><i class="ion ion-ios-more"></i></button>
-														<div ngbDropdownMenu>
-															<a class="dropdown-item">Edit</a>
-															<a class="dropdown-item" (click)="removeComment(view._id)">Remove</a>
-														</div>
-													</span>
-													<div class="p-3" [innerHTML]="view.attachments[0]"></div>
-												</div>
-											</div>
-										</div>
-
-									</div>
-								</div>
-							</div>
-							<!-- / Attached files -->
-						</div>
-					</div>
 				</div>
 			</div>
 		</div>
 	</div>
+</div>
