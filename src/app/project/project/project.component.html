@@ -67,9 +67,6 @@
             Project Name<i class="ion text-muted ml-2"></i>
           </th>
           <th class="text-nowrap cursor-pointer">
-            Project Description<i class="ion text-muted ml-2"></i>
-          </th>
-          <th class="text-nowrap cursor-pointer">
             Status<i class="ion text-muted ml-2"></i>
           </th>
           <th class="text-nowrap cursor-pointer">
@@ -92,8 +89,13 @@
           <td class="align-middle">{{project.projectCode||""}}</td>
           <td class="align-middle"><a href="javascript:void(0)"
               (click)="onView(project._id||'')">{{project.nameOfProject||""}}</a></td>
-          <td class="align-middle">{{project.projectDescription||""}}</td>
-          <td class="align-middle">{{project.status||""}}</td>
+          <td class="align-middle">
+            <span *ngIf="project.status=='created'" class="badge badge-outline-default">Created</span>
+            <span *ngIf="project.status=='pending'" class="badge badge-outline-warning">Pending</span>
+            <span *ngIf="project.status=='progress'" class="badge badge-outline-primary">Progress</span>
+            <span *ngIf="project.status=='complete'" class="badge badge-outline-success">Complete</span>
+            <span *ngIf="project.status=='remoedv'" class="badge badge-outline-danger">Remove</span>
+          </td>
           <td class="align-middle">{{project.createdOn|date:'dd/MM/yyyy'||""}}</td>
           <td class="align-middle">{{project.handledBy.fName||""}}&nbsp;{{project.handledBy.lName||""}}</td>
           <td class="align-middle">

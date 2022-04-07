@@ -115,6 +115,7 @@
                     <td class="align-middle">
                         <span *ngIf="user.status=='Active'" class="badge badge-outline-success">Active</span>
                         <span *ngIf="user.status=='Created'" class="badge badge-outline-default">Created</span>
+                        <span *ngIf="user.status=='Blocked'" class="badge badge-outline-danger">Blocked</span>
                     </td>
                     <td class="text-center text-nowrap">
                         <a class="btn btn-primary btn-sm" (click)="onView(user._id||'')">View</a>&nbsp;

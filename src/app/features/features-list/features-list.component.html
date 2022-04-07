@@ -70,9 +70,6 @@
                         Module Name<i class="ion text-muted ml-2"></i>
                     </th>
                     <th class="text-nowrap cursor-pointer">
-                        Description<i class="ion text-muted ml-2"></i>
-                    </th>
-                    <th class="text-nowrap cursor-pointer">
                         createdBy<i class="ion text-muted ml-2"></i>
                     </th>
                     <th class="text-nowrap cursor-pointer">
@@ -93,7 +90,6 @@
                     <td class="align-middle" (click)="onView(feature._id||'')"><a
                             href="javascript(0)">{{feature.featureName||""}}</a></td>
                     <td class="align-middle">{{feature.moduleName||""}}</td>
-                    <td class="align-middle">{{feature.decription||""}}</td>
                     <td class="align-middle">{{feature.createdBy||""}}</td>
                     <td class="align-middle">{{feature.createdOn|date:'dd/MM/yyyy'||""}}</td>
                     <td class="text-center text-nowrap align-middle">

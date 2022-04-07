@@ -1,42 +1,51 @@
-<h4 class="font-weight-bold py-3 mb-4">
-    Account settings
-</h4>
+<div class="authentication-wrapper authentication-3">
+    <div class="authentication-inner d-flex justify-content-center">
 
-<div class="card overflow-hidden">
-    <div class="row no-gutters row-bordered row-border-light">
-        <div class="col-md-3 pt-0">
-            <div class="list-group list-group-flush account-settings-links">
+        <!-- Form container -->
+        <div class="theme-bg-white col-lg-4 pt-5" style="margin-top:5%">
+            <!-- Inner container -->
+            <!-- Have to add `.d-flex` to control width via `.col-*` classes -->
+            <div class=" col-sm-7 col-md-5 col-lg-12">
+                <div class="w-100">
 
-                <button type="button" class="list-group-item list-group-item-action"
-                    (click)="curTab = 'password'">Change password</button>
+                    <!-- Logo -->
+                    <div class="d-flex justify-content-center">
+                        <img src="assets/sk.jpeg" class="w-ui-30" alt="">
+                    </div>
+                    <!-- / Logo -->
 
+                    <h4 class="text-center text-lighter font-weight-normal mb-0">Change password</h4>
+
+                    <!-- Form -->
+                    <form class="card-body pb-2" [formGroup]="formGroup">
+
+                        <div class="form-group">
+                            <label class="form-label">Current password</label>
+                            <input type="password" formControlName="currentpsw" class="form-control">
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">New password</label>
+                            <input type="text" formControlName="newpsw" class="form-control">
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Repeat new password</label>
+                            <input type="password" formControlName="repeatnewpsw" class="form-control">
+                        </div>
+
+                    </form>
+                    <!-- / Form -->
+                    <div class="text-right m-3">
+                        <button type="button" class="btn btn-primary btn-md" (click)="onSaveChanges()">Save
+                            changes</button>&nbsp;
+                        <button type="button" class="btn btn-default" (click)="onCancel()">Cancel</button>
+                    </div>
+
+                </div>
             </div>
         </div>
+        <!-- / Form container -->
 
-        <div class="col-md-9" *ngIf="curTab == 'password'">
-            <form class="card-body pb-2" [formGroup]="formGroup">
-
-                <div class="form-group">
-                    <label class="form-label">Current password</label>
-                    <input type="password" formControlName="currentpsw" class="form-control">
-                </div>
-
-                <div class="form-group">
-                    <label class="form-label">New password</label>
-                    <input type="text" formControlName="newpsw" class="form-control">
-                </div>
-
-                <div class="form-group">
-                    <label class="form-label">Repeat new password</label>
-                    <input type="password" formControlName="repeatnewpsw" class="form-control">
-                </div>
-
-            </form>
-        </div>
     </div>
-</div>
-
-<div class="text-right mt-3">
-    <button type="button" class="btn btn-primary" (click)="onSaveChanges()">Save changes</button>&nbsp;
-    <button type="button" class="btn btn-default" (click)="onCancel()">Cancel</button>
 </div>
