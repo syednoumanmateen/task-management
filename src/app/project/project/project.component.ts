@@ -6,6 +6,7 @@ import { AppService } from "src/app/providers/app.service";
 import { ToastrService } from "ngx-toastr";
 import { Router } from "@angular/router";
 import { Component, OnInit } from "@angular/core";
+import { ModalService } from "src/app/providers/modal.service";
 
 @Component({
   selector: "app-project",
@@ -29,7 +30,7 @@ export class ProjectComponent implements OnInit {
     private appService: AppService,
     private userService: UserService,
     private toastr: ToastrService,
-    private modalService: NgbModal
+    private modalService: ModalService
   ) {
     this.appService.pageTitle = "Project - Task Management";
     this.date = "";
@@ -49,7 +50,7 @@ export class ProjectComponent implements OnInit {
   }
 
   onCreateProject() {
-    this.open();
+    this.modalService.open(AddProjectComponent);
   }
 
   onView(id: any) {
@@ -86,30 +87,5 @@ export class ProjectComponent implements OnInit {
         this.toastr.error(err.error.message || "");
       }
     );
-  }
-
-  open() {
-    this.modalService
-      .open(AddProjectComponent, {
-        windowClass: "modal-top modal-lg",
-      })
-      .result.then(
-        (result) => {
-          this.closeResult = `Closed with: ${result}`;
-        },
-        (reason) => {
-          this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
-        }
-      );
-  }
-
-  private getDismissReason(reason: any): string {
-    if (reason === ModalDismissReasons.ESC) {
-      return "by pressing ESC";
-    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
-      return "by clicking on a backdrop";
-    } else {
-      return `with: ${reason}`;
-    }
   }
 }

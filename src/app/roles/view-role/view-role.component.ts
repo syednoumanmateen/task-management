@@ -6,6 +6,7 @@ import { UserService } from "src/app/providers/user.service";
 import { AppService } from "src/app/providers/app.service";
 import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
+import { ModalService } from "src/app/providers/modal.service";
 
 @Component({
   selector: "app-view-role",
@@ -25,7 +26,7 @@ export class ViewRoleComponent implements OnInit {
     private userService: UserService,
     private toastr: ToastrService,
     private storage: DataStorageService,
-    private modalService: NgbModal,
+    private modalService: ModalService,
     private router: Router
   ) {
     this.appService.pageTitle = "viewrole - Task Management";
@@ -69,31 +70,8 @@ export class ViewRoleComponent implements OnInit {
 
   viewFeatures(data: any) {
     this.storage.setData("featureList", data);
-    this.open();
+    this.modalService.open(RoleFeaturesComponent);
   }
 
-  open() {
-    this.modalService
-      .open(RoleFeaturesComponent, {
-        ariaLabelledBy: "modal-basic-title",
-      })
-      .result.then(
-        (result) => {
-          this.closeResult = `Closed with: ${result}`;
-        },
-        (reason) => {
-          this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
-        }
-      );
-  }
-
-  private getDismissReason(reason: any): string {
-    if (reason === ModalDismissReasons.ESC) {
-      return "by pressing ESC";
-    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
-      return "by clicking on a backdrop";
-    } else {
-      return `with: ${reason}`;
-    }
-  }
+  
 }

@@ -5,6 +5,7 @@ import { AppService } from "src/app/providers/app.service";
 import { Component, ElementRef, OnInit, ViewChild } from "@angular/core";
 import { ModalDismissReasons, NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { ToastrService } from "ngx-toastr";
+import { ModalService } from "src/app/providers/modal.service";
 
 @Component({
   selector: "app-forget-password",
@@ -18,11 +19,11 @@ export class ForgetPasswordComponent implements OnInit {
   closeResult: string;
   otpGroup: FormGroup;
   resetGroup: FormGroup;
-  loading:Boolean;
+  loading: Boolean;
   constructor(
     private appService: AppService,
     private userService: UserService,
-    private modalService: NgbModal,
+    private modalService: ModalService,
     private router: Router,
     private toastr: ToastrService
   ) {
@@ -32,31 +33,6 @@ export class ForgetPasswordComponent implements OnInit {
     this.otpGroup = this.getOTP();
     this.resetGroup = this.getresetPassword();
     this.loading = false;
-  }
-
-  open(data: any) {
-    this.modalService
-      .open(data, {
-        ariaLabelledBy: "modal-basic-title",
-      })
-      .result.then(
-        (result) => {
-          this.closeResult = `Closed with: ${result}`;
-        },
-        (reason) => {
-          this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
-        }
-      );
-  }
-
-  private getDismissReason(reason: any): string {
-    if (reason === ModalDismissReasons.ESC) {
-      return "by pressing ESC";
-    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
-      return "by clicking on a backdrop";
-    } else {
-      return `with: ${reason}`;
-    }
   }
 
   ngOnInit(): void {}
@@ -91,7 +67,7 @@ export class ForgetPasswordComponent implements OnInit {
     }
     return {
       msg: msg,
-      status: (msg == "") ? true : false,
+      status: msg == "" ? true : false,
     };
   }
   validateOTP() {
@@ -104,7 +80,7 @@ export class ForgetPasswordComponent implements OnInit {
     }
     return {
       msg: msg,
-      status: (msg == "") ? true : false,
+      status: msg == "" ? true : false,
     };
   }
   validateResetPassword() {
@@ -121,7 +97,7 @@ export class ForgetPasswordComponent implements OnInit {
     }
     return {
       msg: msg,
-      status: (msg == "") ? true : false,
+      status: msg == "" ? true : false,
     };
   }
 
@@ -137,7 +113,7 @@ export class ForgetPasswordComponent implements OnInit {
       this.userService.forgetPassword(p).subscribe(
         (res: any) => {
           this.loading = false;
-          this.open(this.OTPModal);
+          this.modalService.open(this.OTPModal);
         },
         (err: any) => {
           this.loading = false;
@@ -153,24 +129,24 @@ export class ForgetPasswordComponent implements OnInit {
       this.toastr.error(v.msg);
     } else {
       let p = {
-        code: this.otpGroup.value.otp||'',
+        code: this.otpGroup.value.otp || "",
       };
       this.loading = true;
       this.userService.OTPValidation(p).subscribe(
         (res: any) => {
           this.loading = false;
-          this.open(this.restPassword);
+          this.modalService.open(this.restPassword);
         },
         (err: any) => {
           this.loading = false;
-          this.toastr.error(err.error.message||"");
+          this.toastr.error(err.error.message || "");
         }
       );
     }
   }
 
   close() {
-    this.modalService.dismissAll();
+    this.modalService.close();
   }
 
   onSavePassword() {
@@ -180,18 +156,18 @@ export class ForgetPasswordComponent implements OnInit {
       this.toastr.error(v.msg);
     } else {
       let p = {
-        password: f.newpsw||'',
+        password: f.newpsw || "",
       };
       this.loading = true;
       this.userService.resetPassword(this.formGroup.value.email, p).subscribe(
         (res: any) => {
           this.loading = false;
-          this.modalService.dismissAll();
+          this.modalService.close();
           this.router.navigate(["/login"]);
         },
         (err: any) => {
           this.loading = false;
-          this.toastr.error(err.error.message||"");
+          this.toastr.error(err.error.message || "");
         }
       );
     }

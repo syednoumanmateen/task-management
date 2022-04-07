@@ -1,4 +1,4 @@
-import { AddComponent } from './../add/add.component';
+import { AddComponent } from "./../add/add.component";
 import { ModalDismissReasons, NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { FormControl, FormGroup } from "@angular/forms";
 import { ToastrService } from "ngx-toastr";
@@ -7,6 +7,7 @@ import { Router } from "@angular/router";
 import { UserService } from "src/app/providers/user.service";
 import { Component, ElementRef, OnInit, ViewChild } from "@angular/core";
 import * as moment from "moment";
+import { ModalService } from "src/app/providers/modal.service";
 
 @Component({
   selector: "app-list",
@@ -36,7 +37,7 @@ export class ListComponent implements OnInit {
     private router: Router,
     private appService: AppService,
     private toastr: ToastrService,
-    private modalService: NgbModal
+    private modalService: ModalService
   ) {
     this.appService.pageTitle = "userList - Task Management";
     this.user = {
@@ -82,7 +83,7 @@ export class ListComponent implements OnInit {
   }
 
   onAddUser() {
-    this.open(AddComponent)
+    this.modalService.open(AddComponent);
   }
 
   userList() {
@@ -156,30 +157,5 @@ export class ListComponent implements OnInit {
         this.toastr.error(err.message.message || err.error.message || "");
       }
     );
-  }
-
-  open(data: any) {
-    this.modalService
-      .open(data, {
-        windowClass: "modal-top modal-lg",
-      })
-      .result.then(
-        (result) => {
-          this.closeResult = `Closed with: ${result}`;
-        },
-        (reason) => {
-          this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
-        }
-      );
-  }
-
-  private getDismissReason(reason: any): string {
-    if (reason === ModalDismissReasons.ESC) {
-      return "by pressing ESC";
-    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
-      return "by clicking on a backdrop";
-    } else {
-      return `with: ${reason}`;
-    }
   }
 }

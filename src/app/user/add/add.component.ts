@@ -5,6 +5,7 @@ import { ActivatedRoute, Router } from "@angular/router";
 import { UserService } from "./../../providers/user.service";
 import { Component, OnInit } from "@angular/core";
 import { ToastrService } from "ngx-toastr";
+import { ModalService } from "src/app/providers/modal.service";
 
 @Component({
   selector: "app-add",
@@ -35,7 +36,7 @@ export class AddComponent implements OnInit {
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private toastr: ToastrService,
-    private modalService: NgbModal
+    private modalService: ModalService
   ) {
     this.appService.pageTitle = "addUser - Task Management";
     this.formGroup = this.getFormGroup();
@@ -178,7 +179,7 @@ export class AddComponent implements OnInit {
 
   onCancel() {
     this.formGroup.reset();
-    this.modalService.dismissAll();
+    this.modalService.close();
   }
 
   getRoles() {

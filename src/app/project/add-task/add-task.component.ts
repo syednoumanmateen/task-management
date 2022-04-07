@@ -6,8 +6,7 @@ import { ActivatedRoute, Router } from "@angular/router";
 import { UserService } from "src/app/providers/user.service";
 import { Component, OnChanges, OnInit } from "@angular/core";
 import { ToastrService } from "ngx-toastr";
-import { loadavg } from "os";
-import { log } from "console";
+import { ModalService } from "src/app/providers/modal.service";
 
 @Component({
   selector: "app-add-task",
@@ -70,7 +69,7 @@ export class AddTaskComponent implements OnInit {
     private activtedRoute: ActivatedRoute,
     private appService: AppService,
     private router: Router,
-    private modalService: NgbModal
+    private modalService: ModalService
   ) {
     this.appService.pageTitle = "addTask - Task Management";
     this.formGroup = this.getFormGroup();
@@ -188,7 +187,7 @@ export class AddTaskComponent implements OnInit {
 
   onCancel() {
     this.formGroup.reset();
-    this.modalService.dismissAll();
+    this.modalService.close();
   }
 
   viewTask(url: any) {

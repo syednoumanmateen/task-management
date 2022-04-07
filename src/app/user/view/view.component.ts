@@ -1,3 +1,5 @@
+import { ModalService } from "src/app/providers/modal.service";
+import { AddComponent } from "./../add/add.component";
 import { ToastrService } from "ngx-toastr";
 import { AppService } from "./../../providers/app.service";
 import { ActivatedRoute, Router } from "@angular/router";
@@ -25,7 +27,8 @@ export class ViewComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private userService: UserService,
     private appService: AppService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private modalService: ModalService
   ) {
     this.appService.pageTitle = "addUser - Task Management";
     this.urlParams = {};
@@ -76,10 +79,6 @@ export class ViewComponent implements OnInit {
   }
 
   onEdit() {
-    this.router.navigate(["/users/add-user"], {
-      queryParams: {
-        id: this.urlParams.id || "",
-      },
-    });
+    this.modalService.open(AddComponent);
   }
 }

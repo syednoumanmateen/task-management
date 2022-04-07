@@ -6,6 +6,7 @@ import { FormControl, FormGroup } from "@angular/forms";
 import { AppService } from "src/app/providers/app.service";
 import { Component, OnInit } from "@angular/core";
 import { DropzoneConfigInterface } from "ngx-dropzone-wrapper";
+import { ModalService } from "src/app/providers/modal.service";
 
 @Component({
   selector: "app-add-project",
@@ -49,7 +50,7 @@ export class AddProjectComponent implements OnInit {
     private userService: UserService,
     private toastr: ToastrService,
     private router: Router,
-    private modalService: NgbModal
+    private modalService: ModalService
   ) {
     this.appService.pageTitle = "Add Project - Task Management";
     this.formGroup = this.getFormGroup();
@@ -159,7 +160,7 @@ export class AddProjectComponent implements OnInit {
 
   onCancel() {
     this.formGroup.reset();
-    this.modalService.dismissAll();
+    this.modalService.close();
   }
 
   onInputClick() {

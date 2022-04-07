@@ -9,6 +9,7 @@ import { ToastrService } from "ngx-toastr";
 import { Router } from "@angular/router";
 import { Component, OnInit } from "@angular/core";
 import { UserService } from "src/app/providers/user.service";
+import { ModalService } from "src/app/providers/modal.service";
 
 @Component({
   selector: "app-roles-list",
@@ -30,7 +31,7 @@ export class RolesListComponent implements OnInit {
     private userService: UserService,
     private toastr: ToastrService,
     private appService: AppService,
-    private modalService: NgbModal,
+    private modalService: ModalService,
     private storage: DataStorageService
   ) {
     this.appService.pageTitle = "list of role - Task Management";
@@ -50,7 +51,7 @@ export class RolesListComponent implements OnInit {
   }
 
   addRole() {
-    this.open(AddRoleComponent);
+    this.modalService.open(AddRoleComponent);
   }
 
   getRoles() {
@@ -92,31 +93,6 @@ export class RolesListComponent implements OnInit {
 
   viewFeatures(data: any) {
     this.storage.setData("featureList", data || {});
-    this.open(RoleFeaturesComponent);
-  }
-
-  open(data: any) {
-    this.modalService
-      .open(data, {
-        windowClass: "modal-top modal-lg",
-      })
-      .result.then(
-        (result) => {
-          this.closeResult = `Closed with: ${result}`;
-        },
-        (reason) => {
-          this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
-        }
-      );
-  }
-
-  private getDismissReason(reason: any): string {
-    if (reason === ModalDismissReasons.ESC) {
-      return "by pressing ESC";
-    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
-      return "by clicking on a backdrop";
-    } else {
-      return `with: ${reason}`;
-    }
+    this.modalService.open(RoleFeaturesComponent);
   }
 }

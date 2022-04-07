@@ -5,6 +5,7 @@ import { FormControl, FormGroup } from "@angular/forms";
 import { AppService } from "src/app/providers/app.service";
 import { Component, OnInit } from "@angular/core";
 import { UserService } from "src/app/providers/user.service";
+import { ModalService } from "src/app/providers/modal.service";
 
 @Component({
   selector: "app-add-role",
@@ -41,7 +42,7 @@ export class AddRoleComponent implements OnInit {
     private toastr: ToastrService,
     private activatedRoute: ActivatedRoute,
     private router: Router,
-    private modalService: NgbModal
+    private modalService: ModalService
   ) {
     this.appService.pageTitle = "addrole - Task Management";
     this.formGroup = this.getFormGroup();
@@ -211,6 +212,6 @@ export class AddRoleComponent implements OnInit {
 
   onCancel() {
     this.formGroup.reset();
-    this.modalService.dismissAll();
+    this.modalService.close();
   }
 }

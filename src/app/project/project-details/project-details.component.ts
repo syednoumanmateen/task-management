@@ -6,6 +6,7 @@ import { ActivatedRoute, Router } from "@angular/router";
 import { AppService } from "src/app/providers/app.service";
 import { Component, OnInit } from "@angular/core";
 import { AddTaskComponent } from "../add-task/add-task.component";
+import { ModalService } from "src/app/providers/modal.service";
 
 
 @Component({
@@ -70,7 +71,7 @@ export class ProjectDetailsComponent implements OnInit {
     private userService: UserService,
     private toastr: ToastrService,
     private router: Router,
-    private modalService: NgbModal
+    private modalService: ModalService
   ) {
     this.appService.pageTitle = "projectDetails - Task Management";
     this.urlParams = {};
@@ -164,7 +165,7 @@ export class ProjectDetailsComponent implements OnInit {
   }
 
   onAddTask() {
-    this.open();
+    this.modalService.open(AddTaskComponent);
   }
 
   onDelete(id: any) {
@@ -179,31 +180,6 @@ export class ProjectDetailsComponent implements OnInit {
         this.toastr.error(err.error.message);
       }
     );
-  }
-
-  open() {
-    this.modalService
-      .open(AddTaskComponent, {
-        windowClass: "modal-top modal-lg",
-      })
-      .result.then(
-        (result) => {
-          this.closeResult = `Closed with: ${result}`;
-        },
-        (reason) => {
-          this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
-        }
-      );
-  }
-
-  private getDismissReason(reason: any): string {
-    if (reason === ModalDismissReasons.ESC) {
-      return "by pressing ESC";
-    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
-      return "by clicking on a backdrop";
-    } else {
-      return `with: ${reason}`;
-    }
   }
 
   userList() {
