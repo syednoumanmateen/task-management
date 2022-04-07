@@ -2,7 +2,6 @@ import { AddTaskComponent } from "./project/add-task/add-task.component";
 import { ViewRoleComponent } from "./roles/view-role/view-role.component";
 
 import { SettingsComponent } from "./user/settings/settings.component";
-// import { AuthGuardService } from "./providers/auth-guard.service";
 import { NgModule } from "@angular/core";
 import { Routes, RouterModule } from "@angular/router";
 import { NotFoundComponent } from "./not-found/not-found.component";
@@ -17,7 +16,6 @@ import { ProfileComponent } from "./user/profile/profile.component";
 import { ForgetPasswordComponent } from "./user/forget-password/forget-password.component";
 import { ProjectComponent } from "./project/project/project.component";
 import { ProjectDetailsComponent } from "./project/project-details/project-details.component";
-import { TasksViewComponent } from "./project/tasks-view/tasks-view.component";
 import { LayoutBlankComponent } from "./layout/layout-blank/layout-blank.component";
 import { AddComponent } from "./user/add/add.component";
 import { ViewComponent } from "./user/view/view.component";
@@ -88,11 +86,7 @@ const routes: Routes = [
       {
         path: "add-task",
         component: AddTaskComponent,
-      },
-      {
-        path: "view-task",
-        component: TasksViewComponent,
-      },
+      }
     ],
   },
   {

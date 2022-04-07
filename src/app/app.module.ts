@@ -35,7 +35,7 @@ import { LoginComponent } from "./user/login/login.component";
 import { ForgetPasswordComponent } from "./user/forget-password/forget-password.component";
 import { ProjectComponent } from "./project/project/project.component";
 import { ProjectDetailsComponent } from "./project/project-details/project-details.component";
-import { TasksViewComponent } from "./project/tasks-view/tasks-view.component";
+// import { TasksViewComponent } from "./project/tasks-view/tasks-view.component";
 import { ProfileComponent } from "./user/profile/profile.component";
 import { DashboardComponent } from "./dashboard/dashboard.component";
 import { SettingsComponent } from "./user/settings/settings.component";
@@ -75,7 +75,7 @@ const DEFAULT_DROPZONE_CONFIG: DropzoneConfigInterface = {
     ForgetPasswordComponent,
     ProjectComponent,
     ProjectDetailsComponent,
-    TasksViewComponent,
+    // TasksViewComponent,
     ProfileComponent,
     DashboardComponent,
     SettingsComponent,
