@@ -30,7 +30,9 @@
             <div class="form-row">
                 <div class="form-group col-md-12">
                     <label class="form-label">Description<span class="text-danger">*</span></label>
-                    <textarea name="description" class="form-control" formControlName="description"></textarea>
+                    <quill-editor formControlName="description">
+                        <div quill-editor-toolbar>Add Description</div>
+                    </quill-editor>
                 </div>
             </div>
         </div>

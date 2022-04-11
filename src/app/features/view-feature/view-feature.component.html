@@ -32,7 +32,7 @@
                     <span *ngIf="feature.loading">
                         <app-spinner></app-spinner>
                     </span>
-                    <td *ngIf="!feature.loading">{{feature.data.decription||""}}</td>
+                    <td *ngIf="!feature.loading"><span [innerHTML]="feature.data.decription"></span></td>
                 </tr>
                 <tr>
                     <td>fetureName:</td>

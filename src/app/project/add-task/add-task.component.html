@@ -6,48 +6,43 @@
   <form action="" [formGroup]="formGroup">
     <div class="card-header">
       <div class="form-group col-md-6">
-        <label class="form-label">Projects:<span class="text-danger">*</span></label>
-        <select formControlName="project" class="custom-select" formControlName="project">
-          <option *ngFor="let project of project.data" value="project._id">{{project.nameOfProject}}</option>
-        </select>
+        <label class="form-label">Project:<span class="text-danger">*</span></label>
+        <!-- <select formControlName="project" class="custom-select" formControlName="project">
+          <option [value]="project.data._id">{{project.data.nameOfProject}}</option>
+        </select> -->
+        <h4 class="text-capitalize">{{project.data.nameOfProject}}</h4>
       </div>
       <div class="form-group col-md-6">
         <label class="form-label">Type:<span class="text-danger">*</span></label>
         <select formControlName="type" class="custom-select" formControlName="type">
-          <option value="Improvement">Improvement</option>
           <option value="Bug">Bug</option>
           <option value="Task">Task</option>
-          <option value="New Feature">New Feature</option>
-          <option value="Test">Test</option>
         </select>
       </div>
     </div>
     <div class="card-body">
       <div class="form-row">
-        <div class="form-group col-md-6">
-          <label class="form-label">Parent ID<span class="text-danger">*</span></label>
-          <input type="text" formControlName="id" class="form-control">
-        </div>
-        <div class="form-group col-md-6">
+        <div class="form-group col-md-12">
           <label class="form-label">Summary<span class="text-danger">*</span></label>
           <input type="email" formControlName="title" class="form-control mb-1">
+        </div>
+        <div class="form-group col-md-12">
+          <label class="form-label">Description</label>
+          <quill-editor formControlName="description">
+            <div quill-editor-toolbar>Add Description</div>
+          </quill-editor>
         </div>
       </div>
 
       <div class="form-row">
-        <div class="form-group col-md-12">
-          <label class="form-label">Description</label>
-          <textarea name="description" class="form-control" formControlName="description"></textarea>
-        </div>
-
-        <div class="form-group col-md-12">
+        <div class="form-group col-md-6">
           <label class="form-label">Member<span class="text-danger">*</span></label>
           <ng-select [items]="user.data" [closeOnSelect]="true" bindLabel="fName" bindValue="_id"
             formControlName="user">
           </ng-select>
         </div>
 
-        <div class="form-group col-md-12">
+        <div class="form-group col-md-6">
           <label class="form-label">Priority</label>
           <select formControlName="priority" class="custom-select">
             <option value="high">High</option>
@@ -71,10 +66,16 @@
 
       <div class="form-row">
         <div class="form-group col-md-12">
-          <label class="form-label w-100">Attachment</label>
-          <dropzone class="dropzone-container" [config]="config" formControlName="attachment"
-            [message]="'Click or drag file here to upload'">
-          </dropzone>
+          <label class="form-label w-100">Upload Documents</label>
+          <quill-editor formControlName="attachment">
+            <div quill-editor-toolbar>
+              <span class="ql-formats">
+                <button class="ql-link"></button>
+                <button class="ql-image"></button>
+                <button class="ql-video"></button>
+              </span>
+            </div>
+          </quill-editor>
         </div>
       </div>
 

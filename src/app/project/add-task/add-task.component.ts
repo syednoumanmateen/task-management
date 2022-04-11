@@ -4,7 +4,7 @@ import { AppService } from "src/app/providers/app.service";
 import { FormControl, FormGroup } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
 import { UserService } from "src/app/providers/user.service";
-import { Component, OnChanges, OnInit } from "@angular/core";
+import { Component, Input, OnChanges, OnInit } from "@angular/core";
 import { ToastrService } from "ngx-toastr";
 import { ModalService } from "src/app/providers/modal.service";
 
@@ -109,14 +109,12 @@ export class AddTaskComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // this.activtedRoute.queryParams.subscribe((data) => {
-    //   this.urlParams = data;
-    // });
-    // if (this.urlParams.type) {
-    //   this.viewTask(this.urlParams.id);
-    // }
+    this.activtedRoute.queryParams.subscribe((data) => {
+      this.urlParams = data;
+    });
+    this.viewProject(this.urlParams.id);
     this.userList();
-    this.getProject();
+    // this.getProject();
   }
 
   getFormGroup() {
@@ -190,17 +188,21 @@ export class AddTaskComponent implements OnInit {
     this.modalService.close();
   }
 
-  viewTask(url: any) {
+  viewProject(url: any) {
+    console.log(url);
+    
     let p = url;
-    this.task.loading = true;
-    this.userService.viewTask(p).subscribe(
+    this.project.loading = true;
+    this.userService.viewProject(p).subscribe(
       (res: any) => {
-        this.task.loading = false;
-        this.task.data = res[0] || {};
+        this.project.loading = false;
+        this.project.data = res[0] || {};
+        console.log(res[0]);
+        
         this.setValue();
       },
       (err: any) => {
-        this.task.loading = false;
+        this.project.loading = false;
         this.toastr.error(err.error.message);
       }
     );

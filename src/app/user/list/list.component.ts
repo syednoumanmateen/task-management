@@ -17,6 +17,7 @@ import { ModalService } from "src/app/providers/modal.service";
 export class ListComponent implements OnInit {
   @ViewChild("BlockMsg") BlockMsg!: ElementRef;
   date: any;
+  fName: any;
   user: {
     data: any;
     loading: Boolean;
@@ -143,6 +144,7 @@ export class ListComponent implements OnInit {
 
     let p = {
       role: this.roleName || "",
+      // fName:this.fName||"",
       status: this.statusValue || "",
       startDate: this.date[0] || "",
       endDate: this.date[1] || "",

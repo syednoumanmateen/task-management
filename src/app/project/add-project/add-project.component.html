@@ -6,35 +6,52 @@
 	<div class="card-body">
 		<form action="" [formGroup]="formGroup">
 
-			<div class="form-group col-md-6">
-				<label class="form-label">Project Name<span class="text-danger">*</span></label>
-				<input type="text" formControlName="name" class="form-control">
+			<div class="form-row">
+				<div class="form-group col-md-12">
+					<label class="form-label">Project Name<span class="text-danger">*</span></label>
+					<input type="text" formControlName="name" class="form-control">
+				</div>
 			</div>
 
-			<div class="form-group col-md-12">
-				<label class="form-label">Handled By<span class="text-danger">*</span></label>
-				<ng-select [items]="user.data" [closeOnSelect]="true" bindLabel="fName" [hideSelected]="true"
-					formControlName="lead">
-				</ng-select>
+			<div class="form-row">
+				<div class="form-group col-md-12">
+					<label class="form-label">Description</label>
+					<quill-editor formControlName="description">
+						<div quill-editor-toolbar>Add Description</div>
+					</quill-editor>
+				</div>
 			</div>
 
-			<div class="form-group col-md-12">
-				<label class="form-label">Members<span class="text-danger">*</span></label>
-				<ng-select [items]="user.data" [closeOnSelect]="false" [multiple]="true" bindLabel="fName" [hideSelected]="true"
-					formControlName="user">
-				</ng-select>
+			<div class="form-row">
+				<div class="form-group col-md-6">
+					<label class="form-label">Handled By<span class="text-danger">*</span></label>
+					<ng-select [items]="user.data" [closeOnSelect]="true" bindLabel="fName" [hideSelected]="true"
+						formControlName="lead">
+					</ng-select>
+				</div>
+
+				<div class="form-group col-md-6">
+					<label class="form-label">Members<span class="text-danger">*</span></label>
+					<ng-select [items]="user.data" [closeOnSelect]="false" [multiple]="true" bindLabel="fName"
+						[hideSelected]="true" formControlName="user">
+					</ng-select>
+				</div>
 			</div>
 
-			<div class="card-body p-3">
-				<label class="form-label">Description</label>
-				<textarea name="description" class="form-control" formControlName="description"></textarea>
-			</div>
 
-			<div class="form-group col-md-12">
-				<label class="form-label w-100">Attachment</label>
-				<dropzone class="dropzone-container" [config]="config" formControlName="attachment"
-					[message]="'Click or drag file here to upload'">
-				</dropzone>
+			<div class="form-row">
+				<div class="form-group col-md-12">
+					<label class="form-label w-100">Upload a File</label>
+					<quill-editor formControlName="attachment">
+						<div quill-editor-toolbar>
+							<span class="ql-formats">
+								<button class="ql-link"></button>
+								<button class="ql-image"></button>
+								<button class="ql-video"></button>
+							</span>
+						</div>
+					</quill-editor>
+				</div>
 			</div>
 
 			<div class="form-row">

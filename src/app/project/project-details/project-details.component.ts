@@ -32,9 +32,11 @@ export class ProjectDetailsComponent implements OnInit {
   quillShow: Boolean;
   quillcommentShow: Boolean;
   quillData: String;
+  quillAttachment: any;
   task: {
     data: any;
     loading: Boolean;
+    filter: any;
   };
   addComment: {
     loading: Boolean;
@@ -84,6 +86,7 @@ export class ProjectDetailsComponent implements OnInit {
     this.task = {
       data: {},
       loading: false,
+      filter: {},
     };
     this.addComment = {
       loading: false,
@@ -151,10 +154,9 @@ export class ProjectDetailsComponent implements OnInit {
       (res: any) => {
         this.task.loading = false;
         this.task.data = res || {};
+        this.task.filter = res || {};
         this.curTab = this.task.data[0];
-        this.getcomment();
-        console.log(this.task.data[0].projectId);
-        
+        this.getComment();
         this.getStatusCount(this.task.data[0].projectId);
       },
       (err: any) => {
@@ -208,20 +210,21 @@ export class ProjectDetailsComponent implements OnInit {
     console.log(data);
     this.curTab = data;
     this.quillData = data.description + data.attachment[0];
-    this.getcomment();
+    this.getComment();
   }
 
   save() {
     let p = {
       description: this.quillData,
-      attachment: this.quillData,
+      attachment: this.quillAttachment,
     };
     this.editTask.loading = true;
     this.userService.editTask(this.curTab._id, p).subscribe(
       (res: any) => {
         this.editTask.loading = false;
-        this.toastr.success(res.data.message);
-        this.ngOnInit();
+        this.toastr.success(res.message);
+        this.quillData = "";
+        this.getTask();
       },
       (err: any) => {
         this.editTask.loading = false;
@@ -256,7 +259,8 @@ export class ProjectDetailsComponent implements OnInit {
         this.addComment.loading = false;
         this.comment = "";
         this.attachment = "";
-        this.getcomment();
+        this.toastr.success(res.message);
+        this.getComment();
       },
       (err: any) => {
         this.addComment.loading = false;
@@ -265,7 +269,7 @@ export class ProjectDetailsComponent implements OnInit {
     );
   }
 
-  getcomment() {
+  getComment() {
     this.viewComment.loading = true;
     this.userService.viewTaskComment(this.curTab._id).subscribe(
       (res: any) => {
@@ -285,7 +289,7 @@ export class ProjectDetailsComponent implements OnInit {
       (res: any) => {
         this.deleteComment.loading = false;
         this.toastr.success(res.message);
-        this.getcomment();
+        this.getComment();
       },
       (err: any) => {
         this.deleteComment.loading = false;
@@ -300,7 +304,7 @@ export class ProjectDetailsComponent implements OnInit {
     this.userService.editTaskComment(id, p).subscribe(
       (res: any) => {
         this.editComment.loading = false;
-        this.getcomment();
+        this.getComment();
       },
       (err: any) => {
         this.editComment.loading = false;
@@ -317,14 +321,14 @@ export class ProjectDetailsComponent implements OnInit {
       startDate: this.date[0] || "",
       endDate: this.date[1] || "",
     };
-    this.project.loading = true;
+    this.task.loading = true;
     this.userService.filterTask(p).subscribe(
       (res: any) => {
-        this.project.loading = false;
-        this.project.data = res || {};
+        this.task.loading = false;
+        this.task.data = res || {};
       },
       (err: any) => {
-        this.project.loading = false;
+        this.task.loading = false;
         this.toastr.error(err.error.message || err.message.message || "");
       }
     );

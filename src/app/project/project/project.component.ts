@@ -51,7 +51,7 @@ export class ProjectComponent implements OnInit {
   }
 
   onCreateProject() {
-    this.modalService.open(AddProjectComponent);
+    this.modalService.open(AddProjectComponent);    
   }
 
   onView(id: any) {
@@ -92,9 +92,6 @@ export class ProjectComponent implements OnInit {
   }
 
   onFilter() {
-    console.log("oidjkd");
-    console.log(this.date);
-
     let p = {
       project: this.projectName || "",
       status: this.status || "",

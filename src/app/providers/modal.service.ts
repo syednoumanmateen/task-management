@@ -11,16 +11,16 @@ export class ModalService {
 
   open(data: any) {
     this.modalService
-      .open(data, {
-        windowClass: "modal-top modal-lg",
-      })
-      .result.then(
-        (result) => {
-          this.closeResult = `Closed with: ${result}`;
-        },
-        (reason) => {
-          this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
-        }
+    .open(data, {
+      windowClass: "modal-top modal-lg",
+    })
+    .result.then(
+      (result) => {
+        this.closeResult = `Closed with: ${result}`;
+      },
+      (reason) => {
+        this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+      }
       );
   }
 
