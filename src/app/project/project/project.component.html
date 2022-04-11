@@ -14,7 +14,7 @@
   <div class="col-md mb-4">
     <label class="form-label">Project Name</label>
     <select class="custom-select" [(ngModel)]="projectName">
-      <option *ngFor="let project of project.data" [value]="project.nameOfProject">{{project.nameOfProject}}
+      <option *ngFor="let project of project.filter" [value]="project.nameOfProject">{{project.nameOfProject}}
       </option>
     </select>
   </div>

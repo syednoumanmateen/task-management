@@ -8,7 +8,6 @@ import { Component, OnInit } from "@angular/core";
 import { AddTaskComponent } from "../add-task/add-task.component";
 import { ModalService } from "src/app/providers/modal.service";
 
-
 @Component({
   selector: "app-project-details",
   templateUrl: "./project-details.component.html",
@@ -27,7 +26,6 @@ export class ProjectDetailsComponent implements OnInit {
   date: any;
   title: any;
   assigne: any;
-  reporter: any;
   status: any;
   comment: any;
   attachment: any;
@@ -45,6 +43,10 @@ export class ProjectDetailsComponent implements OnInit {
     loading: Boolean;
   };
   viewComment: {
+    loading: Boolean;
+    data: any;
+  };
+  statusCount: {
     loading: Boolean;
     data: any;
   };
@@ -78,7 +80,6 @@ export class ProjectDetailsComponent implements OnInit {
     this.date = "";
     this.title = "";
     this.assigne = "";
-    this.reporter = "";
     this.status = "";
     this.task = {
       data: {},
@@ -91,6 +92,10 @@ export class ProjectDetailsComponent implements OnInit {
       loading: false,
     };
     this.viewComment = {
+      loading: false,
+      data: {},
+    };
+    this.statusCount = {
       loading: false,
       data: {},
     };
@@ -148,6 +153,9 @@ export class ProjectDetailsComponent implements OnInit {
         this.task.data = res || {};
         this.curTab = this.task.data[0];
         this.getcomment();
+        console.log(this.task.data[0].projectId);
+        
+        this.getStatusCount(this.task.data[0].projectId);
       },
       (err: any) => {
         this.task.loading = false;
@@ -237,7 +245,7 @@ export class ProjectDetailsComponent implements OnInit {
 
   postComment() {
     let p = {
-      projectId: this.task.data.projectId,
+      projectId: this.task.data[0].projectId,
       taskId: this.curTab._id,
       attachments: this.comment.trim() || "",
       comments: this.comment.trim() || "",
@@ -302,16 +310,12 @@ export class ProjectDetailsComponent implements OnInit {
   }
 
   onFilter() {
-    console.log("oidjkd");
-    console.log(this.date);
-
     let p = {
-      title:  "",
-      assigne:"",
-      reporter:"",
-      status:this.status||"",
-      startDate: this.date[0] ||"",
-      endDate: this.date[1] ||"",
+      title: this.title || "",
+      assigne: this.assigne || "",
+      status: this.status || "",
+      startDate: this.date[0] || "",
+      endDate: this.date[1] || "",
     };
     this.project.loading = true;
     this.userService.filterTask(p).subscribe(
@@ -321,7 +325,22 @@ export class ProjectDetailsComponent implements OnInit {
       },
       (err: any) => {
         this.project.loading = false;
-        this.toastr.error(err.error.message||err.message.message ||"");
+        this.toastr.error(err.error.message || err.message.message || "");
+      }
+    );
+  }
+
+  getStatusCount(Id: any) {
+    this.statusCount.loading = true;
+
+    this.userService.countStatus(Id).subscribe(
+      (res: any) => {
+        this.statusCount.loading = false;
+        this.statusCount.data = res || [];
+      },
+      (err: any) => {
+        this.statusCount.loading = false;
+        this.toastr.error(err.error.message);
       }
     );
   }

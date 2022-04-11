@@ -5,6 +5,7 @@ import { ToastrService } from "ngx-toastr";
 import { Router } from "@angular/router";
 import { Component, OnInit } from "@angular/core";
 import { ModalService } from "src/app/providers/modal.service";
+import { AnyCnameRecord } from "dns";
 
 @Component({
   selector: "app-project",
@@ -19,6 +20,7 @@ export class ProjectComponent implements OnInit {
   project: {
     data: any;
     loading: Boolean;
+    filter: any;
   };
   delete: {
     loading: Boolean;
@@ -37,6 +39,7 @@ export class ProjectComponent implements OnInit {
     this.project = {
       data: {},
       loading: false,
+      filter: {},
     };
     this.delete = {
       loading: false,
@@ -79,6 +82,7 @@ export class ProjectComponent implements OnInit {
       (res: any) => {
         this.project.loading = false;
         this.project.data = res || {};
+        this.project.filter = res || {};
       },
       (err: any) => {
         this.project.loading = false;
@@ -92,7 +96,7 @@ export class ProjectComponent implements OnInit {
     console.log(this.date);
 
     let p = {
-      projectName: this.projectName || "",
+      project: this.projectName || "",
       status: this.status || "",
       startDate: this.date[0] || "",
       endDate: this.date[1] || "",

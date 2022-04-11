@@ -21,6 +21,7 @@ export class FeaturesListComponent implements OnInit {
   feature: {
     loading: Boolean;
     data: any;
+    filter: any;
   };
   delete: {
     loading: Boolean;
@@ -35,10 +36,11 @@ export class FeaturesListComponent implements OnInit {
   ) {
     this.appService.pageTitle = "list of features - Task Management";
     this.userId = "";
-    this.date=""
+    this.date = "";
     this.feature = {
       loading: false,
       data: {},
+      filter: {},
     };
     this.delete = {
       loading: false,
@@ -59,6 +61,7 @@ export class FeaturesListComponent implements OnInit {
       (res: any) => {
         this.feature.loading = false;
         this.feature.data = res || {};
+        this.feature.filter = res || {};
       },
       (err: any) => {
         this.feature.loading = false;
@@ -118,12 +121,12 @@ export class FeaturesListComponent implements OnInit {
   onFilter() {
     console.log("kinj");
     console.log(this.date);
-    
+
     let p = {
-      featureName: this.featureName || "",
-      moduleName: this.moduleName || "",
-      startDate: this.date[0] ||"",
-      endDate: this.date[1] ||"",
+      feature: this.featureName || "",
+      module: this.moduleName || "",
+      startDate: this.date[0] || "",
+      endDate: this.date[1] || "",
     };
     this.feature.loading = true;
     this.userService.filterFeature(p).subscribe(
@@ -133,7 +136,7 @@ export class FeaturesListComponent implements OnInit {
       },
       (err: any) => {
         this.feature.loading = false;
-        this.toastr.error(err.error.message||err.message.message ||"");
+        this.toastr.error(err.error.message || err.message.message || "");
       }
     );
   }

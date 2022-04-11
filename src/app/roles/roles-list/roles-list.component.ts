@@ -99,7 +99,7 @@ export class RolesListComponent implements OnInit {
     console.log(this.roleName);
 
     let p = {
-      roleName: this.roleName || "",
+      role: this.roleName || "",
       startDate: this.date[0] ||"",
       endDate: this.date[1] || "",
     };

@@ -14,7 +14,7 @@
     <div class="col-md mb-4">
         <label class="form-label">Feature Name</label>
         <select class="custom-select" [(ngModel)]="featureName">
-            <option *ngFor="let feature of feature.data" [value]="feature.featureName">{{feature.featureName}}
+            <option *ngFor="let feature of feature.filter" [value]="feature.featureName">{{feature.featureName}}
             </option>
         </select>
     </div>

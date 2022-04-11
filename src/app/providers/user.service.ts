@@ -55,8 +55,8 @@ export class UserService {
 
   filterUser(params?: any) {
     console.log(params);
-    
-    return this.ajax.getParamsObject("/user/filtered-list", params)
+
+    return this.ajax.getParamsObject("/user/filtered-list", params);
   }
 
   // feature
@@ -160,6 +160,10 @@ export class UserService {
 
   filterTask(params?: any) {
     return this.ajax.getParamsObject("/project/filtered-tasklist/", params);
+  }
+
+  countStatus(id: any) {
+    return this.ajax.get("/project/status-task/" + id);
   }
   // comment
   addTaskComment(params: any) {
