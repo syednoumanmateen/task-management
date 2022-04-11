@@ -310,11 +310,11 @@ export class ProjectDetailsComponent implements OnInit {
       assigne:"",
       reporter:"",
       status:this.status||"",
-      startDate: this.date[0] || {},
-      endDate: this.date[1] || {},
+      startDate: this.date[0] ||"",
+      endDate: this.date[1] ||"",
     };
     this.project.loading = true;
-    this.userService.filterRole(p).subscribe(
+    this.userService.filterTask(p).subscribe(
       (res: any) => {
         this.project.loading = false;
         this.project.data = res || {};

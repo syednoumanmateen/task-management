@@ -35,6 +35,7 @@ export class FeaturesListComponent implements OnInit {
   ) {
     this.appService.pageTitle = "list of features - Task Management";
     this.userId = "";
+    this.date=""
     this.feature = {
       loading: false,
       data: {},
@@ -121,8 +122,8 @@ export class FeaturesListComponent implements OnInit {
     let p = {
       featureName: this.featureName || "",
       moduleName: this.moduleName || "",
-      startDate: this.date[0] || {},
-      endDate: this.date[1] || {},
+      startDate: this.date[0] ||"",
+      endDate: this.date[1] ||"",
     };
     this.feature.loading = true;
     this.userService.filterFeature(p).subscribe(

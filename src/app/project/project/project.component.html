@@ -14,14 +14,14 @@
   <div class="col-md mb-4">
     <label class="form-label">Project Name</label>
     <select class="custom-select" [(ngModel)]="projectName">
-      <option *ngFor="let project of project.data" value="project.nameOfProject">{{project.nameOfProject}}
+      <option *ngFor="let project of project.data" [value]="project.nameOfProject">{{project.nameOfProject}}
       </option>
     </select>
   </div>
   <div class="col-md mb-4">
     <label class="form-label">Status</label>
     <select class="custom-select" [(ngModel)]="status">
-      <option *ngFor="let status of ['created','pending', 'progress', 'complete', 'rejected']" value="status">
+      <option *ngFor="let status of ['created','pending', 'progress', 'complete', 'rejected']" [value]="status">
         {{status}}</option>
     </select>
   </div>
@@ -33,7 +33,11 @@
 </div>
 <!-- / Filters -->
 
-<div class="card">
+<h4 *ngIf="this.project.data.length==0" class="card text-center px-5 py-2">
+	No Data Found
+</h4>
+
+<div class="card" *ngIf="this.project.data.length!=0">
 
   <!-- Table controls -->
   <div class="card-body">

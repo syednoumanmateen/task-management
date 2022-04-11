@@ -1,8 +1,5 @@
 import { AddRoleComponent } from "./../add-role/add-role.component";
-import { logging } from "protractor";
 import { RoleFeaturesComponent } from "./../role-features/role-features.component";
-import { ModalDismissReasons } from "@ng-bootstrap/ng-bootstrap";
-import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { AppService } from "src/app/providers/app.service";
 import { DataStorageService } from "src/app/providers/data-storage.service";
 import { ToastrService } from "ngx-toastr";
@@ -44,6 +41,7 @@ export class RolesListComponent implements OnInit {
       loading: false,
     };
     this.closeResult = "";
+    this.date=""
   }
 
   ngOnInit(): void {
@@ -98,12 +96,12 @@ export class RolesListComponent implements OnInit {
 
   onFilter() {
     console.log("oidjkd");
-    console.log(this.date);
+    console.log(this.roleName);
 
     let p = {
       roleName: this.roleName || "",
-      startDate: this.date[0] || {},
-      endDate: this.date[1] || {},
+      startDate: this.date[0] ||"",
+      endDate: this.date[1] || "",
     };
     this.role.loading = true;
     this.userService.filterRole(p).subscribe(

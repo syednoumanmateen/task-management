@@ -14,14 +14,14 @@
     <div class="col-md mb-4">
         <label class="form-label">Feature Name</label>
         <select class="custom-select" [(ngModel)]="featureName">
-            <option *ngFor="let feature of feature.data" value="feature.featureName">{{feature.featureName}}
+            <option *ngFor="let feature of feature.data" [value]="feature.featureName">{{feature.featureName}}
             </option>
         </select>
     </div>
     <div class="col-md mb-4">
         <label class="form-label">Module Name</label>
         <select class="custom-select" [(ngModel)]="moduleName">
-            <option *ngFor="let feature of ['user','project','role','feature']" value="feature">
+            <option *ngFor="let feature of ['user','project','role','feature']" [value]="feature">
                 {{feature}}</option>
         </select>
     </div>
@@ -33,7 +33,11 @@
 </div>
 <!-- / Filters -->
 
-<div class="card">
+<h4 *ngIf="this.feature.data.length==0" class="card text-center px-5 py-2">
+	No Data Found
+</h4>
+
+<div class="card" *ngIf="this.feature.data.length!=0">
 
     <!-- Table controls -->
     <div class="card-body">

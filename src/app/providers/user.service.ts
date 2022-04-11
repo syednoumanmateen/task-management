@@ -54,9 +54,11 @@ export class UserService {
   }
 
   filterUser(params?: any) {
-    return this.ajax.getParamsObject("/user/filtered-list", params);
+    console.log(params);
+    
+    return this.ajax.getParamsObject("/user/filtered-list", params)
   }
-  
+
   // feature
   addFeature(params: any) {
     return this.ajax.post("/feature/add/", params);
@@ -132,8 +134,8 @@ export class UserService {
     return this.ajax.put("/project/remove/" + id);
   }
 
-  filterProject() {
-    return this.ajax.getParamsObject("/project/filtered-list");
+  filterProject(params?: any) {
+    return this.ajax.getParamsObject("/project/filtered-list", params);
   }
   // task
   addTask(id: any, params: any) {

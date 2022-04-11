@@ -1,6 +1,4 @@
 import { AddProjectComponent } from "./../add-project/add-project.component";
-import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
-import { ModalDismissReasons } from "@ng-bootstrap/ng-bootstrap";
 import { UserService } from "src/app/providers/user.service";
 import { AppService } from "src/app/providers/app.service";
 import { ToastrService } from "ngx-toastr";
@@ -95,19 +93,19 @@ export class ProjectComponent implements OnInit {
 
     let p = {
       projectName: this.projectName || "",
-      status:this.status||"",
-      startDate: this.date[0] || {},
-      endDate: this.date[1] || {},
+      status: this.status || "",
+      startDate: this.date[0] || "",
+      endDate: this.date[1] || "",
     };
     this.project.loading = true;
-    this.userService.filterRole(p).subscribe(
+    this.userService.filterProject(p).subscribe(
       (res: any) => {
         this.project.loading = false;
         this.project.data = res || {};
       },
       (err: any) => {
         this.project.loading = false;
-        this.toastr.error(err.error.message||err.message.message ||"");
+        this.toastr.error(err.error.message || err.message.message || "");
       }
     );
   }

@@ -16,6 +16,7 @@ import { ModalService } from "src/app/providers/modal.service";
 })
 export class ListComponent implements OnInit {
   @ViewChild("BlockMsg") BlockMsg!: ElementRef;
+  date: any;
   user: {
     data: any;
     loading: Boolean;
@@ -28,10 +29,9 @@ export class ListComponent implements OnInit {
     loading: Boolean;
   };
   status: Array<any>;
-  roleValue: string;
-  statusValue: string;
+  roleName: any;
+  statusValue: any;
   closeResult: any;
-  date: any;
   constructor(
     private userService: UserService,
     private router: Router,
@@ -40,6 +40,7 @@ export class ListComponent implements OnInit {
     private modalService: ModalService
   ) {
     this.appService.pageTitle = "userList - Task Management";
+    this.date = "";
     this.user = {
       data: {},
       loading: false,
@@ -52,8 +53,6 @@ export class ListComponent implements OnInit {
       loading: false,
     };
     this.status = this.getStatus();
-    this.roleValue = "";
-    this.statusValue = "";
   }
 
   ngOnInit(): void {
@@ -140,11 +139,13 @@ export class ListComponent implements OnInit {
   }
 
   onFilter() {
+    console.log(this.date);
+
     let p = {
-      role: this.roleValue || "",
+      role: this.roleName || "",
       status: this.statusValue || "",
-      startDate: this.date[0] || {},
-      endDate: this.date[1] || {},
+      startDate: this.date[0] || "",
+      endDate: this.date[1] || "",
     };
     this.user.loading = true;
     this.userService.filterUser(p).subscribe(
