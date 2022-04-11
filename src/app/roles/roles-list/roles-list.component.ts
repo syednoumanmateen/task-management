@@ -25,7 +25,8 @@ export class RolesListComponent implements OnInit {
     loading: Boolean;
   };
   closeResult: any;
-  roleFilter: string;
+  date: any;
+  roleName: any;
   constructor(
     private router: Router,
     private userService: UserService,
@@ -43,7 +44,6 @@ export class RolesListComponent implements OnInit {
       loading: false,
     };
     this.closeResult = "";
-    this.roleFilter = "";
   }
 
   ngOnInit(): void {
@@ -94,5 +94,27 @@ export class RolesListComponent implements OnInit {
   viewFeatures(data: any) {
     this.storage.setData("featureList", data || {});
     this.modalService.open(RoleFeaturesComponent);
+  }
+
+  onFilter() {
+    console.log("oidjkd");
+    console.log(this.date);
+
+    let p = {
+      roleName: this.roleName || "",
+      startDate: this.date[0] || {},
+      endDate: this.date[1] || {},
+    };
+    this.role.loading = true;
+    this.userService.filterRole(p).subscribe(
+      (res: any) => {
+        this.role.loading = false;
+        this.role.data = res || {};
+      },
+      (err: any) => {
+        this.role.loading = false;
+        this.toastr.error(err.error.message||err.message.message ||"");
+      }
+    );
   }
 }

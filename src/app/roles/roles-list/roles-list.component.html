@@ -9,11 +9,11 @@
 <div class="ui-bordered px-4 pt-4 mb-4 row">
     <div class="form-group col-md-4">
         <label class="form-label">Created On</label>
-        <custom-daterange-picker></custom-daterange-picker>
+        <custom-daterange-picker [(ngModel)]="date"></custom-daterange-picker>
     </div>
     <div class="col-md-6 mb-4">
         <label class="form-label">Role</label>
-        <select class="custom-select" [(ngModel)]="roleFilter">
+        <select class="custom-select" [(ngModel)]="roleName">
             <option *ngFor="let feature of ['user','project','role','feature']" value="feature">
                 {{feature}}</option>
         </select>
@@ -21,7 +21,7 @@
 
     <div class="col-md col-xl-2 mb-4">
         <label class="form-label d-none d-md-block">&nbsp;</label>
-        <button type="button" class="btn btn-secondary btn-block">Filter</button>
+        <button type="button" class="btn btn-secondary btn-block" (click)="onFilter()">Filter</button>
     </div>
 </div>
 <!-- / Filters -->

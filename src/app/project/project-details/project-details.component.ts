@@ -25,8 +25,8 @@ export class ProjectDetailsComponent implements OnInit {
   urlParams: any;
   closeResult: any;
   date: any;
-  summary: any;
-  assignee: any;
+  title: any;
+  assigne: any;
   reporter: any;
   status: any;
   comment: any;
@@ -76,8 +76,8 @@ export class ProjectDetailsComponent implements OnInit {
     this.appService.pageTitle = "projectDetails - Task Management";
     this.urlParams = {};
     this.date = "";
-    this.summary = "";
-    this.assignee = "";
+    this.title = "";
+    this.assigne = "";
     this.reporter = "";
     this.status = "";
     this.task = {
@@ -297,6 +297,31 @@ export class ProjectDetailsComponent implements OnInit {
       (err: any) => {
         this.editComment.loading = false;
         this.toastr.error(err.error.message);
+      }
+    );
+  }
+
+  onFilter() {
+    console.log("oidjkd");
+    console.log(this.date);
+
+    let p = {
+      title:  "",
+      assigne:"",
+      reporter:"",
+      status:this.status||"",
+      startDate: this.date[0] || {},
+      endDate: this.date[1] || {},
+    };
+    this.project.loading = true;
+    this.userService.filterRole(p).subscribe(
+      (res: any) => {
+        this.project.loading = false;
+        this.project.data = res || {};
+      },
+      (err: any) => {
+        this.project.loading = false;
+        this.toastr.error(err.error.message||err.message.message ||"");
       }
     );
   }

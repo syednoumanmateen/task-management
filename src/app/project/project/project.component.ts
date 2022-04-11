@@ -88,4 +88,27 @@ export class ProjectComponent implements OnInit {
       }
     );
   }
+
+  onFilter() {
+    console.log("oidjkd");
+    console.log(this.date);
+
+    let p = {
+      projectName: this.projectName || "",
+      status:this.status||"",
+      startDate: this.date[0] || {},
+      endDate: this.date[1] || {},
+    };
+    this.project.loading = true;
+    this.userService.filterRole(p).subscribe(
+      (res: any) => {
+        this.project.loading = false;
+        this.project.data = res || {};
+      },
+      (err: any) => {
+        this.project.loading = false;
+        this.toastr.error(err.error.message||err.message.message ||"");
+      }
+    );
+  }
 }

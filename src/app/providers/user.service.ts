@@ -56,6 +56,7 @@ export class UserService {
   filterUser(params?: any) {
     return this.ajax.getParamsObject("/user/filtered-list", params);
   }
+  
   // feature
   addFeature(params: any) {
     return this.ajax.post("/feature/add/", params);
@@ -76,6 +77,11 @@ export class UserService {
   deletFeature(id: any) {
     return this.ajax.delete("/feature/remove/" + id);
   }
+
+  filterFeature(params?: any) {
+    return this.ajax.getParamsObject("/feature/filter/", params);
+  }
+
   // role
   addRole(params: any) {
     return this.ajax.post("/role/add", params);
@@ -96,6 +102,11 @@ export class UserService {
   deletRole(id: any) {
     return this.ajax.delete("/role/remove/" + id);
   }
+
+  filterRole(params?: any) {
+    return this.ajax.getParamsObject("/role/filter", params);
+  }
+
   // project
   addProject(params: any) {
     return this.ajax.post("/project/add/", params);
@@ -146,7 +157,7 @@ export class UserService {
   }
 
   filterTask(params?: any) {
-    return this.ajax.getParamsObject("/user/filtered-list", params);
+    return this.ajax.getParamsObject("/project/filtered-tasklist/", params);
   }
   // comment
   addTaskComment(params: any) {
@@ -170,6 +181,6 @@ export class UserService {
   }
 
   filterTaskComment(params?: any) {
-    return this.ajax.getParamsObject("/user/filtered-list", params);
+    return this.ajax.getParamsObject("/project/filtered-taskComment/", params);
   }
 }

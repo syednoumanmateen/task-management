@@ -15,6 +15,9 @@ import { Router } from "@angular/router";
 export class FeaturesListComponent implements OnInit {
   userId: any;
   closeResult: any;
+  date: any;
+  featureName: any;
+  moduleName: any;
   feature: {
     loading: Boolean;
     data: any;
@@ -22,8 +25,6 @@ export class FeaturesListComponent implements OnInit {
   delete: {
     loading: Boolean;
   };
-  featureFilter: string;
-  moduleFilter: string;
 
   constructor(
     private userService: UserService,
@@ -41,8 +42,6 @@ export class FeaturesListComponent implements OnInit {
     this.delete = {
       loading: false,
     };
-    this.featureFilter = "";
-    this.moduleFilter = "";
   }
 
   ngOnInit(): void {
@@ -113,5 +112,28 @@ export class FeaturesListComponent implements OnInit {
     } else {
       return `with: ${reason}`;
     }
+  }
+
+  onFilter() {
+    console.log("kinj");
+    console.log(this.date);
+    
+    let p = {
+      featureName: this.featureName || "",
+      moduleName: this.moduleName || "",
+      startDate: this.date[0] || {},
+      endDate: this.date[1] || {},
+    };
+    this.feature.loading = true;
+    this.userService.filterFeature(p).subscribe(
+      (res: any) => {
+        this.feature.loading = false;
+        this.feature.data = res || {};
+      },
+      (err: any) => {
+        this.feature.loading = false;
+        this.toastr.error(err.error.message||err.message.message ||"");
+      }
+    );
   }
 }
