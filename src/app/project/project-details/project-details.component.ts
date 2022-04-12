@@ -82,7 +82,7 @@ export class ProjectDetailsComponent implements OnInit {
     this.date = "";
     this.title = "";
     this.assigne = "";
-    this.status = "";
+    this.status = "created";
     this.task = {
       data: {},
       loading: false,
@@ -217,6 +217,7 @@ export class ProjectDetailsComponent implements OnInit {
     let p = {
       description: this.quillData,
       attachment: this.quillAttachment,
+      status: this.status,
     };
     this.editTask.loading = true;
     this.userService.editTask(this.curTab._id, p).subscribe(
@@ -313,6 +314,31 @@ export class ProjectDetailsComponent implements OnInit {
     );
   }
 
+  totalTask() {
+    this.getTask();
+  }
+
+  createdTask() {
+    let p = {
+      status: "Created" || "",
+    };
+    this.filter(p);
+  }
+
+  inProgressTask() {
+    let p = {
+      status: "Progress" || "",
+    };
+    this.filter(p);
+  }
+
+  completedTask() {
+    let p = {
+      status: "Done" || "",
+    };
+    this.filter(p);
+  }
+
   onFilter() {
     let p = {
       title: this.title || "",
@@ -321,6 +347,10 @@ export class ProjectDetailsComponent implements OnInit {
       startDate: this.date[0] || "",
       endDate: this.date[1] || "",
     };
+    this.filter(p);
+  }
+
+  filter(p: any) {
     this.task.loading = true;
     this.userService.filterTask(p).subscribe(
       (res: any) => {

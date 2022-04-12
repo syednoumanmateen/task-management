@@ -9,16 +9,16 @@
 			Project Status
 		</div>
 		<div class="col-md">
-			<div type="button" class="btn btn-default ml-2">Total Tasks:
-				<span class="badge">{{task.data.length||0}}</span>
+			<div type="button" class="btn btn-default ml-2" (click)="totalTask()">Total Tasks:
+				<span class="badge">{{task.filter.length||0}}</span>
 			</div>
-			<div type="button" class="btn btn-primary ml-2">Tasks Created:
+			<div type="button" class="btn btn-primary ml-2" (click)="createdTask()">Tasks Created:
 				<span class="badge">{{statusCount.data.message.createdStatus}}</span>
 			</div>
-			<div type="button" class="btn btn-warning ml-2">Tasks In Progress:
+			<div type="button" class="btn btn-warning ml-2" (click)="inProgressTask()">Tasks In Progress:
 				<span class="badge">{{statusCount.data.message.progessStatus}}</span>
 			</div>
-			<div type="button" class="btn btn-success ml-2">Tasks Done:
+			<div type="button" class="btn btn-success ml-2" (click)="completedTask()">Tasks Done:
 				<span class="badge">{{statusCount.data.message.doneStatus}}</span>
 			</div>
 		</div>
@@ -80,7 +80,7 @@
 				<span *ngIf="project.loading">
 					<app-spinner></app-spinner>
 				</span>
-				<span *ngIf="!project.loading">{{task.data.length||0}}</span>
+				<span *ngIf="!project.loading">{{task.filter.length||0}}</span>
 			</div>
 		</div>
 
@@ -111,12 +111,21 @@
 			</ul>
 			<div class="col-sm-9 card">
 				<div class="card-body row">
-					<div class="col-md-10">
+					<div class="col-md-8">
 						<h4 class="text-capitalize font-weight-bold">{{curTab.title || "" }}</h4>
 					</div>
-					<div class="col-md-2">
-						<span><img src="assets/profile.png" class="ui-w-30 rounded-circle" [ngbTooltip]="" alt></span>
-						<span>{{curTab.member.name}}</span>
+					<div class="col-md-4">
+						<div class="ml-2"><span><img src="assets/profile.png" class="ui-w-30 rounded-circle" [ngbTooltip]=""
+									alt></span>
+							<span>{{curTab.member.name}}</span>
+						</div>
+						<div class="d-flex mt-2">
+							<select class="custom-select text-capitalize col-md-4 mx-2" [(ngModel)]="status">
+								<option class="text-capitalize" *ngFor="let status of ['created', 'progress','Done']" [value]="status">
+									{{status}}</option>
+							</select>
+							<button class="btn btn-primary" (click)="save()">save</button>
+						</div>
 					</div>
 				</div>
 				<div class="card-body px-3">
