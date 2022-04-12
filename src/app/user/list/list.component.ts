@@ -64,10 +64,6 @@ export class ListComponent implements OnInit {
   getStatus() {
     return [
       {
-        title: "Any",
-        value: "",
-      },
-      {
         title: "Active",
         value: "Active",
       },

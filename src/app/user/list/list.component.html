@@ -86,9 +86,6 @@
                         Role<i class="ion text-muted ml-2"></i>
                     </th>
                     <th class="text-nowrap cursor-pointer">
-                        Verified<i class="ion text-muted ml-2"></i>
-                    </th>
-                    <th class="text-nowrap cursor-pointer">
                         Status<i class="ion text-muted ml-2"></i>
                     </th>
                     <th class="text-center cursor-pointer">
@@ -110,14 +107,6 @@
                     <td class="align-middle">{{user.createdOn |date: 'dd/MM/yyyy'||""}}</td>
                     <td class="align-middle">
                         <span class="">{{user.role||""}}</span>
-                    </td>
-                    <td class="align-middle">
-                        <span
-                            *ngIf="(user.verification.emailConfirmation && user.verification.phoneConfirmation)=='Confirmed'"
-                            class="text-success">Confirmed</span>
-                        <span
-                            *ngIf="(user.verification.emailConfirmation && user.verification.phoneConfirmation)=='Pending'"
-                            class=" text-warning">Pending</span>
                     </td>
 
                     <td class="align-middle">

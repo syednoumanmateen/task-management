@@ -20,6 +20,10 @@ export class ViewComponent implements OnInit {
   psw: {
     loading: Boolean;
   };
+  edit: {
+    loading: Boolean;
+    data: any;
+  };
   resetPassword: any;
 
   constructor(
@@ -37,6 +41,10 @@ export class ViewComponent implements OnInit {
       loading: false,
     };
     this.psw = {
+      loading: false,
+    };
+    this.edit = {
+      data: {},
       loading: false,
     };
   }
@@ -80,5 +88,23 @@ export class ViewComponent implements OnInit {
 
   onEdit() {
     this.modalService.open(AddComponent);
+  }
+
+  blocked(data: any) {
+    let p = {
+      status: data,
+    };
+    this.edit.loading = true;
+    this.userService.editUser(this.urlParams.id, p).subscribe(
+      (res: any) => {
+        this.edit.loading = false;
+        this.toastr.success(res.message || "");
+        this.userView();
+      },
+      (err: any) => {
+        this.edit.loading = false;
+        this.toastr.error(err.error.message || "");
+      }
+    );
   }
 }

@@ -27,6 +27,7 @@ export class ProjectDetailsComponent implements OnInit {
   title: any;
   assigne: any;
   status: any;
+  statusFilter: any;
   comment: any;
   attachment: any;
   quillShow: Boolean;
@@ -82,7 +83,7 @@ export class ProjectDetailsComponent implements OnInit {
     this.date = "";
     this.title = "";
     this.assigne = "";
-    this.status = "created";
+    this.status = "Created";
     this.task = {
       data: {},
       loading: false,
@@ -130,6 +131,7 @@ export class ProjectDetailsComponent implements OnInit {
     });
     this.viewProject();
     this.userList();
+    this.getStatusCount(this.urlParams.id);
   }
 
   viewProject() {
@@ -155,9 +157,10 @@ export class ProjectDetailsComponent implements OnInit {
         this.task.loading = false;
         this.task.data = res || {};
         this.task.filter = res || {};
-        this.curTab = this.task.data[0];
+        if (!this.curTab) {
+          this.curTab = this.task.data[0];
+        }
         this.getComment();
-        this.getStatusCount(this.task.data[0].projectId);
       },
       (err: any) => {
         this.task.loading = false;
@@ -207,16 +210,15 @@ export class ProjectDetailsComponent implements OnInit {
   }
 
   getTaskTab(data: any) {
-    console.log(data);
     this.curTab = data;
-    this.quillData = data.description + data.attachment[0];
+    this.status = this.curTab.status;
+    this.quillData = data.description;
     this.getComment();
   }
 
   save() {
     let p = {
       description: this.quillData,
-      attachment: this.quillAttachment,
       status: this.status,
     };
     this.editTask.loading = true;
@@ -327,7 +329,7 @@ export class ProjectDetailsComponent implements OnInit {
 
   inProgressTask() {
     let p = {
-      status: "Progress" || "",
+      status: "progress" || "",
     };
     this.filter(p);
   }
@@ -343,7 +345,7 @@ export class ProjectDetailsComponent implements OnInit {
     let p = {
       title: this.title || "",
       assigne: this.assigne || "",
-      status: this.status || "",
+      status: this.statusFilter || "",
       startDate: this.date[0] || "",
       endDate: this.date[1] || "",
     };
@@ -352,7 +354,7 @@ export class ProjectDetailsComponent implements OnInit {
 
   filter(p: any) {
     this.task.loading = true;
-    this.userService.filterTask(p).subscribe(
+    this.userService.filterTask(this.urlParams.id, p).subscribe(
       (res: any) => {
         this.task.loading = false;
         this.task.data = res || {};

@@ -37,10 +37,10 @@ export class AddTaskComponent implements OnInit {
     data: any;
     loading: Boolean;
   };
-  time: {
-    from: any;
-    to: any;
-  };
+  // time: {
+  //   from: any;
+  //   to: any;
+  // };
   detailed: {
     user: any;
     loading: Boolean;
@@ -82,10 +82,10 @@ export class AddTaskComponent implements OnInit {
       data: {},
       loading: false,
     };
-    this.time = {
-      from: {},
-      to: {},
-    };
+    // this.time = {
+    //   from: {},
+    //   to: {},
+    // };
     this.detailed = {
       user: {},
       loading: false,
@@ -140,11 +140,9 @@ export class AddTaskComponent implements OnInit {
   valiadateForm() {
     let fg = this.formGroup.value;
     let msg = "";
-    if (!fg.project) {
-      msg = "Select The Project";
-    } else if (!fg.id.trim()) {
-      msg = "Enter The Parent Id";
-    } else if (!fg.type.trim()) {
+    console.log(fg);
+
+    if (!fg.type.trim()) {
       msg = "Enter The Type";
     } else if (!fg.effortType.trim()) {
       msg = "Enter The Effort Type";
@@ -160,9 +158,9 @@ export class AddTaskComponent implements OnInit {
       msg = "Select The End Date";
     } else if (fg.endDate.day < fg.startDate) {
       msg = "The Start Date Should Be Less Than End Date";
-    } else if (!fg.timeForm.hour && !fg.timeForm.minute) {
+    } else if (!fg.timeFrom.hour || !fg.timeFrom.minute) {
       msg = "Select The From Time";
-    } else if (!fg.timeTo.hour && !fg.timeTo.minute) {
+    } else if (!fg.timeTo.hour || !fg.timeTo.minute) {
       msg = "Select The To Time";
     } else {
       msg = "";
@@ -175,10 +173,13 @@ export class AddTaskComponent implements OnInit {
 
   onApiCall() {
     console.log(this.formGroup.value.timeFrom);
+    console.log(this.formGroup.value.timeTo);
     let v = this.valiadateForm();
     if (v.status == false) {
       this.toastr.error(v.msg);
     } else {
+      console.log("trig");
+
       this.userView();
     }
   }
@@ -190,7 +191,7 @@ export class AddTaskComponent implements OnInit {
 
   viewProject(url: any) {
     console.log(url);
-    
+
     let p = url;
     this.project.loading = true;
     this.userService.viewProject(p).subscribe(
@@ -198,7 +199,7 @@ export class AddTaskComponent implements OnInit {
         this.project.loading = false;
         this.project.data = res[0] || {};
         console.log(res[0]);
-        
+
         this.setValue();
       },
       (err: any) => {
@@ -255,7 +256,6 @@ export class AddTaskComponent implements OnInit {
   taskAddEdit() {
     let fg = this.formGroup.value;
     let p = {
-      parentId: fg.id,
       type: fg.type,
       title: fg.title,
       description: fg.description,
@@ -264,10 +264,13 @@ export class AddTaskComponent implements OnInit {
         id: fg.user,
         name: this.detailed.user.fName,
       },
-      fromDate: [],
-      toDate: [],
-      fromTime: this.time.from.hour + ":" + this.time.from.minute,
-      toTime: this.time.to.hour + ":" + this.time.to.minute,
+      fromDate:
+        fg.startDate.day + "/" + fg.startDate.month + "/" + fg.startDate.year,
+      toDate: fg.endDate.day + "/" + fg.endDate.month + "/" + fg.endDate.year,
+      fromTime: fg.timeFrom.hour + ":" + fg.timeFrom.minute,
+      // this.time.from.hour + ":" + this.time.from.minute,
+      toTime: fg.timeTo.hour + ":" + fg.timeTo.minute,
+      //  this.time.to.hour + ":" + this.time.to.minute,
       effort: {
         type: fg.effortType,
         value: fg.effortValue,

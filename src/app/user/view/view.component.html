@@ -10,6 +10,8 @@
         <div class="text-muted mb-2">Emp ID: {{user.data.userCode||""}}</div>
         <a class="btn btn-primary btn-sm" (click)="onEdit()">Edit</a>
     </div>
+    <span class="btn btn-danger mr-2" (click)="blocked('Blocked')">Blocked</span>
+    <span class="btn btn-primary mr-2" (click)="blocked('Active')">Active</span>
 </div>
 
 <div class="card">
@@ -102,16 +104,6 @@
     <div class="card-body">
         <table class="table user-view-table m-0">
             <tbody>
-                <tr>
-                    <td class="col-sm-4">verify user:</td>
-                    <span *ngIf="user.loading">
-                        <app-spinner></app-spinner>
-                    </span>
-                    <td *ngIf="!user.loading">
-                        <!-- <a class="btn btn-primary btn-sm" (click)="onAccept(Active)">accept</a>&nbsp;
-                        <a class="btn btn-danger btn-sm" (click)="onReject(Inactive)">Reject</a>&nbsp; -->
-                    </td>
-                </tr>
                 <tr *ngIf="user.data.role=='Admin'">
                     <td class="col-sm-4">Reset Password:</td>
                     <td>
@@ -138,7 +130,6 @@
                     <td class="col-sm-4">Status:</td>
                     <td>
                         <span class="badge badge-outline-success" *ngIf="user.data.status=='Active'">Active</span>
-                        <span class="badge badge-outline-default" *ngIf="user.data.status=='Created'">Created</span>
                         <span class="badge badge-outline-danger" *ngIf="user.data.status=='Blocked'">Blocked</span>
                     </td>
                 </tr>

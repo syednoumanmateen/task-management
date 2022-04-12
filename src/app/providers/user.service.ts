@@ -158,8 +158,11 @@ export class UserService {
     return this.ajax.delete("/project/remove-tasklist/" + id);
   }
 
-  filterTask(params?: any) {
-    return this.ajax.getParamsObject("/project/filtered-tasklist/", params);
+  filterTask(id: any, params?: any) {
+    return this.ajax.getParamsObject(
+      "/project/filtered-tasklist/" + id,
+      params
+    );
   }
 
   countStatus(id: any) {
