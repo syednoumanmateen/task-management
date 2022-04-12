@@ -1,5 +1,3 @@
-import { ModalDismissReasons } from "@ng-bootstrap/ng-bootstrap";
-import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { ToastrService } from "ngx-toastr";
 import { UserService } from "src/app/providers/user.service";
 import { ActivatedRoute, Router } from "@angular/router";
@@ -219,6 +217,7 @@ export class ProjectDetailsComponent implements OnInit {
   save() {
     let p = {
       description: this.quillData,
+      attachment: this.quillAttachment,
       status: this.status,
     };
     this.editTask.loading = true;
