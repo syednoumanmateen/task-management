@@ -183,8 +183,9 @@ export class AddComponent implements OnInit {
   }
 
   getRoles() {
+    let p = {};
     this.role.loading = true;
-    this.userService.roleList().subscribe(
+    this.userService.roleList(p).subscribe(
       (res: any) => {
         this.role.loading = false;
         this.role.data = res || "";

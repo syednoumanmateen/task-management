@@ -210,8 +210,9 @@ export class AddTaskComponent implements OnInit {
   }
 
   getProject() {
+    let p = {};
     this.project.loading = true;
-    this.userService.projectList().subscribe(
+    this.userService.projectList(p).subscribe(
       (res: any) => {
         this.project.loading = false;
         this.project.data = res || {};
@@ -224,8 +225,9 @@ export class AddTaskComponent implements OnInit {
   }
 
   userList() {
+    let p = {};
     this.user.loading = true;
-    this.userService.listUser().subscribe(
+    this.userService.listUser(p).subscribe(
       (res: any) => {
         this.user.loading = false;
         this.user.data = res || {};

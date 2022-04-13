@@ -126,7 +126,7 @@
 										[ngClass]="(status=='Done')?'bg-success':(status=='progress')?'bg-warning':'bg-primary'">{{status}}</span>
 								</option>
 							</select>
-							<button class="btn btn-primary" (click)="save()">save</button>
+							<button class="btn btn-primary" (click)="save($event)">save</button>
 						</div>
 					</div>
 				</div>
@@ -135,11 +135,11 @@
 					<div class="row no-gutters">
 						<div class="col-md-12 col-lg-12 col-xl-12">
 							<input *ngIf="!quillShow" type="text" readOnly class="form-control text-capitalize"
-								placeholder="Add Description" (click)="onInputClick()">
+								placeholder="Add Description" (click)="onInputClick('description')">
 							<quill-editor placeholder="Add Description" [(ngModel)]="quillData" *ngIf="quillShow"></quill-editor>
 							<div class="mt-3" *ngIf="quillShow">
-								<a class="btn btn-primary" (click)="save()">Save</a>&nbsp;<a class="btn btn-default"
-									(click)="Cancel()">Cancel</a>
+								<a class="btn btn-primary" (click)="save('description')">Save</a>&nbsp;<a class="btn btn-default"
+									(click)="Cancel('description')">Cancel</a>
 							</div>
 						</div>
 						<div class="m-2" [innerHtml]="curTab.description"></div>
@@ -151,20 +151,13 @@
 					<h5>Attached files</h5>
 					<div class="row no-gutters">
 						<div class="col-md-12 col-lg-12 col-xl-12">
-							<div class="media-body">
-								<span *ngIf="task.loading">
-									<app-spinner></app-spinner>
-								</span>
-								<div class="project-attachment-filename" *ngIf="!task.loading">
-									<quill-editor placeholder="Add Description" [(ngModel)]="quillAttachment">
-									</quill-editor>
-
-								</div>
-								<div class="mt-3">
-									<a class="btn btn-primary" (click)="save()">Save</a>&nbsp;<a class="btn btn-default"
-										(click)="Cancel()">Cancel</a>
-								</div>
-
+							<input *ngIf="!quilAttachmentShow" type="text" readOnly class="form-control text-capitalize"
+								placeholder="Add Description" (click)="onInputClick('attachment')">
+							<quill-editor placeholder="Add Description" [(ngModel)]="quillAttachment" *ngIf="quilAttachmentShow">
+							</quill-editor>
+							<div class="mt-3" *ngIf="quilAttachmentShow">
+								<a class="btn btn-primary" (click)="save('attachment')">Save</a>&nbsp;<a class="btn btn-default"
+									(click)="Cancel('attachment')">Cancel</a>
 							</div>
 						</div>
 						<div class="m-2 w-50 img" [innerHTML]="curTab.attachment[0]"></div>
@@ -182,12 +175,12 @@
 								</span>
 								<span class="col-sm-12 mr-5">
 									<input *ngIf="!quillcommentShow" type="text" readOnly class="form-control w-98" placeholder="Comment"
-										(click)="onInputClickComment()">
+										(click)="onInputClick('comment')">
 									<quill-editor [(ngModel)]="comment" *ngIf="quillcommentShow"></quill-editor>
 
 									<div class="mt-3" *ngIf="quillcommentShow">
 										<a class="btn btn-primary" (click)="postComment()">Send</a>&nbsp;<a class="btn btn-default"
-											(click)="Cancel()">Cancel</a>
+											(click)="Cancel('comment')">Cancel</a>
 									</div>
 								</span>
 							</div>

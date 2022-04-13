@@ -18,6 +18,10 @@ export class ListComponent implements OnInit {
   @ViewChild("BlockMsg") BlockMsg!: ElementRef;
   date: any;
   fName: any;
+  page: number;
+  count: number;
+  totalPages: number;
+  countPages: number;
   user: {
     data: any;
     loading: Boolean;
@@ -42,6 +46,10 @@ export class ListComponent implements OnInit {
   ) {
     this.appService.pageTitle = "userList - Task Management";
     this.date = "";
+    this.page = 1;
+    this.count = 10;
+    this.totalPages = 0;
+    this.countPages = 0;
     this.user = {
       data: {},
       loading: false,
@@ -57,7 +65,7 @@ export class ListComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.userList();
+    this.userCountList();
     this.getRoles();
   }
 
@@ -82,9 +90,34 @@ export class ListComponent implements OnInit {
     this.modalService.open(AddComponent);
   }
 
-  userList() {
+  pageChanges() {
+    this.userList();
+  }
+
+  userCountList() {
     this.user.loading = true;
-    this.userService.listUser().subscribe(
+    this.userService.listCountUser().subscribe(
+      (res: any) => {
+        this.user.loading = false;
+        // this.user.data = res || 0;
+        this.totalPages = res;
+        this.countPages = Math.ceil(this.totalPages / this.count);
+        this.userList();
+      },
+      (err: any) => {
+        this.user.loading = false;
+        this.toastr.error(err.error.message || "");
+      }
+    );
+  }
+
+  userList() {
+    let p = {
+      page: this.page,
+      count: this.count,
+    };
+    this.user.loading = true;
+    this.userService.listUser(p).subscribe(
       (res: any) => {
         this.user.loading = false;
         this.user.data = res || {};
@@ -122,8 +155,9 @@ export class ListComponent implements OnInit {
   }
 
   getRoles() {
+    let p = {};
     this.role.loading = true;
-    this.userService.roleList().subscribe(
+    this.userService.roleList(p).subscribe(
       (res: any) => {
         this.role.loading = false;
         this.role.data = res || "";
@@ -136,8 +170,6 @@ export class ListComponent implements OnInit {
   }
 
   onFilter() {
-    console.log(this.date);
-
     let p = {
       role: this.roleName || "",
       // fName:this.fName||"",

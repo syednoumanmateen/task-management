@@ -75,8 +75,9 @@ export class AddProjectComponent implements OnInit {
   }
 
   userList() {
+    let p = {};
     this.user.loading = true;
-    this.userService.listUser().subscribe(
+    this.userService.listUser(p).subscribe(
       (res: any) => {
         this.user.loading = false;
         this.user.data = res || {};

@@ -34,7 +34,7 @@
 <!-- / Filters -->
 
 <h4 *ngIf="this.feature.data.length==0" class="card text-center px-5 py-2">
-	No Data Found
+    No Data Found
 </h4>
 
 <div class="card" *ngIf="this.feature.data.length!=0">
@@ -111,11 +111,11 @@
 
         <div class="row">
             <div class="col-sm text-sm-left text-center pt-3">
-                <span class="text-muted"> Total Pages:10</span>
+                <span class="text-muted"> Total Pages:{{countPages}}</span>
             </div>
             <div class="col-sm pt-3">
-                <ngb-pagination size="sm" [collectionSize]="feature.data.length" [pageSize]="10" [page]="10"
-                    class="d-flex justify-content-center justify-content-sm-end m-0">
+                <ngb-pagination size="sm" [collectionSize]="totalPages" [pageSize]="count" [(page)]="page"
+                    (pageChange)="pageChanges()" class="d-flex justify-content-center justify-content-sm-end m-0">
                 </ngb-pagination>
             </div>
         </div>

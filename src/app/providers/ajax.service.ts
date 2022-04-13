@@ -11,9 +11,9 @@ export class AjaxService {
     this.baseUrl = "http://localhost:3000";
   }
 
-  get(url: any, params?: any) {
-    return this.http.get<any>(this.baseUrl + url, params);
-  }
+  // get(url: any, params?: any) {
+  //   return this.http.get<any>(this.baseUrl + url, params);
+  // }
 
   post(url: any, params?: any) {
     return this.http.post(this.baseUrl + url, params);
@@ -27,7 +27,7 @@ export class AjaxService {
     return this.http.delete<any>(this.baseUrl + url, params);
   }
 
-  getParamsObject(url: any, params?: any) {
+  get(url: any, params?: any) {
     let queryParams = new HttpParams({ fromObject: params });
     queryParams = queryParams.append("params", params);
     return this.http.get<any>(this.baseUrl + url, { params: queryParams });

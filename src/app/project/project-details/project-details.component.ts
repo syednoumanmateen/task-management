@@ -29,6 +29,7 @@ export class ProjectDetailsComponent implements OnInit {
   comment: any;
   attachment: any;
   quillShow: Boolean;
+  quilAttachmentShow: Boolean;
   quillcommentShow: Boolean;
   quillData: String;
   quillAttachment: any;
@@ -108,6 +109,7 @@ export class ProjectDetailsComponent implements OnInit {
       loading: false,
     };
     this.quillShow = false;
+    this.quilAttachmentShow = false;
     this.quillcommentShow = false;
     this.project = {
       data: {},
@@ -194,8 +196,9 @@ export class ProjectDetailsComponent implements OnInit {
   }
 
   userList() {
+    let p={}
     this.user.loading = true;
-    this.userService.listUser().subscribe(
+    this.userService.listUser(p).subscribe(
       (res: any) => {
         this.user.loading = false;
         this.user.data = res || {};
@@ -214,7 +217,7 @@ export class ProjectDetailsComponent implements OnInit {
     this.getComment();
   }
 
-  save() {
+  save(data: any) {
     let p = {
       description: this.quillData,
       attachment: this.quillAttachment,
@@ -227,6 +230,7 @@ export class ProjectDetailsComponent implements OnInit {
         this.toastr.success(res.message);
         this.quillData = "";
         this.getTask();
+        this.Cancel(data);
       },
       (err: any) => {
         this.editTask.loading = false;
@@ -235,17 +239,24 @@ export class ProjectDetailsComponent implements OnInit {
     );
   }
 
-  Cancel() {
-    this.quillShow = false;
-    this.quillcommentShow = false;
+  Cancel(data: any) {
+    if (data == "description") {
+      this.quillShow = false;
+    } else if (data == "attachment") {
+      this.quilAttachmentShow = false;
+    } else {
+      this.quillcommentShow = false;
+    }
   }
 
-  onInputClick() {
-    this.quillShow = this.quillShow == false ? true : false;
-  }
-
-  onInputClickComment() {
-    this.quillcommentShow = this.quillcommentShow == false ? true : false;
+  onInputClick(data: any) {
+    if (data == "description") {
+      this.quillShow = this.quillShow == false ? true : false;
+    } else if (data == "attachment") {
+      this.quilAttachmentShow = this.quilAttachmentShow == false ? true : false;
+    } else {
+      this.quillcommentShow = this.quillcommentShow == false ? true : false;
+    }
   }
 
   postComment() {
@@ -261,8 +272,9 @@ export class ProjectDetailsComponent implements OnInit {
         this.addComment.loading = false;
         this.comment = "";
         this.attachment = "";
-        this.toastr.success(res.message);
+        this.toastr.success(res.data.message);
         this.getComment();
+        this.Cancel("comment");
       },
       (err: any) => {
         this.addComment.loading = false;

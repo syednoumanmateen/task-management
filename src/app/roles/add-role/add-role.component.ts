@@ -100,8 +100,9 @@ export class AddRoleComponent implements OnInit {
   }
 
   getFeatures() {
+    let p = {};
     this.role.loading = true;
-    this.userService.featureList().subscribe(
+    this.userService.featureList(p).subscribe(
       (res: any) => {
         this.role.loading = false;
         if (this.urlParams.id) {

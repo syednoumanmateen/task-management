@@ -17,6 +17,10 @@ export class ProjectComponent implements OnInit {
   date: any;
   projectName: any;
   status: any;
+  page: number;
+  count: number;
+  totalPages: number;
+  countPages: number;
   project: {
     data: any;
     loading: Boolean;
@@ -36,6 +40,10 @@ export class ProjectComponent implements OnInit {
     this.date = "";
     this.projectName = "";
     this.status = "";
+    this.page = 1;
+    this.count = 10;
+    this.totalPages = 0;
+    this.countPages = 0;
     this.project = {
       data: {},
       loading: false,
@@ -47,11 +55,15 @@ export class ProjectComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getProject();
+    this.getCountProject();
   }
 
   onCreateProject() {
-    this.modalService.open(AddProjectComponent);    
+    this.modalService.open(AddProjectComponent);
+  }
+
+  pageChanges() {
+    this.getProject();
   }
 
   onView(id: any) {
@@ -76,9 +88,30 @@ export class ProjectComponent implements OnInit {
     );
   }
 
-  getProject() {
+  getCountProject() {
     this.project.loading = true;
-    this.userService.projectList().subscribe(
+    this.userService.projectCountList().subscribe(
+      (res: any) => {
+        this.project.loading = false;
+        // this.project.data = res || 0;
+        this.totalPages = res;
+        this.countPages = Math.ceil(this.totalPages / this.count);
+        this.getProject();
+      },
+      (err: any) => {
+        this.project.loading = false;
+        this.toastr.error(err.error.message || "");
+      }
+    );
+  }
+
+  getProject() {
+    let p = {
+      page: this.page,
+      count: this.count,
+    };
+    this.project.loading = true;
+    this.userService.projectList(p).subscribe(
       (res: any) => {
         this.project.loading = false;
         this.project.data = res || {};

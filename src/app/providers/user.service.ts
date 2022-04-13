@@ -19,8 +19,12 @@ export class UserService {
     return this.ajax.post("/user/add", params);
   }
 
-  listUser() {
-    return this.ajax.get("/user/list/");
+  listUser(params: any) {
+    return this.ajax.get("/user/list/", params);
+  }
+
+  listCountUser() {
+    return this.ajax.get("/user/count");
   }
 
   viewUser(id: any) {
@@ -56,7 +60,7 @@ export class UserService {
   filterUser(params?: any) {
     console.log(params);
 
-    return this.ajax.getParamsObject("/user/filtered-list", params);
+    return this.ajax.get("/user/filtered-list", params);
   }
 
   // feature
@@ -64,8 +68,8 @@ export class UserService {
     return this.ajax.post("/feature/add/", params);
   }
 
-  featureList() {
-    return this.ajax.get("/feature/list/");
+  featureList(params: any) {
+    return this.ajax.get("/feature/list/", params);
   }
 
   viewFeature(id: any) {
@@ -80,8 +84,12 @@ export class UserService {
     return this.ajax.delete("/feature/remove/" + id);
   }
 
+  featureCount() {
+    return this.ajax.get("/feature/count");
+  }
+
   filterFeature(params?: any) {
-    return this.ajax.getParamsObject("/feature/filter/", params);
+    return this.ajax.get("/feature/filter/", params);
   }
 
   // role
@@ -89,8 +97,12 @@ export class UserService {
     return this.ajax.post("/role/add", params);
   }
 
-  roleList() {
-    return this.ajax.get("/role/list/");
+  roleList(params: any) {
+    return this.ajax.get("/role/list/", params);
+  }
+
+  roleCountList() {
+    return this.ajax.get("/role/count");
   }
 
   viewRole(id: any) {
@@ -106,7 +118,7 @@ export class UserService {
   }
 
   filterRole(params?: any) {
-    return this.ajax.getParamsObject("/role/filter", params);
+    return this.ajax.get("/role/filter", params);
   }
 
   // project
@@ -114,8 +126,12 @@ export class UserService {
     return this.ajax.post("/project/add/", params);
   }
 
-  projectList() {
-    return this.ajax.get("/project/list/");
+  projectList(params: any) {
+    return this.ajax.get("/project/list/", params);
+  }
+
+  projectCountList() {
+    return this.ajax.get("/project/count");
   }
 
   viewProject(id: any) {
@@ -135,7 +151,7 @@ export class UserService {
   }
 
   filterProject(params?: any) {
-    return this.ajax.getParamsObject("/project/filtered-list", params);
+    return this.ajax.get("/project/filtered-list", params);
   }
   // task
   addTask(id: any, params: any) {
@@ -159,10 +175,7 @@ export class UserService {
   }
 
   filterTask(id: any, params?: any) {
-    return this.ajax.getParamsObject(
-      "/project/filtered-tasklist/" + id,
-      params
-    );
+    return this.ajax.get("/project/filtered-tasklist/" + id, params);
   }
 
   countStatus(id: any) {
@@ -190,6 +203,6 @@ export class UserService {
   }
 
   filterTaskComment(params?: any) {
-    return this.ajax.getParamsObject("/project/filtered-taskComment/", params);
+    return this.ajax.get("/project/filtered-taskComment/", params);
   }
 }

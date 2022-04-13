@@ -18,6 +18,10 @@ export class FeaturesListComponent implements OnInit {
   date: any;
   featureName: any;
   moduleName: any;
+  count: number;
+  page: number;
+  totalPages: number;
+  countPages: number;
   feature: {
     loading: Boolean;
     data: any;
@@ -37,6 +41,10 @@ export class FeaturesListComponent implements OnInit {
     this.appService.pageTitle = "list of features - Task Management";
     this.userId = "";
     this.date = "";
+    this.count = 10;
+    this.totalPages = 0;
+    this.countPages = 0;
+    this.page = 1;
     this.feature = {
       loading: false,
       data: {},
@@ -48,16 +56,41 @@ export class FeaturesListComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getFeatures();
+    this.getCountFeatures();
   }
 
   addFeature() {
     this.open(AddFeatureComponent);
   }
 
-  getFeatures() {
+  pageChanges() {
+    this.getFeatures();
+  }
+
+  getCountFeatures() {
     this.feature.loading = true;
-    this.userService.featureList().subscribe(
+    this.userService.featureCount().subscribe(
+      (res: any) => {
+        this.feature.loading = false;
+        // this.feature.data = res || 0;
+        this.totalPages = res;
+        this.countPages = Math.ceil(this.totalPages / this.count);
+        this.getFeatures();
+      },
+      (err: any) => {
+        this.feature.loading = false;
+        this.toastr.error(err.error.message || "");
+      }
+    );
+  }
+
+  getFeatures() {
+    let p = {
+      page: this.page,
+      count: this.count,
+    };
+    this.feature.loading = true;
+    this.userService.featureList(p).subscribe(
       (res: any) => {
         this.feature.loading = false;
         this.feature.data = res || {};
@@ -119,9 +152,6 @@ export class FeaturesListComponent implements OnInit {
   }
 
   onFilter() {
-    console.log("kinj");
-    console.log(this.date);
-
     let p = {
       feature: this.featureName || "",
       module: this.moduleName || "",

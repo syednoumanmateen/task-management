@@ -24,6 +24,10 @@ export class RolesListComponent implements OnInit {
   closeResult: any;
   date: any;
   roleName: any;
+  page: number;
+  count: number;
+  totalPages: number;
+  countPages: number;
   constructor(
     private router: Router,
     private userService: UserService,
@@ -41,23 +45,52 @@ export class RolesListComponent implements OnInit {
       loading: false,
     };
     this.closeResult = "";
-    this.date=""
+    this.date = "";
+    this.page = 1;
+    this.count = 10;
+    this.totalPages = 0;
+    this.countPages = 0;
   }
 
   ngOnInit(): void {
-    this.getRoles();
+    this.getCountRoles();
   }
 
   addRole() {
     this.modalService.open(AddRoleComponent);
   }
 
-  getRoles() {
+  pageChanges() {
+    this.getRoles();
+  }
+
+  getCountRoles() {
     this.role.loading = true;
-    this.userService.roleList().subscribe(
+    this.userService.roleCountList().subscribe(
       (res: any) => {
         this.role.loading = false;
-        this.role.data = res || "";
+        // this.role.data = res || 0;
+        this.totalPages = res;
+        this.countPages = Math.ceil(this.totalPages / this.count);
+        this.getRoles();
+      },
+      (err: any) => {
+        this.role.loading = false;
+        this.toastr.error(err.error.message || "");
+      }
+    );
+  }
+
+  getRoles() {
+    let p = {
+      page: this.page,
+      count: this.count,
+    };
+    this.role.loading = true;
+    this.userService.roleList(p).subscribe(
+      (res: any) => {
+        this.role.loading = false;
+        this.role.data = res || {};
       },
       (err: any) => {
         this.role.loading = false;
@@ -95,12 +128,9 @@ export class RolesListComponent implements OnInit {
   }
 
   onFilter() {
-    console.log("oidjkd");
-    console.log(this.roleName);
-
     let p = {
       role: this.roleName || "",
-      startDate: this.date[0] ||"",
+      startDate: this.date[0] || "",
       endDate: this.date[1] || "",
     };
     this.role.loading = true;
@@ -111,7 +141,7 @@ export class RolesListComponent implements OnInit {
       },
       (err: any) => {
         this.role.loading = false;
-        this.toastr.error(err.error.message||err.message.message ||"");
+        this.toastr.error(err.error.message || err.message.message || "");
       }
     );
   }
