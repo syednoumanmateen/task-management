@@ -14,7 +14,7 @@
     <div class="col-md-6 mb-4">
         <label class="form-label">Role</label>
         <select class="custom-select" [(ngModel)]="roleName">
-            <option *ngFor="let r of role.data" [value]="r.roleName">{{r.roleName}}
+            <option *ngFor="let r of role.filter" [value]="r.roleName">{{r.roleName}}
             </option>
         </select>
     </div>

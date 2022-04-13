@@ -58,8 +58,6 @@ export class UserService {
   }
 
   filterUser(params?: any) {
-    console.log(params);
-
     return this.ajax.get("/user/filtered-list", params);
   }
 
@@ -160,6 +158,10 @@ export class UserService {
 
   taskList(id: any) {
     return this.ajax.get("/project/tasklist/" + id);
+  }
+
+  taskCountList(id: any) {
+    return this.ajax.get("/project/tasklist/count/" + id);
   }
 
   viewTask(id: any) {

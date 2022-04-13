@@ -25,6 +25,7 @@ export class ListComponent implements OnInit {
   user: {
     data: any;
     loading: Boolean;
+    count: any;
   };
   role: {
     data: any;
@@ -53,6 +54,7 @@ export class ListComponent implements OnInit {
     this.user = {
       data: {},
       loading: false,
+      count: {},
     };
     this.role = {
       data: {},
@@ -91,7 +93,12 @@ export class ListComponent implements OnInit {
   }
 
   pageChanges() {
-    this.userList();
+    if (!this.user.count) {
+      this.userList();
+    } else {
+      this.filter();
+      console.log("hello");
+    }
   }
 
   userCountList() {
@@ -137,8 +144,6 @@ export class ListComponent implements OnInit {
     });
   }
 
-  onBlock(id: any) {}
-
   onDelete(id: any) {
     this.delete.loading = true;
     this.userService.deleteUser(id).subscribe(
@@ -172,20 +177,46 @@ export class ListComponent implements OnInit {
   onFilter() {
     let p = {
       role: this.roleName || "",
-      // fName:this.fName||"",
       status: this.statusValue || "",
       startDate: this.date[0] || "",
       endDate: this.date[1] || "",
+      type: "count",
     };
     this.user.loading = true;
     this.userService.filterUser(p).subscribe(
       (res: any) => {
         this.user.loading = false;
-        this.user.data = res || {};
+        this.user.count = res[0].count;
+        this.totalPages = res[0].count;
+        this.countPages = Math.ceil(this.totalPages / this.count);
+        this.filter();
       },
       (err: any) => {
         this.user.loading = false;
         this.toastr.error(err.message.message || err.error.message || "");
+      }
+    );
+  }
+
+  filter() {
+    let p = {
+      page: this.page,
+      count: this.count,
+      role: this.roleName || "",
+      status: this.statusValue || "",
+      startDate: this.date[0] || "",
+      endDate: this.date[1] || "",
+      type: "list",
+    };
+    this.user.loading = true;
+    this.userService.filterUser(p).subscribe(
+      (res: any) => {
+        this.user.loading = false;
+        this.user.data = res || [];
+      },
+      (err: any) => {
+        this.user.loading = false;
+        this.toastr.error(err.error.message || err.message.message || "");
       }
     );
   }

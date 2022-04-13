@@ -33,6 +33,8 @@ export class ProjectDetailsComponent implements OnInit {
   quillcommentShow: Boolean;
   quillData: String;
   quillAttachment: any;
+  page: number;
+  count: number;
   task: {
     data: any;
     loading: Boolean;
@@ -83,6 +85,8 @@ export class ProjectDetailsComponent implements OnInit {
     this.title = "";
     this.assigne = "";
     this.status = "Created";
+    this.page = 1;
+    this.count = 10;
     this.task = {
       data: {},
       loading: false,
@@ -140,10 +144,31 @@ export class ProjectDetailsComponent implements OnInit {
       (res: any) => {
         this.project.loading = false;
         this.project.data = res[0] || [];
-        this.getTask();
+        this.getCountTask();
       },
       (err: any) => {
         this.project.loading = false;
+        this.toastr.error(err.error.message || "");
+      }
+    );
+  }
+
+  getCountTask() {
+    this.task.loading = true;
+    let p = this.project.data._id;
+    this.userService.taskCountList(p).subscribe(
+      (res: any) => {
+        this.task.loading = false;
+        this.task.data = res || {};
+        this.task.filter = res || {};
+        if (!this.curTab) {
+          this.curTab = this.task.data[0];
+        }
+        this.getTask();
+        this.getComment();
+      },
+      (err: any) => {
+        this.task.loading = false;
         this.toastr.error(err.error.message || "");
       }
     );
@@ -196,7 +221,7 @@ export class ProjectDetailsComponent implements OnInit {
   }
 
   userList() {
-    let p={}
+    let p = {};
     this.user.loading = true;
     this.userService.listUser(p).subscribe(
       (res: any) => {
@@ -229,7 +254,7 @@ export class ProjectDetailsComponent implements OnInit {
         this.editTask.loading = false;
         this.toastr.success(res.message);
         this.quillData = "";
-        this.getTask();
+        this.getCountTask();
         this.Cancel(data);
       },
       (err: any) => {
@@ -328,26 +353,35 @@ export class ProjectDetailsComponent implements OnInit {
   }
 
   totalTask() {
-    this.getTask();
+    this.getCountTask();
   }
 
   createdTask() {
+    this.onFilter();
     let p = {
       status: "Created" || "",
+      page: this.page,
+      count: this.count,
     };
     this.filter(p);
   }
 
   inProgressTask() {
+    this.onFilter();
     let p = {
       status: "progress" || "",
+      page: this.page,
+      count: this.count,
     };
     this.filter(p);
   }
 
   completedTask() {
+    this.onFilter();
     let p = {
       status: "Done" || "",
+      page: this.page,
+      count: this.count,
     };
     this.filter(p);
   }
@@ -359,6 +393,32 @@ export class ProjectDetailsComponent implements OnInit {
       status: this.statusFilter || "",
       startDate: this.date[0] || "",
       endDate: this.date[1] || "",
+      type: "count",
+    };
+    this.task.loading = true;
+    this.userService.filterTask(this.urlParams.id, p).subscribe(
+      (res: any) => {
+        this.task.loading = false;
+        this.task.data = res || {};
+        this.params();
+      },
+      (err: any) => {
+        this.task.loading = false;
+        this.toastr.error(err.error.message || err.message.message || "");
+      }
+    );
+  }
+
+  params() {
+    let p = {
+      page: this.page,
+      count: this.count,
+      title: this.title || "",
+      assigne: this.assigne || "",
+      status: this.statusFilter || "",
+      startDate: this.date[0] || "",
+      endDate: this.date[1] || "",
+      type: "list",
     };
     this.filter(p);
   }

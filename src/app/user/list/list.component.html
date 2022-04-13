@@ -19,7 +19,7 @@
         </select>
     </div>
     <!-- <div class="col-md mb-4">
-        <label class="form-label">Name</label>
+        <label class="form-label">User Name</label>
         <input type="text" class="form-control" [(ngModel)]="fName">
     </div> -->
     <div class="col-md mb-4">
@@ -36,11 +36,11 @@
 </div>
 <!-- / Filters -->
 
-<h4 *ngIf="this.user.data.length==0" class="card text-center px-5 py-2">
+<h4 *ngIf="user.data.length==0" class="card text-center px-5 py-2">
     No Data Found
 </h4>
 
-<div class="card" *ngIf="this.user.data.length!=0">
+<div class="card" *ngIf="user.data.length!=0">
 
     <!-- Table controls -->
     <div class="card-body">
@@ -128,14 +128,14 @@
     <div class="card-body py-0">
         <div class="row">
             <div class="col-sm text-sm-left text-center pt-3">
-              <span class="text-muted"> Total Pages:{{countPages}}</span>
-          </div>
-          <div class="col-sm pt-3">
-              <ngb-pagination size="sm" [collectionSize]="totalPages" [pageSize]="count" [(page)]="page"
-                  (pageChange)="pageChanges()" class="d-flex justify-content-center justify-content-sm-end m-0">
-              </ngb-pagination>
-          </div>
-          </div>
+                <span class="text-muted"> Total Pages:{{countPages}}</span>
+            </div>
+            <div class="col-sm pt-3">
+                <ngb-pagination size="sm" [collectionSize]="totalPages" [pageSize]="count" [(page)]="page"
+                    (pageChange)="pageChanges()" class="d-flex justify-content-center justify-content-sm-end m-0">
+                </ngb-pagination>
+            </div>
+        </div>
     </div>
     <!-- / Pagination -->
 </div>

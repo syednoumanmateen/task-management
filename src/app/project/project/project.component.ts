@@ -25,6 +25,7 @@ export class ProjectComponent implements OnInit {
     data: any;
     loading: Boolean;
     filter: any;
+    count: any;
   };
   delete: {
     loading: Boolean;
@@ -48,6 +49,7 @@ export class ProjectComponent implements OnInit {
       data: {},
       loading: false,
       filter: {},
+      count: {},
     };
     this.delete = {
       loading: false,
@@ -63,7 +65,11 @@ export class ProjectComponent implements OnInit {
   }
 
   pageChanges() {
-    this.getProject();
+    if (!this.project.count) {
+      this.getProject();
+    } else {
+      this.filter();
+    }
   }
 
   onView(id: any) {
@@ -130,12 +136,39 @@ export class ProjectComponent implements OnInit {
       status: this.status || "",
       startDate: this.date[0] || "",
       endDate: this.date[1] || "",
+      type: "count",
     };
     this.project.loading = true;
     this.userService.filterProject(p).subscribe(
       (res: any) => {
         this.project.loading = false;
-        this.project.data = res || {};
+        this.project.count = res[0].count;
+        this.totalPages = res[0].count;
+        this.countPages = Math.ceil(this.totalPages / this.count);
+        this.filter();
+      },  
+      (err: any) => {
+        this.project.loading = false;
+        this.toastr.error(err.error.message || err.message.message || "");
+      }
+    );
+  }
+
+  filter() {
+    let p = {
+      page: this.page,
+      count: this.count,
+      project: this.projectName || "",
+      status: this.status || "",
+      startDate: this.date[0] || "",
+      endDate: this.date[1] || "",
+      type: "list",
+    };
+    this.project.loading = true;
+    this.userService.filterProject(p).subscribe(
+      (res: any) => {
+        this.project.loading = false;
+        this.project.data = res || [];
       },
       (err: any) => {
         this.project.loading = false;

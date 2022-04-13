@@ -17,6 +17,8 @@ export class RolesListComponent implements OnInit {
   role: {
     data: any;
     loading: Boolean;
+    count: any;
+    filter: any;
   };
   delete: {
     loading: Boolean;
@@ -40,6 +42,8 @@ export class RolesListComponent implements OnInit {
     this.role = {
       data: {},
       loading: false,
+      count: {},
+      filter: {},
     };
     this.delete = {
       loading: false,
@@ -61,7 +65,11 @@ export class RolesListComponent implements OnInit {
   }
 
   pageChanges() {
-    this.getRoles();
+    if (!this.role.count) {
+      this.getRoles();
+    } else {
+      this.filter();
+    }
   }
 
   getCountRoles() {
@@ -91,6 +99,7 @@ export class RolesListComponent implements OnInit {
       (res: any) => {
         this.role.loading = false;
         this.role.data = res || {};
+        this.role.filter = res || {};
       },
       (err: any) => {
         this.role.loading = false;
@@ -132,12 +141,38 @@ export class RolesListComponent implements OnInit {
       role: this.roleName || "",
       startDate: this.date[0] || "",
       endDate: this.date[1] || "",
+      type: "count",
     };
     this.role.loading = true;
     this.userService.filterRole(p).subscribe(
       (res: any) => {
         this.role.loading = false;
-        this.role.data = res || {};
+        this.role.count = res[0].count;
+        this.totalPages = res[0].count;
+        this.countPages = Math.ceil(this.totalPages / this.count);
+        this.filter();
+      },
+      (err: any) => {
+        this.role.loading = false;
+        this.toastr.error(err.error.message || err.message.message || "");
+      }
+    );
+  }
+
+  filter() {
+    let p = {
+      page: this.page,
+      count: this.count,
+      role: this.roleName || "",
+      startDate: this.date[0] || "",
+      endDate: this.date[1] || "",
+      type: "list",
+    };
+    this.role.loading = true;
+    this.userService.filterRole(p).subscribe(
+      (res: any) => {
+        this.role.loading = false;
+        this.role.data = res || [];
       },
       (err: any) => {
         this.role.loading = false;

@@ -26,6 +26,7 @@ export class FeaturesListComponent implements OnInit {
     loading: Boolean;
     data: any;
     filter: any;
+    count: any;
   };
   delete: {
     loading: Boolean;
@@ -49,6 +50,7 @@ export class FeaturesListComponent implements OnInit {
       loading: false,
       data: {},
       filter: {},
+      count: {},
     };
     this.delete = {
       loading: false,
@@ -64,7 +66,11 @@ export class FeaturesListComponent implements OnInit {
   }
 
   pageChanges() {
-    this.getFeatures();
+    if (!this.feature.count) {
+      this.getFeatures();
+    } else {
+      this.filter();
+    }
   }
 
   getCountFeatures() {
@@ -157,12 +163,39 @@ export class FeaturesListComponent implements OnInit {
       module: this.moduleName || "",
       startDate: this.date[0] || "",
       endDate: this.date[1] || "",
+      type: "count",
     };
     this.feature.loading = true;
     this.userService.filterFeature(p).subscribe(
       (res: any) => {
         this.feature.loading = false;
-        this.feature.data = res || {};
+        this.feature.count = res[0].count;
+        this.totalPages = res[0].count;
+        this.countPages = Math.ceil(this.totalPages / this.count);
+        this.filter();
+      },
+      (err: any) => {
+        this.feature.loading = false;
+        this.toastr.error(err.error.message || err.message.message || "");
+      }
+    );
+  }
+
+  filter() {
+    let p = {
+      page: this.page,
+      count: this.count,
+      feature: this.featureName || "",
+      module: this.moduleName || "",
+      startDate: this.date[0] || "",
+      endDate: this.date[1] || "",
+      type: "list",
+    };
+    this.feature.loading = true;
+    this.userService.filterFeature(p).subscribe(
+      (res: any) => {
+        this.feature.loading = false;
+        this.feature.data = res || [];
       },
       (err: any) => {
         this.feature.loading = false;
